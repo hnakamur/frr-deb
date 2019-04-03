@@ -1,3 +1,9 @@
+frr (6.0.2-2ppa1~ubuntu18.04.1) bionic; urgency=medium
+
+  * Backport to Ubuntu 18.04 LTS
+
+ -- Hiroaki Nakamura <hnakamur@gmail.com>  Wed, 03 Apr 2019 20:49:16 +0900
+
 frr (6.0.2-2) unstable; urgency=medium
 
   * remove bogus libjson0 build-dep (closes: #921349)
