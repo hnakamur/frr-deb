@@ -1,3 +1,10 @@
+frr (7.0-1ppa1~ubuntu18.04.1) bionic; urgency=medium
+
+  * New upstream version 7.0
+  * Delete debian patches since they all are in upstream now
+
+ -- Hiroaki Nakamura <hnakamur@gmail.com>  Wed, 03 Apr 2019 22:56:38 +0900
+
 frr (6.0.2-2ppa1~ubuntu18.04.1) bionic; urgency=medium
 
   * Backport to Ubuntu 18.04 LTS
