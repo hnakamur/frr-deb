@@ -1,15 +1,11 @@
-frr (7.0-1ppa1~ubuntu18.04.1) bionic; urgency=medium
+frr (7.1-1~ubuntu18.04.1) UNRELEASED; urgency=medium
 
-  * New upstream version 7.0
-  * Delete debian patches since they all are in upstream now
+  * upstream 7.1 release (7.0 / 7.0.1 packages existed on deb.frrouting.org
+    but were not pushed out to Debian during the buster freeze)
+  * now requires libyang as an additional dependency
+  * build for Ubuntu 18.04 (bionic)
 
- -- Hiroaki Nakamura <hnakamur@gmail.com>  Wed, 03 Apr 2019 22:56:38 +0900
-
-frr (6.0.2-2ppa1~ubuntu18.04.1) bionic; urgency=medium
-
-  * Backport to Ubuntu 18.04 LTS
-
- -- Hiroaki Nakamura <hnakamur@gmail.com>  Wed, 03 Apr 2019 20:49:16 +0900
+ -- David Lamparter <equinox-debian@diac24.net>  Mon, 01 Jul 2019 16:40:41 +0200
 
 frr (6.0.2-2) unstable; urgency=medium
 

@@ -264,15 +264,21 @@ noinst_PROGRAMS = lib/grammar_sandbox$(EXEEXT) $(am__EXEEXT_7) \
 # Sysrepo support
 #
 @SYSREPO_TRUE@am__append_11 = lib/sysrepo.la
-@BUILD_CLIPPY_TRUE@am__append_12 = lib/clippy
-@ZEBRA_TRUE@am__append_13 = zebra/zebra
-@ZEBRA_TRUE@am__append_14 = zebra/zebra.conf.sample
+
+#
+# gRPC northbound plugin
+#
+@GRPC_TRUE@am__append_12 = lib/grpc.la
+@BUILD_CLIPPY_TRUE@am__append_13 = lib/clippy
+@ZEBRA_TRUE@am__append_14 = zebra/zebra
+@ZEBRA_TRUE@am__append_15 = zebra/zebra.conf.sample
 
 # can be loaded as DSO - always include for vtysh
-@ZEBRA_TRUE@am__append_15 = $(top_srcdir)/zebra/debug.c \
+@ZEBRA_TRUE@am__append_16 = $(top_srcdir)/zebra/debug.c \
 @ZEBRA_TRUE@	$(top_srcdir)/zebra/interface.c \
 @ZEBRA_TRUE@	$(top_srcdir)/zebra/router-id.c \
 @ZEBRA_TRUE@	$(top_srcdir)/zebra/rtadv.c \
+@ZEBRA_TRUE@	$(top_srcdir)/zebra/zebra_mlag.c \
 @ZEBRA_TRUE@	$(top_srcdir)/zebra/zebra_mpls_vty.c \
 @ZEBRA_TRUE@	$(top_srcdir)/zebra/zebra_ptm.c \
 @ZEBRA_TRUE@	$(top_srcdir)/zebra/zebra_pw.c \
@@ -281,22 +287,23 @@ noinst_PROGRAMS = lib/grammar_sandbox$(EXEEXT) $(am__EXEEXT_7) \
 @ZEBRA_TRUE@	$(top_srcdir)/zebra/zserv.c \
 @ZEBRA_TRUE@	$(top_srcdir)/zebra/irdp_interface.c \
 @ZEBRA_TRUE@	$(top_srcdir)/zebra/zebra_fpm.c
-@IRDP_TRUE@@ZEBRA_TRUE@am__append_16 = zebra/zebra_irdp.la
-@SNMP_TRUE@@ZEBRA_TRUE@am__append_17 = zebra/zebra_snmp.la
-@FPM_TRUE@@ZEBRA_TRUE@am__append_18 = zebra/zebra_fpm.la
-@ZEBRA_TRUE@am__append_19 = $(MANBUILD)/zebra.8
-@HAVE_PROTOBUF_TRUE@am__append_20 = fpm/libfrrfpm_pb.la qpb/libfrr_pb.la $(PROTOBUF_C_LIBS)
-@HAVE_PROTOBUF_TRUE@am__append_21 = zebra/zebra_fpm_protobuf.c
-@DEV_BUILD_TRUE@@HAVE_PROTOBUF_TRUE@am__append_22 = zebra/zebra_fpm_dt.c
-@WATCHFRR_TRUE@am__append_23 = watchfrr/watchfrr
-@WATCHFRR_TRUE@am__append_24 = $(top_srcdir)/watchfrr/watchfrr_vty.c
-@WATCHFRR_TRUE@am__append_25 = $(MANBUILD)/watchfrr.8
-@HAVE_PROTOBUF_TRUE@am__append_26 = qpb/libfrr_pb.la
-@FPM_TRUE@@HAVE_PROTOBUF_TRUE@am__append_27 = fpm/libfrrfpm_pb.la
-@BGPD_TRUE@am__append_28 = bgpd/libbgp.a
-@BGPD_TRUE@am__append_29 = bgpd/bgpd
-@BGPD_TRUE@am__append_30 = bgpd/bgp_btoa
-@BGPD_TRUE@am__append_31 = \
+@IRDP_TRUE@@ZEBRA_TRUE@am__append_17 = zebra/zebra_irdp.la
+@SNMP_TRUE@@ZEBRA_TRUE@am__append_18 = zebra/zebra_snmp.la
+@FPM_TRUE@@ZEBRA_TRUE@am__append_19 = zebra/zebra_fpm.la
+@ZEBRA_TRUE@am__append_20 = $(MANBUILD)/zebra.8
+@HAVE_PROTOBUF_TRUE@am__append_21 = fpm/libfrrfpm_pb.la qpb/libfrr_pb.la $(PROTOBUF_C_LIBS)
+@HAVE_PROTOBUF_TRUE@am__append_22 = zebra/zebra_fpm_protobuf.c
+@DEV_BUILD_TRUE@@HAVE_PROTOBUF_TRUE@am__append_23 = zebra/zebra_fpm_dt.c
+@WATCHFRR_TRUE@am__append_24 = watchfrr/watchfrr
+@WATCHFRR_TRUE@am__append_25 = $(top_srcdir)/watchfrr/watchfrr_vty.c
+@WATCHFRR_TRUE@am__append_26 = $(MANBUILD)/watchfrr.8
+@HAVE_PROTOBUF_TRUE@am__append_27 = qpb/libfrr_pb.la
+@FPM_TRUE@@HAVE_PROTOBUF_TRUE@am__append_28 = fpm/libfrrfpm_pb.la
+@GRPC_TRUE@am__append_29 = grpc/libfrrgrpc_pb.la
+@BGPD_TRUE@am__append_30 = bgpd/libbgp.a
+@BGPD_TRUE@am__append_31 = bgpd/bgpd
+@BGPD_TRUE@am__append_32 = bgpd/bgp_btoa
+@BGPD_TRUE@am__append_33 = \
 @BGPD_TRUE@	bgpd/bgpd.conf.sample \
 @BGPD_TRUE@	bgpd/bgpd.conf.sample2 \
 @BGPD_TRUE@	bgpd/bgpd.conf.vnc.sample \
@@ -304,7 +311,7 @@ noinst_PROGRAMS = lib/grammar_sandbox$(EXEEXT) $(am__EXEEXT_7) \
 
 
 # can be loaded as DSO - always include for vtysh
-@BGPD_TRUE@am__append_32 = $(top_srcdir)/bgpd/bgp_bfd.c \
+@BGPD_TRUE@am__append_34 = $(top_srcdir)/bgpd/bgp_bfd.c \
 @BGPD_TRUE@	$(top_srcdir)/bgpd/bgp_debug.c \
 @BGPD_TRUE@	$(top_srcdir)/bgpd/bgp_dump.c \
 @BGPD_TRUE@	$(top_srcdir)/bgpd/bgp_evpn_vty.c \
@@ -316,17 +323,17 @@ noinst_PROGRAMS = lib/grammar_sandbox$(EXEEXT) $(am__EXEEXT_7) \
 @BGPD_TRUE@	$(top_srcdir)/bgpd/bgp_vty.c \
 @BGPD_TRUE@	$(top_srcdir)/bgpd/bgp_flowspec_vty.c \
 @BGPD_TRUE@	$(top_srcdir)/bgpd/bgp_rpki.c
-@BGPD_TRUE@@ENABLE_BGP_VNC_TRUE@am__append_33 = \
+@BGPD_TRUE@@ENABLE_BGP_VNC_TRUE@am__append_35 = \
 @BGPD_TRUE@@ENABLE_BGP_VNC_TRUE@	$(top_srcdir)/bgpd/rfapi/bgp_rfapi_cfg.c \
 @BGPD_TRUE@@ENABLE_BGP_VNC_TRUE@	$(top_srcdir)/bgpd/rfapi/rfapi.c \
 @BGPD_TRUE@@ENABLE_BGP_VNC_TRUE@	$(top_srcdir)/bgpd/rfapi/rfapi_vty.c \
 @BGPD_TRUE@@ENABLE_BGP_VNC_TRUE@	$(top_srcdir)/bgpd/rfapi/vnc_debug.c \
 @BGPD_TRUE@@ENABLE_BGP_VNC_TRUE@	# end
 
-@BGPD_TRUE@@SNMP_TRUE@am__append_34 = bgpd/bgpd_snmp.la
-@BGPD_TRUE@@RPKI_TRUE@am__append_35 = bgpd/bgpd_rpki.la
-@BGPD_TRUE@am__append_36 = $(MANBUILD)/bgpd.8
-@ENABLE_BGP_VNC_TRUE@am__append_37 = \
+@BGPD_TRUE@@SNMP_TRUE@am__append_36 = bgpd/bgpd_snmp.la
+@BGPD_TRUE@@RPKI_TRUE@am__append_37 = bgpd/bgpd_rpki.la
+@BGPD_TRUE@am__append_38 = $(MANBUILD)/bgpd.8
+@ENABLE_BGP_VNC_TRUE@am__append_39 = \
 @ENABLE_BGP_VNC_TRUE@	bgpd/rfapi/bgp_rfapi_cfg.c \
 @ENABLE_BGP_VNC_TRUE@	bgpd/rfapi/rfapi_import.c \
 @ENABLE_BGP_VNC_TRUE@	bgpd/rfapi/rfapi.c \
@@ -344,34 +351,36 @@ noinst_PROGRAMS = lib/grammar_sandbox$(EXEEXT) $(am__EXEEXT_7) \
 @ENABLE_BGP_VNC_TRUE@	bgpd/rfapi/vnc_zebra.c \
 @ENABLE_BGP_VNC_TRUE@	# end
 
-@ENABLE_BGP_VNC_TRUE@am__append_38 = bgpd/rfapi/rfapi_descriptor_rfp_utils.c
-@ENABLE_BGP_VNC_TRUE@am__append_39 = bgpd/rfapi/rfapi_descriptor_rfp_utils.c
-@ENABLE_BGP_VNC_TRUE@am__append_40 = bgpd/rfp-example/librfp/librfp.a
-@ENABLE_BGP_VNC_TRUE@am__append_41 = bgpd/rfp-example/rfptest/rfptest
-@RIPD_TRUE@am__append_42 = ripd/librip.a
-@RIPD_TRUE@am__append_43 = ripd/ripd
-@RIPD_TRUE@am__append_44 = ripd/ripd.conf.sample
-@RIPD_TRUE@am__append_45 = \
+@ENABLE_BGP_VNC_TRUE@am__append_40 = bgpd/rfapi/rfapi_descriptor_rfp_utils.c
+@ENABLE_BGP_VNC_TRUE@am__append_41 = -Irfapi -I@top_srcdir@/$(RFPINC)
+@ENABLE_BGP_VNC_TRUE@am__append_42 = bgpd/rfapi/rfapi_descriptor_rfp_utils.c
+@ENABLE_BGP_VNC_TRUE@am__append_43 = -Irfapi -I@top_srcdir@/$(RFPINC)
+@ENABLE_BGP_VNC_TRUE@am__append_44 = bgpd/rfp-example/librfp/librfp.a
+@ENABLE_BGP_VNC_TRUE@am__append_45 = bgpd/rfp-example/rfptest/rfptest
+@RIPD_TRUE@am__append_46 = ripd/librip.a
+@RIPD_TRUE@am__append_47 = ripd/ripd
+@RIPD_TRUE@am__append_48 = ripd/ripd.conf.sample
+@RIPD_TRUE@am__append_49 = \
 @RIPD_TRUE@	$(top_srcdir)/ripd/rip_cli.c \
 @RIPD_TRUE@	$(top_srcdir)/ripd/rip_debug.c \
 @RIPD_TRUE@	$(top_srcdir)/ripd/ripd.c \
 @RIPD_TRUE@	# end
 
-@RIPD_TRUE@@SNMP_TRUE@am__append_46 = ripd/ripd_snmp.la
-@RIPD_TRUE@am__append_47 = $(MANBUILD)/ripd.8
-@RIPNGD_TRUE@am__append_48 = ripngd/libripng.a
-@RIPNGD_TRUE@am__append_49 = ripngd/ripngd
-@RIPNGD_TRUE@am__append_50 = \
+@RIPD_TRUE@@SNMP_TRUE@am__append_50 = ripd/ripd_snmp.la
+@RIPD_TRUE@am__append_51 = $(MANBUILD)/ripd.8
+@RIPNGD_TRUE@am__append_52 = ripngd/libripng.a
+@RIPNGD_TRUE@am__append_53 = ripngd/ripngd
+@RIPNGD_TRUE@am__append_54 = \
 @RIPNGD_TRUE@	$(top_srcdir)/ripngd/ripng_cli.c \
 @RIPNGD_TRUE@	$(top_srcdir)/ripngd/ripng_debug.c \
 @RIPNGD_TRUE@	$(top_srcdir)/ripngd/ripngd.c \
 @RIPNGD_TRUE@	# end
 
-@RIPNGD_TRUE@am__append_51 = $(MANBUILD)/ripngd.8
-@OSPFD_TRUE@am__append_52 = ospfd/libfrrospf.a
-@OSPFD_TRUE@am__append_53 = ospfd/ospfd
-@OSPFD_TRUE@am__append_54 = ospfd/ospfd.conf.sample
-@OSPFD_TRUE@am__append_55 = \
+@RIPNGD_TRUE@am__append_55 = $(MANBUILD)/ripngd.8
+@OSPFD_TRUE@am__append_56 = ospfd/libfrrospf.a
+@OSPFD_TRUE@am__append_57 = ospfd/ospfd
+@OSPFD_TRUE@am__append_58 = ospfd/ospfd.conf.sample
+@OSPFD_TRUE@am__append_59 = \
 @OSPFD_TRUE@	$(top_srcdir)/ospfd/ospf_bfd.c \
 @OSPFD_TRUE@	$(top_srcdir)/ospfd/ospf_dump.c \
 @OSPFD_TRUE@	$(top_srcdir)/ospfd/ospf_opaque.c \
@@ -382,12 +391,12 @@ noinst_PROGRAMS = lib/grammar_sandbox$(EXEEXT) $(am__EXEEXT_7) \
 @OSPFD_TRUE@	$(top_srcdir)/ospfd/ospf_vty.c \
 @OSPFD_TRUE@	# end
 
-@OSPFD_TRUE@@SNMP_TRUE@am__append_56 = ospfd/ospfd_snmp.la
-@OSPFD_TRUE@am__append_57 = $(MANBUILD)/ospfd.8
-@OSPF6D_TRUE@am__append_58 = ospf6d/libospf6.a
-@OSPF6D_TRUE@am__append_59 = ospf6d/ospf6d
-@OSPF6D_TRUE@am__append_60 = ospf6d/ospf6d.conf.sample
-@OSPF6D_TRUE@am__append_61 = \
+@OSPFD_TRUE@@SNMP_TRUE@am__append_60 = ospfd/ospfd_snmp.la
+@OSPFD_TRUE@am__append_61 = $(MANBUILD)/ospfd.8
+@OSPF6D_TRUE@am__append_62 = ospf6d/libospf6.a
+@OSPF6D_TRUE@am__append_63 = ospf6d/ospf6d
+@OSPF6D_TRUE@am__append_64 = ospf6d/ospf6d.conf.sample
+@OSPF6D_TRUE@am__append_65 = \
 @OSPF6D_TRUE@	$(top_srcdir)/ospf6d/ospf6_abr.c \
 @OSPF6D_TRUE@	$(top_srcdir)/ospf6d/ospf6_asbr.c \
 @OSPF6D_TRUE@	$(top_srcdir)/ospf6d/ospf6_area.c \
@@ -405,11 +414,11 @@ noinst_PROGRAMS = lib/grammar_sandbox$(EXEEXT) $(am__EXEEXT_7) \
 @OSPF6D_TRUE@	$(top_srcdir)/ospf6d/ospf6d.c \
 @OSPF6D_TRUE@	# end
 
-@OSPF6D_TRUE@@SNMP_TRUE@am__append_62 = ospf6d/ospf6d_snmp.la
-@OSPF6D_TRUE@am__append_63 = $(MANBUILD)/ospf6d.8
-@OSPFCLIENT_TRUE@am__append_64 = ospfclient/libfrrospfapiclient.la
-@OSPFCLIENT_TRUE@am__append_65 = ospfclient/ospfclient
-@OSPFCLIENT_TRUE@am__append_66 = $(MANBUILD)/ospfclient.8
+@OSPF6D_TRUE@@SNMP_TRUE@am__append_66 = ospf6d/ospf6d_snmp.la
+@OSPF6D_TRUE@am__append_67 = $(MANBUILD)/ospf6d.8
+@OSPFCLIENT_TRUE@am__append_68 = ospfclient/libfrrospfapiclient.la
+@OSPFCLIENT_TRUE@am__append_69 = ospfclient/ospfclient
+@OSPFCLIENT_TRUE@am__append_70 = $(MANBUILD)/ospfclient.8
 
 # libfrr is linked in through libfrrospfapiclient.  If we list it here too,
 # it gets linked twice and we get a ton of symbol collisions.
@@ -418,11 +427,11 @@ noinst_PROGRAMS = lib/grammar_sandbox$(EXEEXT) $(am__EXEEXT_7) \
 # to disallow transitive references *while* *als* not patching their libtool
 # to work appropriately.  RedHat has the same linker behaviour, but things
 # work as expected since they also patch libtool.
-@STATIC_BIN_FALSE@am__append_67 = lib/libfrr.la
-@ISISD_TRUE@am__append_68 = isisd/libisis.a
-@ISISD_TRUE@am__append_69 = isisd/isisd
-@ISISD_TRUE@am__append_70 = isisd/isisd.conf.sample
-@ISISD_TRUE@am__append_71 = \
+@STATIC_BIN_FALSE@am__append_71 = lib/libfrr.la
+@ISISD_TRUE@am__append_72 = isisd/libisis.a
+@ISISD_TRUE@am__append_73 = isisd/isisd
+@ISISD_TRUE@am__append_74 = isisd/isisd.conf.sample
+@ISISD_TRUE@am__append_75 = \
 @ISISD_TRUE@	$(top_srcdir)/isisd/isis_cli.c \
 @ISISD_TRUE@	$(top_srcdir)/isisd/isis_redist.c \
 @ISISD_TRUE@	$(top_srcdir)/isisd/isis_spf.c \
@@ -432,77 +441,77 @@ noinst_PROGRAMS = lib/grammar_sandbox$(EXEEXT) $(am__EXEEXT_7) \
 @ISISD_TRUE@	$(top_srcdir)/isisd/isisd.c \
 @ISISD_TRUE@	# end
 
-@ISISD_TRUE@am__append_72 = $(MANBUILD)/isisd.8
-@FABRICD_TRUE@am__append_73 = isisd/libfabric.a
-@FABRICD_TRUE@am__append_74 = isisd/fabricd
-@FABRICD_TRUE@am__append_75 = isisd/fabricd.conf.sample
-@NHRPD_TRUE@am__append_76 = nhrpd/nhrpd
-@NHRPD_TRUE@am__append_77 = $(top_srcdir)/nhrpd/nhrp_vty.c
-@NHRPD_TRUE@am__append_78 = $(MANBUILD)/nhrpd.8
-@LDPD_TRUE@am__append_79 = ldpd/libldp.a
-@LDPD_TRUE@am__append_80 = ldpd/ldpd
-@LDPD_TRUE@am__append_81 = ldpd/ldpd.conf.sample
-@LDPD_TRUE@am__append_82 = $(top_srcdir)/ldpd/ldp_vty_cmds.c
-@LDPD_TRUE@am__append_83 = $(MANBUILD)/ldpd.8
-@BABELD_TRUE@am__append_84 = babeld/libbabel.a
-@BABELD_TRUE@am__append_85 = babeld/babeld
-@BABELD_TRUE@am__append_86 = babeld/babeld.conf.sample
-@BABELD_TRUE@am__append_87 = \
+@ISISD_TRUE@am__append_76 = $(MANBUILD)/isisd.8
+@FABRICD_TRUE@am__append_77 = isisd/libfabric.a
+@FABRICD_TRUE@am__append_78 = isisd/fabricd
+@FABRICD_TRUE@am__append_79 = isisd/fabricd.conf.sample
+@NHRPD_TRUE@am__append_80 = nhrpd/nhrpd
+@NHRPD_TRUE@am__append_81 = $(top_srcdir)/nhrpd/nhrp_vty.c
+@NHRPD_TRUE@am__append_82 = $(MANBUILD)/nhrpd.8
+@LDPD_TRUE@am__append_83 = ldpd/libldp.a
+@LDPD_TRUE@am__append_84 = ldpd/ldpd
+@LDPD_TRUE@am__append_85 = ldpd/ldpd.conf.sample
+@LDPD_TRUE@am__append_86 = $(top_srcdir)/ldpd/ldp_vty_cmds.c
+@LDPD_TRUE@am__append_87 = $(MANBUILD)/ldpd.8
+@BABELD_TRUE@am__append_88 = babeld/libbabel.a
+@BABELD_TRUE@am__append_89 = babeld/babeld
+@BABELD_TRUE@am__append_90 = babeld/babeld.conf.sample
+@BABELD_TRUE@am__append_91 = \
 @BABELD_TRUE@	$(top_srcdir)/babeld/babel_interface.c \
 @BABELD_TRUE@	$(top_srcdir)/babeld/babel_zebra.c \
 @BABELD_TRUE@	$(top_srcdir)/babeld/babeld.c \
 @BABELD_TRUE@	# end
 
-@EIGRPD_TRUE@am__append_88 = eigrpd/libeigrp.a
-@EIGRPD_TRUE@am__append_89 = eigrpd/eigrpd
-@EIGRPD_TRUE@am__append_90 = eigrpd/eigrpd.conf.sample
-@EIGRPD_TRUE@am__append_91 = \
+@EIGRPD_TRUE@am__append_92 = eigrpd/libeigrp.a
+@EIGRPD_TRUE@am__append_93 = eigrpd/eigrpd
+@EIGRPD_TRUE@am__append_94 = eigrpd/eigrpd.conf.sample
+@EIGRPD_TRUE@am__append_95 = \
 @EIGRPD_TRUE@	$(top_srcdir)/eigrpd/eigrp_dump.c \
 @EIGRPD_TRUE@	$(top_srcdir)/eigrpd/eigrp_vty.c \
 @EIGRPD_TRUE@	# end
 
 #	$(top_srcdir)/eigrpd/eigrp_routemap.c
-@EIGRPD_TRUE@am__append_92 = $(MANBUILD)/eigrpd.8
-@SHARPD_TRUE@am__append_93 = sharpd/libsharp.a
-@SHARPD_TRUE@am__append_94 = sharpd/sharpd
-@SHARPD_TRUE@am__append_95 = sharpd/sharpd.conf.sample
-@SHARPD_TRUE@am__append_96 = $(top_srcdir)/sharpd/sharp_vty.c
-@SHARPD_TRUE@am__append_97 = $(MANBUILD)/sharpd.8
-@PIMD_TRUE@am__append_98 = pimd/libpim.a
-@PIMD_TRUE@am__append_99 = pimd/pimd
-@PIMD_TRUE@am__append_100 = pimd/mtracebis
-@PIMD_TRUE@am__append_101 = pimd/test_igmpv3_join
-@PIMD_TRUE@am__append_102 = pimd/pimd.conf.sample
-@PIMD_TRUE@am__append_103 = $(top_srcdir)/pimd/pim_cmd.c
-@PIMD_TRUE@am__append_104 = $(MANBUILD)/pimd.8 $(MANBUILD)/mtracebis.8
-@PBRD_TRUE@am__append_105 = pbrd/libpbr.a
-@PBRD_TRUE@am__append_106 = pbrd/pbrd
-@PBRD_TRUE@am__append_107 = pbrd/pbrd.conf.sample
-@PBRD_TRUE@am__append_108 = \
+@EIGRPD_TRUE@am__append_96 = $(MANBUILD)/eigrpd.8
+@SHARPD_TRUE@am__append_97 = sharpd/libsharp.a
+@SHARPD_TRUE@am__append_98 = sharpd/sharpd
+@SHARPD_TRUE@am__append_99 = sharpd/sharpd.conf.sample
+@SHARPD_TRUE@am__append_100 = $(top_srcdir)/sharpd/sharp_vty.c
+@SHARPD_TRUE@am__append_101 = $(MANBUILD)/sharpd.8
+@PIMD_TRUE@am__append_102 = pimd/libpim.a
+@PIMD_TRUE@am__append_103 = pimd/pimd
+@PIMD_TRUE@am__append_104 = pimd/mtracebis
+@PIMD_TRUE@am__append_105 = pimd/test_igmpv3_join
+@PIMD_TRUE@am__append_106 = pimd/pimd.conf.sample
+@PIMD_TRUE@am__append_107 = $(top_srcdir)/pimd/pim_cmd.c
+@PIMD_TRUE@am__append_108 = $(MANBUILD)/pimd.8 $(MANBUILD)/mtracebis.8
+@PBRD_TRUE@am__append_109 = pbrd/libpbr.a
+@PBRD_TRUE@am__append_110 = pbrd/pbrd
+@PBRD_TRUE@am__append_111 = pbrd/pbrd.conf.sample
+@PBRD_TRUE@am__append_112 = \
 @PBRD_TRUE@	$(top_srcdir)/pbrd/pbr_vty.c \
 @PBRD_TRUE@	$(top_srcdir)/pbrd/pbr_debug.c \
 @PBRD_TRUE@	# end
 
-@PBRD_TRUE@am__append_109 = $(MANBUILD)/pbrd.8
-@STATICD_TRUE@am__append_110 = staticd/libstatic.a
-@STATICD_TRUE@am__append_111 = staticd/staticd
-@STATICD_TRUE@am__append_112 = staticd/staticd.conf.sample
-@STATICD_TRUE@am__append_113 = $(top_srcdir)/staticd/static_vty.c
-@STATICD_TRUE@am__append_114 = $(MANBUILD)/staticd.8
-@BFDD_TRUE@am__append_115 = bfdd/libbfd.a
-@BFDD_TRUE@am__append_116 = bfdd/bfdd
-@BFDD_TRUE@am__append_117 = bfdd/bfdd.conf.sample
-@BFDD_TRUE@am__append_118 = $(top_srcdir)/bfdd/bfdd_vty.c
-@BFDD_TRUE@am__append_119 = $(MANBUILD)/bfdd.8
-@RIPD_TRUE@am__append_120 = yang/frr-ripd.yang
-@RIPNGD_TRUE@am__append_121 = yang/frr-ripngd.yang
-@ISISD_TRUE@am__append_122 = yang/frr-isisd.yang
-@LIBYANG_EXT_BUILTIN_TRUE@am__append_123 = yang/libyang_plugins/frr_user_types.c
-@LIBYANG_EXT_BUILTIN_FALSE@am__append_124 = yang/libyang_plugins/frr_user_types.la
-@VTYSH_TRUE@am__append_125 = vtysh/vtysh
-@VTYSH_TRUE@am__append_126 = vtysh/vtysh.conf.sample
-@VTYSH_TRUE@am__append_127 = $(MANBUILD)/vtysh.1
-check_PROGRAMS = tests/lib/test_buffer$(EXEEXT) \
+@PBRD_TRUE@am__append_113 = $(MANBUILD)/pbrd.8
+@STATICD_TRUE@am__append_114 = staticd/libstatic.a
+@STATICD_TRUE@am__append_115 = staticd/staticd
+@STATICD_TRUE@am__append_116 = staticd/staticd.conf.sample
+@STATICD_TRUE@am__append_117 = $(top_srcdir)/staticd/static_vty.c
+@STATICD_TRUE@am__append_118 = $(MANBUILD)/staticd.8
+@BFDD_TRUE@am__append_119 = bfdd/libbfd.a
+@BFDD_TRUE@am__append_120 = bfdd/bfdd
+@BFDD_TRUE@am__append_121 = bfdd/bfdd.conf.sample
+@BFDD_TRUE@am__append_122 = $(top_srcdir)/bfdd/bfdd_vty.c
+@BFDD_TRUE@am__append_123 = $(MANBUILD)/bfdd.8
+@RIPD_TRUE@am__append_124 = yang/frr-ripd.yang
+@RIPNGD_TRUE@am__append_125 = yang/frr-ripngd.yang
+@ISISD_TRUE@am__append_126 = yang/frr-isisd.yang
+@VTYSH_TRUE@am__append_127 = vtysh/vtysh
+@VTYSH_TRUE@am__append_128 = vtysh/vtysh.conf.sample
+@VTYSH_TRUE@am__append_129 = $(MANBUILD)/vtysh.1
+check_PROGRAMS = tests/lib/cxxcompat$(EXEEXT) \
+	tests/lib/test_atomlist$(EXEEXT) \
+	tests/lib/test_buffer$(EXEEXT) \
 	tests/lib/test_checksum$(EXEEXT) \
 	tests/lib/test_heavy_thread$(EXEEXT) \
 	tests/lib/test_heavy_wq$(EXEEXT) tests/lib/test_heavy$(EXEEXT) \
@@ -510,16 +519,18 @@ check_PROGRAMS = tests/lib/test_buffer$(EXEEXT) \
 	tests/lib/test_nexthop_iter$(EXEEXT) \
 	tests/lib/test_privs$(EXEEXT) tests/lib/test_ringbuf$(EXEEXT) \
 	tests/lib/test_srcdest_table$(EXEEXT) \
-	tests/lib/test_segv$(EXEEXT) tests/lib/test_sig$(EXEEXT) \
-	tests/lib/test_stream$(EXEEXT) tests/lib/test_table$(EXEEXT) \
+	tests/lib/test_segv$(EXEEXT) tests/lib/test_seqlock$(EXEEXT) \
+	tests/lib/test_sig$(EXEEXT) tests/lib/test_stream$(EXEEXT) \
+	tests/lib/test_table$(EXEEXT) \
 	tests/lib/test_timer_correctness$(EXEEXT) \
 	tests/lib/test_timer_performance$(EXEEXT) \
-	tests/lib/test_ttable$(EXEEXT) tests/lib/test_zlog$(EXEEXT) \
+	tests/lib/test_ttable$(EXEEXT) \
+	tests/lib/test_typelist$(EXEEXT) tests/lib/test_zlog$(EXEEXT) \
 	tests/lib/test_graph$(EXEEXT) tests/lib/cli/test_cli$(EXEEXT) \
 	tests/lib/cli/test_commands$(EXEEXT) \
 	tests/lib/northbound/test_oper_data$(EXEEXT) $(am__EXEEXT_3) \
 	$(am__EXEEXT_4) $(am__EXEEXT_5) $(am__EXEEXT_6)
-@ZEROMQ_TRUE@am__append_128 = \
+@ZEROMQ_TRUE@am__append_130 = \
 @ZEROMQ_TRUE@	tests/lib/test_zmq \
 @ZEROMQ_TRUE@	# end
 
@@ -553,13 +564,13 @@ CONFIG_CLEAN_VPATH_FILES =
 @PIMD_TRUE@am__EXEEXT_1 = pimd/mtracebis$(EXEEXT)
 @VTYSH_TRUE@am__EXEEXT_2 = vtysh/vtysh$(EXEEXT)
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(sbindir)" \
-	"$(DESTDIR)$(libdir)" "$(DESTDIR)$(libyang_pluginsdir)" \
-	"$(DESTDIR)$(moduledir)" "$(DESTDIR)$(rcdir)" \
-	"$(DESTDIR)$(sbindir)" "$(DESTDIR)$(examplesdir)" \
-	"$(DESTDIR)$(yangmodelsdir)" "$(DESTDIR)$(rstman1dir)" \
-	"$(DESTDIR)$(rstman8dir)" "$(DESTDIR)$(eigrpdheaderdir)" \
-	"$(DESTDIR)$(pkgincludedir)" "$(DESTDIR)$(ospfapiheaderdir)" \
-	"$(DESTDIR)$(ospfdheaderdir)" "$(DESTDIR)$(pkgincludedir)"
+	"$(DESTDIR)$(libdir)" "$(DESTDIR)$(moduledir)" \
+	"$(DESTDIR)$(rcdir)" "$(DESTDIR)$(sbindir)" \
+	"$(DESTDIR)$(examplesdir)" "$(DESTDIR)$(yangmodelsdir)" \
+	"$(DESTDIR)$(rstman1dir)" "$(DESTDIR)$(rstman8dir)" \
+	"$(DESTDIR)$(eigrpdheaderdir)" "$(DESTDIR)$(pkgincludedir)" \
+	"$(DESTDIR)$(ospfapiheaderdir)" "$(DESTDIR)$(ospfdheaderdir)" \
+	"$(DESTDIR)$(pkgincludedir)"
 @BGPD_TRUE@am__EXEEXT_3 = tests/bgpd/test_aspath$(EXEEXT) \
 @BGPD_TRUE@	tests/bgpd/test_capability$(EXEEXT) \
 @BGPD_TRUE@	tests/bgpd/test_packet$(EXEEXT) \
@@ -625,8 +636,7 @@ am__uninstall_files_from_dir = { \
     || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
-LTLIBRARIES = $(lib_LTLIBRARIES) $(libyang_plugins_LTLIBRARIES) \
-	$(module_LTLIBRARIES)
+LTLIBRARIES = $(lib_LTLIBRARIES) $(module_LTLIBRARIES)
 AM_V_AR = $(am__v_AR_@AM_V@)
 am__v_AR_ = $(am__v_AR_@AM_DEFAULT_V@)
 am__v_AR_0 = @echo "  AR      " $@;
@@ -662,16 +672,16 @@ am__bgpd_libbgp_a_SOURCES_DIST = bgpd/bgp_addpath.c \
 	bgpd/bgp_filter.c bgpd/bgp_flowspec.c bgpd/bgp_flowspec_util.c \
 	bgpd/bgp_flowspec_vty.c bgpd/bgp_fsm.c bgpd/bgp_io.c \
 	bgpd/bgp_keepalives.c bgpd/bgp_label.c bgpd/bgp_labelpool.c \
-	bgpd/bgp_lcommunity.c bgpd/bgp_memory.c bgpd/bgp_mpath.c \
-	bgpd/bgp_mplsvpn.c bgpd/bgp_network.c bgpd/bgp_nexthop.c \
-	bgpd/bgp_nht.c bgpd/bgp_open.c bgpd/bgp_packet.c \
-	bgpd/bgp_pbr.c bgpd/bgp_rd.c bgpd/bgp_regex.c bgpd/bgp_route.c \
-	bgpd/bgp_routemap.c bgpd/bgp_table.c bgpd/bgp_updgrp.c \
-	bgpd/bgp_updgrp_adv.c bgpd/bgp_updgrp_packet.c bgpd/bgp_vpn.c \
-	bgpd/bgp_vty.c bgpd/bgp_zebra.c bgpd/bgpd.c \
-	bgpd/rfapi/bgp_rfapi_cfg.c bgpd/rfapi/rfapi_import.c \
-	bgpd/rfapi/rfapi.c bgpd/rfapi/rfapi_ap.c \
-	bgpd/rfapi/rfapi_descriptor_rfp_utils.c \
+	bgpd/bgp_lcommunity.c bgpd/bgp_mac.c bgpd/bgp_memory.c \
+	bgpd/bgp_mpath.c bgpd/bgp_mplsvpn.c bgpd/bgp_network.c \
+	bgpd/bgp_nexthop.c bgpd/bgp_nht.c bgpd/bgp_open.c \
+	bgpd/bgp_packet.c bgpd/bgp_pbr.c bgpd/bgp_rd.c \
+	bgpd/bgp_regex.c bgpd/bgp_route.c bgpd/bgp_routemap.c \
+	bgpd/bgp_table.c bgpd/bgp_updgrp.c bgpd/bgp_updgrp_adv.c \
+	bgpd/bgp_updgrp_packet.c bgpd/bgp_vpn.c bgpd/bgp_vty.c \
+	bgpd/bgp_zebra.c bgpd/bgpd.c bgpd/rfapi/bgp_rfapi_cfg.c \
+	bgpd/rfapi/rfapi_import.c bgpd/rfapi/rfapi.c \
+	bgpd/rfapi/rfapi_ap.c bgpd/rfapi/rfapi_descriptor_rfp_utils.c \
 	bgpd/rfapi/rfapi_encap_tlv.c bgpd/rfapi/rfapi_nve_addr.c \
 	bgpd/rfapi/rfapi_monitor.c bgpd/rfapi/rfapi_rib.c \
 	bgpd/rfapi/rfapi_vty.c bgpd/rfapi/vnc_debug.c \
@@ -706,17 +716,18 @@ am_bgpd_libbgp_a_OBJECTS = bgpd/bgp_addpath.$(OBJEXT) \
 	bgpd/bgp_flowspec_vty.$(OBJEXT) bgpd/bgp_fsm.$(OBJEXT) \
 	bgpd/bgp_io.$(OBJEXT) bgpd/bgp_keepalives.$(OBJEXT) \
 	bgpd/bgp_label.$(OBJEXT) bgpd/bgp_labelpool.$(OBJEXT) \
-	bgpd/bgp_lcommunity.$(OBJEXT) bgpd/bgp_memory.$(OBJEXT) \
-	bgpd/bgp_mpath.$(OBJEXT) bgpd/bgp_mplsvpn.$(OBJEXT) \
-	bgpd/bgp_network.$(OBJEXT) bgpd/bgp_nexthop.$(OBJEXT) \
-	bgpd/bgp_nht.$(OBJEXT) bgpd/bgp_open.$(OBJEXT) \
-	bgpd/bgp_packet.$(OBJEXT) bgpd/bgp_pbr.$(OBJEXT) \
-	bgpd/bgp_rd.$(OBJEXT) bgpd/bgp_regex.$(OBJEXT) \
-	bgpd/bgp_route.$(OBJEXT) bgpd/bgp_routemap.$(OBJEXT) \
-	bgpd/bgp_table.$(OBJEXT) bgpd/bgp_updgrp.$(OBJEXT) \
-	bgpd/bgp_updgrp_adv.$(OBJEXT) bgpd/bgp_updgrp_packet.$(OBJEXT) \
-	bgpd/bgp_vpn.$(OBJEXT) bgpd/bgp_vty.$(OBJEXT) \
-	bgpd/bgp_zebra.$(OBJEXT) bgpd/bgpd.$(OBJEXT) $(am__objects_1)
+	bgpd/bgp_lcommunity.$(OBJEXT) bgpd/bgp_mac.$(OBJEXT) \
+	bgpd/bgp_memory.$(OBJEXT) bgpd/bgp_mpath.$(OBJEXT) \
+	bgpd/bgp_mplsvpn.$(OBJEXT) bgpd/bgp_network.$(OBJEXT) \
+	bgpd/bgp_nexthop.$(OBJEXT) bgpd/bgp_nht.$(OBJEXT) \
+	bgpd/bgp_open.$(OBJEXT) bgpd/bgp_packet.$(OBJEXT) \
+	bgpd/bgp_pbr.$(OBJEXT) bgpd/bgp_rd.$(OBJEXT) \
+	bgpd/bgp_regex.$(OBJEXT) bgpd/bgp_route.$(OBJEXT) \
+	bgpd/bgp_routemap.$(OBJEXT) bgpd/bgp_table.$(OBJEXT) \
+	bgpd/bgp_updgrp.$(OBJEXT) bgpd/bgp_updgrp_adv.$(OBJEXT) \
+	bgpd/bgp_updgrp_packet.$(OBJEXT) bgpd/bgp_vpn.$(OBJEXT) \
+	bgpd/bgp_vty.$(OBJEXT) bgpd/bgp_zebra.$(OBJEXT) \
+	bgpd/bgpd.$(OBJEXT) $(am__objects_1)
 bgpd_libbgp_a_OBJECTS = $(am_bgpd_libbgp_a_OBJECTS)
 bgpd_rfp_example_librfp_librfp_a_AR = $(AR) $(ARFLAGS)
 bgpd_rfp_example_librfp_librfp_a_LIBADD =
@@ -740,8 +751,7 @@ am_eigrpd_libeigrp_a_OBJECTS = eigrpd/eigrp_dump.$(OBJEXT) \
 eigrpd_libeigrp_a_OBJECTS = $(am_eigrpd_libeigrp_a_OBJECTS)
 isisd_libfabric_a_AR = $(AR) $(ARFLAGS)
 isisd_libfabric_a_LIBADD =
-am__objects_2 = isisd/libfabric_a-dict.$(OBJEXT) \
-	isisd/libfabric_a-isis_adjacency.$(OBJEXT) \
+am__objects_2 = isisd/libfabric_a-isis_adjacency.$(OBJEXT) \
 	isisd/libfabric_a-isis_bfd.$(OBJEXT) \
 	isisd/libfabric_a-isis_circuit.$(OBJEXT) \
 	isisd/libfabric_a-isis_csm.$(OBJEXT) \
@@ -773,7 +783,7 @@ am_isisd_libfabric_a_OBJECTS = $(am__objects_2) \
 isisd_libfabric_a_OBJECTS = $(am_isisd_libfabric_a_OBJECTS)
 isisd_libisis_a_AR = $(AR) $(ARFLAGS)
 isisd_libisis_a_LIBADD =
-am__objects_3 = isisd/dict.$(OBJEXT) isisd/isis_adjacency.$(OBJEXT) \
+am__objects_3 = isisd/isis_adjacency.$(OBJEXT) \
 	isisd/isis_bfd.$(OBJEXT) isisd/isis_circuit.$(OBJEXT) \
 	isisd/isis_csm.$(OBJEXT) isisd/isis_dr.$(OBJEXT) \
 	isisd/isis_dynhn.$(OBJEXT) isisd/isis_errors.$(OBJEXT) \
@@ -870,7 +880,8 @@ am_pimd_libpim_a_OBJECTS = pimd/pim_assert.$(OBJEXT) \
 	pimd/pim_tlv.$(OBJEXT) pimd/pim_upstream.$(OBJEXT) \
 	pimd/pim_util.$(OBJEXT) pimd/pim_version.$(OBJEXT) \
 	pimd/pim_vty.$(OBJEXT) pimd/pim_zebra.$(OBJEXT) \
-	pimd/pim_zlookup.$(OBJEXT) pimd/pimd.$(OBJEXT)
+	pimd/pim_zlookup.$(OBJEXT) pimd/pim_vxlan.$(OBJEXT) \
+	pimd/pimd.$(OBJEXT)
 pimd_libpim_a_OBJECTS = $(am_pimd_libpim_a_OBJECTS)
 ripd_librip_a_AR = $(AR) $(ARFLAGS)
 ripd_librip_a_LIBADD =
@@ -893,8 +904,8 @@ am_ripngd_libripng_a_OBJECTS = ripngd/ripng_cli.$(OBJEXT) \
 ripngd_libripng_a_OBJECTS = $(am_ripngd_libripng_a_OBJECTS)
 sharpd_libsharp_a_AR = $(AR) $(ARFLAGS)
 sharpd_libsharp_a_LIBADD =
-am_sharpd_libsharp_a_OBJECTS = sharpd/sharp_zebra.$(OBJEXT) \
-	sharpd/sharp_vty.$(OBJEXT)
+am_sharpd_libsharp_a_OBJECTS = sharpd/sharp_nht.$(OBJEXT) \
+	sharpd/sharp_zebra.$(OBJEXT) sharpd/sharp_vty.$(OBJEXT)
 sharpd_libsharp_a_OBJECTS = $(am_sharpd_libsharp_a_OBJECTS)
 staticd_libstatic_a_AR = $(AR) $(ARFLAGS)
 staticd_libstatic_a_LIBADD =
@@ -935,66 +946,86 @@ fpm_libfrrfpm_pb_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(LDFLAGS) -o $@
 @FPM_TRUE@@HAVE_PROTOBUF_TRUE@am_fpm_libfrrfpm_pb_la_rpath = -rpath \
 @FPM_TRUE@@HAVE_PROTOBUF_TRUE@	$(libdir)
-lib_confd_la_DEPENDENCIES = lib/libfrr.la
+grpc_libfrrgrpc_pb_la_LIBADD =
+nodist_grpc_libfrrgrpc_pb_la_OBJECTS =  \
+	grpc/libfrrgrpc_pb_la-frr-northbound.pb.lo \
+	grpc/libfrrgrpc_pb_la-frr-northbound.grpc.pb.lo
+grpc_libfrrgrpc_pb_la_OBJECTS =  \
+	$(nodist_grpc_libfrrgrpc_pb_la_OBJECTS)
+grpc_libfrrgrpc_pb_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) $(grpc_libfrrgrpc_pb_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
+@GRPC_TRUE@am_grpc_libfrrgrpc_pb_la_rpath = -rpath $(libdir)
+lib_confd_la_DEPENDENCIES = lib/libfrr.la $(am__DEPENDENCIES_1)
 am_lib_confd_la_OBJECTS = lib/confd_la-northbound_confd.lo
 lib_confd_la_OBJECTS = $(am_lib_confd_la_OBJECTS)
 lib_confd_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(lib_confd_la_CFLAGS) \
 	$(CFLAGS) $(lib_confd_la_LDFLAGS) $(LDFLAGS) -o $@
 @CONFD_TRUE@am_lib_confd_la_rpath = -rpath $(moduledir)
+lib_grpc_la_DEPENDENCIES = lib/libfrr.la grpc/libfrrgrpc_pb.la \
+	$(am__DEPENDENCIES_1)
+am_lib_grpc_la_OBJECTS = lib/grpc_la-northbound_grpc.lo
+lib_grpc_la_OBJECTS = $(am_lib_grpc_la_OBJECTS)
+lib_grpc_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(lib_grpc_la_CXXFLAGS) \
+	$(CXXFLAGS) $(lib_grpc_la_LDFLAGS) $(LDFLAGS) -o $@
+@GRPC_TRUE@am_lib_grpc_la_rpath = -rpath $(moduledir)
 @SQLITE3_TRUE@am__DEPENDENCIES_2 = $(am__DEPENDENCIES_1)
 lib_libfrr_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_2)
-am__lib_libfrr_la_SOURCES_DIST = lib/agg_table.c lib/bfd.c \
-	lib/buffer.c lib/checksum.c lib/command.c lib/command_graph.c \
-	lib/command_lex.l lib/command_match.c lib/command_parse.y \
-	lib/csv.c lib/debug.c lib/distribute.c lib/event_counter.c \
+am__lib_libfrr_la_SOURCES_DIST = lib/agg_table.c lib/atomlist.c \
+	lib/bfd.c lib/buffer.c lib/checksum.c lib/command.c \
+	lib/command_graph.c lib/command_lex.l lib/command_match.c \
+	lib/command_parse.y lib/csv.c lib/debug.c lib/distribute.c \
 	lib/ferr.c lib/filter.c lib/frr_pthread.c lib/frrstr.c \
 	lib/getopt.c lib/getopt1.c lib/grammar_sandbox.c lib/graph.c \
 	lib/hash.c lib/hook.c lib/id_alloc.c lib/if.c lib/if_rmap.c \
 	lib/imsg-buffer.c lib/imsg.c lib/jhash.c lib/json.c \
 	lib/keychain.c lib/lib_errors.c lib/libfrr.c lib/linklist.c \
-	lib/log.c lib/md5.c lib/memory.c lib/memory_vty.c lib/module.c \
-	lib/mpls.c lib/network.c lib/nexthop.c lib/netns_linux.c \
-	lib/netns_other.c lib/nexthop_group.c lib/northbound.c \
-	lib/northbound_cli.c lib/northbound_db.c lib/openbsd-tree.c \
-	lib/pid_output.c lib/plist.c lib/pqueue.c lib/prefix.c \
-	lib/privs.c lib/ptm_lib.c lib/qobj.c lib/ringbuf.c \
-	lib/routemap.c lib/sbuf.c lib/sha256.c lib/sigevent.c \
-	lib/skiplist.c lib/sockopt.c lib/sockunion.c lib/spf_backoff.c \
-	lib/srcdest_table.c lib/stream.c lib/strlcat.c lib/strlcpy.c \
-	lib/systemd.c lib/table.c lib/termtable.c lib/thread.c \
-	lib/vector.c lib/vrf.c lib/vty.c lib/wheel.c lib/workqueue.c \
-	lib/yang.c lib/yang_translator.c lib/yang_wrappers.c \
-	lib/zclient.c lib/logicalrouter.c lib/lua.c lib/db.c \
-	yang/libyang_plugins/frr_user_types.c
+	lib/log.c lib/md5.c lib/memory.c lib/memory_vty.c lib/mlag.c \
+	lib/module.c lib/mpls.c lib/network.c lib/nexthop.c \
+	lib/netns_linux.c lib/netns_other.c lib/nexthop_group.c \
+	lib/northbound.c lib/northbound_cli.c lib/northbound_db.c \
+	lib/openbsd-tree.c lib/pid_output.c lib/plist.c lib/pqueue.c \
+	lib/prefix.c lib/privs.c lib/ptm_lib.c lib/qobj.c \
+	lib/ringbuf.c lib/routemap.c lib/sbuf.c lib/seqlock.c \
+	lib/sha256.c lib/sigevent.c lib/skiplist.c lib/sockopt.c \
+	lib/sockunion.c lib/spf_backoff.c lib/srcdest_table.c \
+	lib/stream.c lib/strlcat.c lib/strlcpy.c lib/systemd.c \
+	lib/table.c lib/termtable.c lib/thread.c lib/typerb.c \
+	lib/typesafe.c lib/vector.c lib/vrf.c lib/vty.c lib/wheel.c \
+	lib/workqueue.c lib/yang.c lib/yang_translator.c \
+	lib/yang_wrappers.c lib/zclient.c lib/logicalrouter.c \
+	lib/lua.c lib/db.c
 @SQLITE3_TRUE@am__objects_4 = lib/db.lo
-@LIBYANG_EXT_BUILTIN_TRUE@am__objects_5 = yang/libyang_plugins/frr_user_types.lo
-am_lib_libfrr_la_OBJECTS = lib/agg_table.lo lib/bfd.lo lib/buffer.lo \
-	lib/checksum.lo lib/command.lo lib/command_graph.lo \
-	lib/command_lex.lo lib/command_match.lo lib/command_parse.lo \
-	lib/csv.lo lib/debug.lo lib/distribute.lo lib/event_counter.lo \
+am_lib_libfrr_la_OBJECTS = lib/agg_table.lo lib/atomlist.lo lib/bfd.lo \
+	lib/buffer.lo lib/checksum.lo lib/command.lo \
+	lib/command_graph.lo lib/command_lex.lo lib/command_match.lo \
+	lib/command_parse.lo lib/csv.lo lib/debug.lo lib/distribute.lo \
 	lib/ferr.lo lib/filter.lo lib/frr_pthread.lo lib/frrstr.lo \
 	lib/getopt.lo lib/getopt1.lo lib/grammar_sandbox.lo \
 	lib/graph.lo lib/hash.lo lib/hook.lo lib/id_alloc.lo lib/if.lo \
 	lib/if_rmap.lo lib/imsg-buffer.lo lib/imsg.lo lib/jhash.lo \
 	lib/json.lo lib/keychain.lo lib/lib_errors.lo lib/libfrr.lo \
 	lib/linklist.lo lib/log.lo lib/md5.lo lib/memory.lo \
-	lib/memory_vty.lo lib/module.lo lib/mpls.lo lib/network.lo \
-	lib/nexthop.lo lib/netns_linux.lo lib/netns_other.lo \
-	lib/nexthop_group.lo lib/northbound.lo lib/northbound_cli.lo \
-	lib/northbound_db.lo lib/openbsd-tree.lo lib/pid_output.lo \
-	lib/plist.lo lib/pqueue.lo lib/prefix.lo lib/privs.lo \
-	lib/ptm_lib.lo lib/qobj.lo lib/ringbuf.lo lib/routemap.lo \
-	lib/sbuf.lo lib/sha256.lo lib/sigevent.lo lib/skiplist.lo \
-	lib/sockopt.lo lib/sockunion.lo lib/spf_backoff.lo \
-	lib/srcdest_table.lo lib/stream.lo lib/strlcat.lo \
-	lib/strlcpy.lo lib/systemd.lo lib/table.lo lib/termtable.lo \
-	lib/thread.lo lib/vector.lo lib/vrf.lo lib/vty.lo lib/wheel.lo \
-	lib/workqueue.lo lib/yang.lo lib/yang_translator.lo \
-	lib/yang_wrappers.lo lib/zclient.lo lib/logicalrouter.lo \
-	lib/lua.lo $(am__objects_4) $(am__objects_5)
+	lib/memory_vty.lo lib/mlag.lo lib/module.lo lib/mpls.lo \
+	lib/network.lo lib/nexthop.lo lib/netns_linux.lo \
+	lib/netns_other.lo lib/nexthop_group.lo lib/northbound.lo \
+	lib/northbound_cli.lo lib/northbound_db.lo lib/openbsd-tree.lo \
+	lib/pid_output.lo lib/plist.lo lib/pqueue.lo lib/prefix.lo \
+	lib/privs.lo lib/ptm_lib.lo lib/qobj.lo lib/ringbuf.lo \
+	lib/routemap.lo lib/sbuf.lo lib/seqlock.lo lib/sha256.lo \
+	lib/sigevent.lo lib/skiplist.lo lib/sockopt.lo \
+	lib/sockunion.lo lib/spf_backoff.lo lib/srcdest_table.lo \
+	lib/stream.lo lib/strlcat.lo lib/strlcpy.lo lib/systemd.lo \
+	lib/table.lo lib/termtable.lo lib/thread.lo lib/typerb.lo \
+	lib/typesafe.lo lib/vector.lo lib/vrf.lo lib/vty.lo \
+	lib/wheel.lo lib/workqueue.lo lib/yang.lo \
+	lib/yang_translator.lo lib/yang_wrappers.lo lib/zclient.lo \
+	lib/logicalrouter.lo lib/lua.lo $(am__objects_4)
 nodist_lib_libfrr_la_OBJECTS = yang/frr-interface.yang.lo \
 	yang/frr-route-types.yang.lo \
 	yang/frr-module-translator.yang.lo
@@ -1077,29 +1108,17 @@ ripd_ripd_snmp_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(ripd_ripd_snmp_la_CFLAGS) $(CFLAGS) \
 	$(ripd_ripd_snmp_la_LDFLAGS) $(LDFLAGS) -o $@
 @RIPD_TRUE@@SNMP_TRUE@am_ripd_ripd_snmp_la_rpath = -rpath $(moduledir)
-yang_libyang_plugins_frr_user_types_la_DEPENDENCIES =
-am_yang_libyang_plugins_frr_user_types_la_OBJECTS =  \
-	yang/libyang_plugins/frr_user_types_la-frr_user_types.lo
-yang_libyang_plugins_frr_user_types_la_OBJECTS =  \
-	$(am_yang_libyang_plugins_frr_user_types_la_OBJECTS)
-yang_libyang_plugins_frr_user_types_la_LINK = $(LIBTOOL) $(AM_V_lt) \
-	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
-	$(CCLD) $(yang_libyang_plugins_frr_user_types_la_CFLAGS) \
-	$(CFLAGS) $(yang_libyang_plugins_frr_user_types_la_LDFLAGS) \
-	$(LDFLAGS) -o $@
-@LIBYANG_EXT_BUILTIN_FALSE@am_yang_libyang_plugins_frr_user_types_la_rpath =  \
-@LIBYANG_EXT_BUILTIN_FALSE@	-rpath $(libyang_pluginsdir)
 @HAVE_PROTOBUF_TRUE@am__DEPENDENCIES_3 = fpm/libfrrfpm_pb.la \
 @HAVE_PROTOBUF_TRUE@	qpb/libfrr_pb.la $(am__DEPENDENCIES_1)
 zebra_zebra_fpm_la_DEPENDENCIES = $(am__DEPENDENCIES_3)
 am__zebra_zebra_fpm_la_SOURCES_DIST = zebra/zebra_fpm.c \
 	zebra/zebra_fpm_netlink.c zebra/zebra_fpm_protobuf.c \
 	zebra/zebra_fpm_dt.c
-@HAVE_PROTOBUF_TRUE@am__objects_6 = zebra/zebra_fpm_protobuf.lo
-@DEV_BUILD_TRUE@@HAVE_PROTOBUF_TRUE@am__objects_7 =  \
+@HAVE_PROTOBUF_TRUE@am__objects_5 = zebra/zebra_fpm_protobuf.lo
+@DEV_BUILD_TRUE@@HAVE_PROTOBUF_TRUE@am__objects_6 =  \
 @DEV_BUILD_TRUE@@HAVE_PROTOBUF_TRUE@	zebra/zebra_fpm_dt.lo
 am_zebra_zebra_fpm_la_OBJECTS = zebra/zebra_fpm.lo \
-	zebra/zebra_fpm_netlink.lo $(am__objects_6) $(am__objects_7)
+	zebra/zebra_fpm_netlink.lo $(am__objects_5) $(am__objects_6)
 zebra_zebra_fpm_la_OBJECTS = $(am_zebra_zebra_fpm_la_OBJECTS)
 zebra_zebra_fpm_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
@@ -1135,9 +1154,9 @@ bfdd_bfdd_OBJECTS = $(am_bfdd_bfdd_OBJECTS)
 bfdd_bfdd_DEPENDENCIES = bfdd/libbfd.a lib/libfrr.la
 am__bgpd_bgp_btoa_SOURCES_DIST = bgpd/bgp_btoa.c \
 	bgpd/rfapi/rfapi_descriptor_rfp_utils.c
-@ENABLE_BGP_VNC_TRUE@am__objects_8 = bgpd/rfapi/bgp_btoa-rfapi_descriptor_rfp_utils.$(OBJEXT)
+@ENABLE_BGP_VNC_TRUE@am__objects_7 = bgpd/rfapi/bgp_btoa-rfapi_descriptor_rfp_utils.$(OBJEXT)
 am_bgpd_bgp_btoa_OBJECTS = bgpd/bgp_btoa-bgp_btoa.$(OBJEXT) \
-	$(am__objects_8)
+	$(am__objects_7)
 bgpd_bgp_btoa_OBJECTS = $(am_bgpd_bgp_btoa_OBJECTS)
 bgpd_bgp_btoa_DEPENDENCIES = bgpd/libbgp.a $(RFPLDADD) lib/libfrr.la \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
@@ -1146,8 +1165,8 @@ bgpd_bgp_btoa_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am__bgpd_bgpd_SOURCES_DIST = bgpd/bgp_main.c \
 	bgpd/rfapi/rfapi_descriptor_rfp_utils.c
-@ENABLE_BGP_VNC_TRUE@am__objects_9 = bgpd/rfapi/bgpd-rfapi_descriptor_rfp_utils.$(OBJEXT)
-am_bgpd_bgpd_OBJECTS = bgpd/bgpd-bgp_main.$(OBJEXT) $(am__objects_9)
+@ENABLE_BGP_VNC_TRUE@am__objects_8 = bgpd/rfapi/bgpd-rfapi_descriptor_rfp_utils.$(OBJEXT)
+am_bgpd_bgpd_OBJECTS = bgpd/bgpd-bgp_main.$(OBJEXT) $(am__objects_8)
 bgpd_bgpd_OBJECTS = $(am_bgpd_bgpd_OBJECTS)
 bgpd_bgpd_DEPENDENCIES = bgpd/libbgp.a $(RFPLDADD) lib/libfrr.la \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
@@ -1168,17 +1187,17 @@ am_eigrpd_eigrpd_OBJECTS = eigrpd/eigrp_main.$(OBJEXT)
 eigrpd_eigrpd_OBJECTS = $(am_eigrpd_eigrpd_OBJECTS)
 eigrpd_eigrpd_DEPENDENCIES = eigrpd/libeigrp.a lib/libfrr.la \
 	$(am__DEPENDENCIES_1)
-am__objects_10 = isisd/fabricd-isis_bpf.$(OBJEXT) \
+am__objects_9 = isisd/fabricd-isis_bpf.$(OBJEXT) \
 	isisd/fabricd-isis_dlpi.$(OBJEXT) \
 	isisd/fabricd-isis_main.$(OBJEXT) \
 	isisd/fabricd-isis_pfpacket.$(OBJEXT)
-am_isisd_fabricd_OBJECTS = $(am__objects_10)
+am_isisd_fabricd_OBJECTS = $(am__objects_9)
 isisd_fabricd_OBJECTS = $(am_isisd_fabricd_OBJECTS)
 am__DEPENDENCIES_4 = lib/libfrr.la $(am__DEPENDENCIES_1)
 isisd_fabricd_DEPENDENCIES = isisd/libfabric.a $(am__DEPENDENCIES_4)
-am__objects_11 = isisd/isis_bpf.$(OBJEXT) isisd/isis_dlpi.$(OBJEXT) \
+am__objects_10 = isisd/isis_bpf.$(OBJEXT) isisd/isis_dlpi.$(OBJEXT) \
 	isisd/isis_main.$(OBJEXT) isisd/isis_pfpacket.$(OBJEXT)
-am_isisd_isisd_OBJECTS = $(am__objects_11)
+am_isisd_isisd_OBJECTS = $(am__objects_10)
 nodist_isisd_isisd_OBJECTS = yang/frr-isisd.yang.$(OBJEXT)
 isisd_isisd_OBJECTS = $(am_isisd_isisd_OBJECTS) \
 	$(nodist_isisd_isisd_OBJECTS)
@@ -1232,7 +1251,7 @@ am_ospfclient_ospfclient_OBJECTS = ospfclient/ospfclient.$(OBJEXT)
 ospfclient_ospfclient_OBJECTS = $(am_ospfclient_ospfclient_OBJECTS)
 ospfclient_ospfclient_DEPENDENCIES =  \
 	ospfclient/libfrrospfapiclient.la $(am__DEPENDENCIES_1) \
-	$(am__append_67)
+	$(am__append_71)
 am_ospfd_ospfd_OBJECTS = ospfd/ospf_main.$(OBJEXT)
 ospfd_ospfd_OBJECTS = $(am_ospfd_ospfd_OBJECTS)
 ospfd_ospfd_DEPENDENCIES = ospfd/libfrrospf.a lib/libfrr.la \
@@ -1395,6 +1414,14 @@ tests_lib_cli_test_commands_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(tests_lib_cli_test_commands_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
+am_tests_lib_cxxcompat_OBJECTS =  \
+	tests/lib/cxxcompat-cxxcompat.$(OBJEXT)
+tests_lib_cxxcompat_OBJECTS = $(am_tests_lib_cxxcompat_OBJECTS)
+tests_lib_cxxcompat_DEPENDENCIES = $(am__DEPENDENCIES_4)
+tests_lib_cxxcompat_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(tests_lib_cxxcompat_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 am_tests_lib_northbound_test_oper_data_OBJECTS =  \
 	tests/lib/northbound/test_oper_data-test_oper_data.$(OBJEXT)
 nodist_tests_lib_northbound_test_oper_data_OBJECTS = yang/tests_lib_northbound_test_oper_data-frr-test-module.yang.$(OBJEXT)
@@ -1407,6 +1434,15 @@ tests_lib_northbound_test_oper_data_LINK = $(LIBTOOL) $(AM_V_lt) \
 	--tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
 	$(CCLD) $(tests_lib_northbound_test_oper_data_CFLAGS) \
 	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+am_tests_lib_test_atomlist_OBJECTS =  \
+	tests/lib/test_atomlist-test_atomlist.$(OBJEXT)
+tests_lib_test_atomlist_OBJECTS =  \
+	$(am_tests_lib_test_atomlist_OBJECTS)
+tests_lib_test_atomlist_DEPENDENCIES = $(am__DEPENDENCIES_4)
+tests_lib_test_atomlist_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(tests_lib_test_atomlist_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 am_tests_lib_test_buffer_OBJECTS =  \
 	tests/lib/test_buffer-test_buffer.$(OBJEXT)
 tests_lib_test_buffer_OBJECTS = $(am_tests_lib_test_buffer_OBJECTS)
@@ -1511,6 +1547,14 @@ tests_lib_test_segv_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(tests_lib_test_segv_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
+am_tests_lib_test_seqlock_OBJECTS =  \
+	tests/lib/test_seqlock-test_seqlock.$(OBJEXT)
+tests_lib_test_seqlock_OBJECTS = $(am_tests_lib_test_seqlock_OBJECTS)
+tests_lib_test_seqlock_DEPENDENCIES = $(am__DEPENDENCIES_4)
+tests_lib_test_seqlock_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(tests_lib_test_seqlock_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 am_tests_lib_test_sig_OBJECTS = tests/lib/test_sig-test_sig.$(OBJEXT)
 tests_lib_test_sig_OBJECTS = $(am_tests_lib_test_sig_OBJECTS)
 tests_lib_test_sig_DEPENDENCIES = $(am__DEPENDENCIES_4)
@@ -1569,6 +1613,16 @@ tests_lib_test_ttable_DEPENDENCIES = $(am__DEPENDENCIES_4)
 tests_lib_test_ttable_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(tests_lib_test_ttable_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
+am_tests_lib_test_typelist_OBJECTS =  \
+	tests/lib/test_typelist-test_typelist.$(OBJEXT) \
+	tests/helpers/c/lib_test_typelist-prng.$(OBJEXT)
+tests_lib_test_typelist_OBJECTS =  \
+	$(am_tests_lib_test_typelist_OBJECTS)
+tests_lib_test_typelist_DEPENDENCIES = $(am__DEPENDENCIES_4)
+tests_lib_test_typelist_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(tests_lib_test_typelist_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 am_tests_lib_test_zlog_OBJECTS =  \
 	tests/lib/test_zlog-test_zlog.$(OBJEXT)
@@ -1643,9 +1697,9 @@ am_zebra_zebra_OBJECTS = zebra/connected.$(OBJEXT) \
 	zebra/rtadv.$(OBJEXT) zebra/rtread_getmsg.$(OBJEXT) \
 	zebra/rtread_netlink.$(OBJEXT) zebra/rtread_sysctl.$(OBJEXT) \
 	zebra/rule_netlink.$(OBJEXT) zebra/rule_socket.$(OBJEXT) \
-	zebra/zebra_l2.$(OBJEXT) zebra/zebra_memory.$(OBJEXT) \
-	zebra/zebra_dplane.$(OBJEXT) zebra/zebra_mpls.$(OBJEXT) \
-	zebra/zebra_mpls_netlink.$(OBJEXT) \
+	zebra/zebra_mlag.$(OBJEXT) zebra/zebra_l2.$(OBJEXT) \
+	zebra/zebra_memory.$(OBJEXT) zebra/zebra_dplane.$(OBJEXT) \
+	zebra/zebra_mpls.$(OBJEXT) zebra/zebra_mpls_netlink.$(OBJEXT) \
 	zebra/zebra_mpls_openbsd.$(OBJEXT) \
 	zebra/zebra_mpls_null.$(OBJEXT) zebra/zebra_mpls_vty.$(OBJEXT) \
 	zebra/zebra_mroute.$(OBJEXT) zebra/zebra_ns.$(OBJEXT) \
@@ -1707,15 +1761,15 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	bgpd/$(DEPDIR)/bgp_flowspec_vty.Po bgpd/$(DEPDIR)/bgp_fsm.Po \
 	bgpd/$(DEPDIR)/bgp_io.Po bgpd/$(DEPDIR)/bgp_keepalives.Po \
 	bgpd/$(DEPDIR)/bgp_label.Po bgpd/$(DEPDIR)/bgp_labelpool.Po \
-	bgpd/$(DEPDIR)/bgp_lcommunity.Po bgpd/$(DEPDIR)/bgp_memory.Po \
-	bgpd/$(DEPDIR)/bgp_mpath.Po bgpd/$(DEPDIR)/bgp_mplsvpn.Po \
-	bgpd/$(DEPDIR)/bgp_network.Po bgpd/$(DEPDIR)/bgp_nexthop.Po \
-	bgpd/$(DEPDIR)/bgp_nht.Po bgpd/$(DEPDIR)/bgp_open.Po \
-	bgpd/$(DEPDIR)/bgp_packet.Po bgpd/$(DEPDIR)/bgp_pbr.Po \
-	bgpd/$(DEPDIR)/bgp_rd.Po bgpd/$(DEPDIR)/bgp_regex.Po \
-	bgpd/$(DEPDIR)/bgp_route.Po bgpd/$(DEPDIR)/bgp_routemap.Po \
-	bgpd/$(DEPDIR)/bgp_table.Po bgpd/$(DEPDIR)/bgp_updgrp.Po \
-	bgpd/$(DEPDIR)/bgp_updgrp_adv.Po \
+	bgpd/$(DEPDIR)/bgp_lcommunity.Po bgpd/$(DEPDIR)/bgp_mac.Po \
+	bgpd/$(DEPDIR)/bgp_memory.Po bgpd/$(DEPDIR)/bgp_mpath.Po \
+	bgpd/$(DEPDIR)/bgp_mplsvpn.Po bgpd/$(DEPDIR)/bgp_network.Po \
+	bgpd/$(DEPDIR)/bgp_nexthop.Po bgpd/$(DEPDIR)/bgp_nht.Po \
+	bgpd/$(DEPDIR)/bgp_open.Po bgpd/$(DEPDIR)/bgp_packet.Po \
+	bgpd/$(DEPDIR)/bgp_pbr.Po bgpd/$(DEPDIR)/bgp_rd.Po \
+	bgpd/$(DEPDIR)/bgp_regex.Po bgpd/$(DEPDIR)/bgp_route.Po \
+	bgpd/$(DEPDIR)/bgp_routemap.Po bgpd/$(DEPDIR)/bgp_table.Po \
+	bgpd/$(DEPDIR)/bgp_updgrp.Po bgpd/$(DEPDIR)/bgp_updgrp_adv.Po \
 	bgpd/$(DEPDIR)/bgp_updgrp_packet.Po bgpd/$(DEPDIR)/bgp_vpn.Po \
 	bgpd/$(DEPDIR)/bgp_vty.Po bgpd/$(DEPDIR)/bgp_zebra.Po \
 	bgpd/$(DEPDIR)/bgpd-bgp_main.Po bgpd/$(DEPDIR)/bgpd.Po \
@@ -1759,7 +1813,9 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	eigrpd/$(DEPDIR)/eigrp_zebra.Po eigrpd/$(DEPDIR)/eigrpd.Po \
 	fpm/$(DEPDIR)/libfrrfpm_pb_la-fpm.pb-c.Plo \
 	fpm/$(DEPDIR)/libfrrfpm_pb_la-fpm_pb.Plo \
-	isisd/$(DEPDIR)/dict.Po isisd/$(DEPDIR)/fabricd-isis_bpf.Po \
+	grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.grpc.pb.Plo \
+	grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.pb.Plo \
+	isisd/$(DEPDIR)/fabricd-isis_bpf.Po \
 	isisd/$(DEPDIR)/fabricd-isis_dlpi.Po \
 	isisd/$(DEPDIR)/fabricd-isis_main.Po \
 	isisd/$(DEPDIR)/fabricd-isis_pfpacket.Po \
@@ -1782,7 +1838,6 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	isisd/$(DEPDIR)/isis_vty_common.Po \
 	isisd/$(DEPDIR)/isis_zebra.Po isisd/$(DEPDIR)/isisd.Po \
 	isisd/$(DEPDIR)/iso_checksum.Po \
-	isisd/$(DEPDIR)/libfabric_a-dict.Po \
 	isisd/$(DEPDIR)/libfabric_a-fabricd.Po \
 	isisd/$(DEPDIR)/libfabric_a-isis_adjacency.Po \
 	isisd/$(DEPDIR)/libfabric_a-isis_bfd.Po \
@@ -1825,8 +1880,9 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	ldpd/$(DEPDIR)/notification.Po ldpd/$(DEPDIR)/packet.Po \
 	ldpd/$(DEPDIR)/pfkey.Po ldpd/$(DEPDIR)/socket.Po \
 	ldpd/$(DEPDIR)/util.Po lib/$(DEPDIR)/agg_table.Plo \
-	lib/$(DEPDIR)/bfd.Plo lib/$(DEPDIR)/buffer.Plo \
-	lib/$(DEPDIR)/checksum.Plo lib/$(DEPDIR)/clippy-clippy.Po \
+	lib/$(DEPDIR)/atomlist.Plo lib/$(DEPDIR)/bfd.Plo \
+	lib/$(DEPDIR)/buffer.Plo lib/$(DEPDIR)/checksum.Plo \
+	lib/$(DEPDIR)/clippy-clippy.Po \
 	lib/$(DEPDIR)/clippy-command_graph.Po \
 	lib/$(DEPDIR)/clippy-command_lex.Po \
 	lib/$(DEPDIR)/clippy-command_parse.Po \
@@ -1840,11 +1896,12 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	lib/$(DEPDIR)/confd_la-northbound_confd.Plo \
 	lib/$(DEPDIR)/csv.Plo lib/$(DEPDIR)/db.Plo \
 	lib/$(DEPDIR)/debug.Plo lib/$(DEPDIR)/distribute.Plo \
-	lib/$(DEPDIR)/event_counter.Plo lib/$(DEPDIR)/ferr.Plo \
-	lib/$(DEPDIR)/filter.Plo lib/$(DEPDIR)/frr_pthread.Plo \
-	lib/$(DEPDIR)/frrstr.Plo lib/$(DEPDIR)/getopt.Plo \
-	lib/$(DEPDIR)/getopt1.Plo lib/$(DEPDIR)/grammar_sandbox.Plo \
+	lib/$(DEPDIR)/ferr.Plo lib/$(DEPDIR)/filter.Plo \
+	lib/$(DEPDIR)/frr_pthread.Plo lib/$(DEPDIR)/frrstr.Plo \
+	lib/$(DEPDIR)/getopt.Plo lib/$(DEPDIR)/getopt1.Plo \
+	lib/$(DEPDIR)/grammar_sandbox.Plo \
 	lib/$(DEPDIR)/grammar_sandbox_main.Po lib/$(DEPDIR)/graph.Plo \
+	lib/$(DEPDIR)/grpc_la-northbound_grpc.Plo \
 	lib/$(DEPDIR)/hash.Plo lib/$(DEPDIR)/hook.Plo \
 	lib/$(DEPDIR)/id_alloc.Plo lib/$(DEPDIR)/if.Plo \
 	lib/$(DEPDIR)/if_rmap.Plo lib/$(DEPDIR)/imsg-buffer.Plo \
@@ -1857,25 +1914,28 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	lib/$(DEPDIR)/linklist.Plo lib/$(DEPDIR)/log.Plo \
 	lib/$(DEPDIR)/logicalrouter.Plo lib/$(DEPDIR)/lua.Plo \
 	lib/$(DEPDIR)/md5.Plo lib/$(DEPDIR)/memory.Plo \
-	lib/$(DEPDIR)/memory_vty.Plo lib/$(DEPDIR)/module.Plo \
-	lib/$(DEPDIR)/mpls.Plo lib/$(DEPDIR)/netns_linux.Plo \
-	lib/$(DEPDIR)/netns_other.Plo lib/$(DEPDIR)/network.Plo \
-	lib/$(DEPDIR)/nexthop.Plo lib/$(DEPDIR)/nexthop_group.Plo \
-	lib/$(DEPDIR)/northbound.Plo lib/$(DEPDIR)/northbound_cli.Plo \
+	lib/$(DEPDIR)/memory_vty.Plo lib/$(DEPDIR)/mlag.Plo \
+	lib/$(DEPDIR)/module.Plo lib/$(DEPDIR)/mpls.Plo \
+	lib/$(DEPDIR)/netns_linux.Plo lib/$(DEPDIR)/netns_other.Plo \
+	lib/$(DEPDIR)/network.Plo lib/$(DEPDIR)/nexthop.Plo \
+	lib/$(DEPDIR)/nexthop_group.Plo lib/$(DEPDIR)/northbound.Plo \
+	lib/$(DEPDIR)/northbound_cli.Plo \
 	lib/$(DEPDIR)/northbound_db.Plo lib/$(DEPDIR)/openbsd-tree.Plo \
 	lib/$(DEPDIR)/pid_output.Plo lib/$(DEPDIR)/plist.Plo \
 	lib/$(DEPDIR)/pqueue.Plo lib/$(DEPDIR)/prefix.Plo \
 	lib/$(DEPDIR)/privs.Plo lib/$(DEPDIR)/ptm_lib.Plo \
 	lib/$(DEPDIR)/qobj.Plo lib/$(DEPDIR)/ringbuf.Plo \
 	lib/$(DEPDIR)/routemap.Plo lib/$(DEPDIR)/sbuf.Plo \
-	lib/$(DEPDIR)/sha256.Plo lib/$(DEPDIR)/sigevent.Plo \
-	lib/$(DEPDIR)/skiplist.Plo lib/$(DEPDIR)/sockopt.Plo \
-	lib/$(DEPDIR)/sockunion.Plo lib/$(DEPDIR)/spf_backoff.Plo \
-	lib/$(DEPDIR)/srcdest_table.Plo lib/$(DEPDIR)/stream.Plo \
-	lib/$(DEPDIR)/strlcat.Plo lib/$(DEPDIR)/strlcpy.Plo \
+	lib/$(DEPDIR)/seqlock.Plo lib/$(DEPDIR)/sha256.Plo \
+	lib/$(DEPDIR)/sigevent.Plo lib/$(DEPDIR)/skiplist.Plo \
+	lib/$(DEPDIR)/sockopt.Plo lib/$(DEPDIR)/sockunion.Plo \
+	lib/$(DEPDIR)/spf_backoff.Plo lib/$(DEPDIR)/srcdest_table.Plo \
+	lib/$(DEPDIR)/stream.Plo lib/$(DEPDIR)/strlcat.Plo \
+	lib/$(DEPDIR)/strlcpy.Plo \
 	lib/$(DEPDIR)/sysrepo_la-northbound_sysrepo.Plo \
 	lib/$(DEPDIR)/systemd.Plo lib/$(DEPDIR)/table.Plo \
 	lib/$(DEPDIR)/termtable.Plo lib/$(DEPDIR)/thread.Plo \
+	lib/$(DEPDIR)/typerb.Plo lib/$(DEPDIR)/typesafe.Plo \
 	lib/$(DEPDIR)/vector.Plo lib/$(DEPDIR)/vrf.Plo \
 	lib/$(DEPDIR)/vty.Plo lib/$(DEPDIR)/wheel.Plo \
 	lib/$(DEPDIR)/workqueue.Plo lib/$(DEPDIR)/yang.Plo \
@@ -1963,8 +2023,9 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	pimd/$(DEPDIR)/pim_time.Po pimd/$(DEPDIR)/pim_tlv.Po \
 	pimd/$(DEPDIR)/pim_upstream.Po pimd/$(DEPDIR)/pim_util.Po \
 	pimd/$(DEPDIR)/pim_version.Po pimd/$(DEPDIR)/pim_vty.Po \
-	pimd/$(DEPDIR)/pim_zebra.Po pimd/$(DEPDIR)/pim_zlookup.Po \
-	pimd/$(DEPDIR)/pimd.Po pimd/$(DEPDIR)/test_igmpv3_join.Po \
+	pimd/$(DEPDIR)/pim_vxlan.Po pimd/$(DEPDIR)/pim_zebra.Po \
+	pimd/$(DEPDIR)/pim_zlookup.Po pimd/$(DEPDIR)/pimd.Po \
+	pimd/$(DEPDIR)/test_igmpv3_join.Po \
 	qpb/$(DEPDIR)/libfrr_pb_la-qpb.Plo \
 	qpb/$(DEPDIR)/libfrr_pb_la-qpb.pb-c.Plo \
 	qpb/$(DEPDIR)/libfrr_pb_la-qpb_allocator.Plo \
@@ -1985,8 +2046,8 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	ripngd/$(DEPDIR)/ripng_peer.Po ripngd/$(DEPDIR)/ripng_route.Po \
 	ripngd/$(DEPDIR)/ripng_routemap.Po \
 	ripngd/$(DEPDIR)/ripng_zebra.Po ripngd/$(DEPDIR)/ripngd.Po \
-	sharpd/$(DEPDIR)/sharp_main.Po sharpd/$(DEPDIR)/sharp_vty.Po \
-	sharpd/$(DEPDIR)/sharp_zebra.Po \
+	sharpd/$(DEPDIR)/sharp_main.Po sharpd/$(DEPDIR)/sharp_nht.Po \
+	sharpd/$(DEPDIR)/sharp_vty.Po sharpd/$(DEPDIR)/sharp_zebra.Po \
 	staticd/$(DEPDIR)/static_main.Po \
 	staticd/$(DEPDIR)/static_memory.Po \
 	staticd/$(DEPDIR)/static_nht.Po \
@@ -2010,9 +2071,12 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	tests/helpers/c/$(DEPDIR)/lib_test_srcdest_table-prng.Po \
 	tests/helpers/c/$(DEPDIR)/lib_test_timer_correctness-prng.Po \
 	tests/helpers/c/$(DEPDIR)/lib_test_timer_performance-prng.Po \
+	tests/helpers/c/$(DEPDIR)/lib_test_typelist-prng.Po \
 	tests/isisd/$(DEPDIR)/test_fuzz_isis_tlv-test_fuzz_isis_tlv.Po \
 	tests/isisd/$(DEPDIR)/test_isis_lspdb-test_isis_lspdb.Po \
 	tests/isisd/$(DEPDIR)/test_isis_vertex_queue-test_isis_vertex_queue.Po \
+	tests/lib/$(DEPDIR)/cxxcompat-cxxcompat.Po \
+	tests/lib/$(DEPDIR)/test_atomlist-test_atomlist.Po \
 	tests/lib/$(DEPDIR)/test_buffer-test_buffer.Po \
 	tests/lib/$(DEPDIR)/test_checksum-test_checksum.Po \
 	tests/lib/$(DEPDIR)/test_graph-test_graph.Po \
@@ -2025,6 +2089,7 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	tests/lib/$(DEPDIR)/test_privs-test_privs.Po \
 	tests/lib/$(DEPDIR)/test_ringbuf-test_ringbuf.Po \
 	tests/lib/$(DEPDIR)/test_segv-test_segv.Po \
+	tests/lib/$(DEPDIR)/test_seqlock-test_seqlock.Po \
 	tests/lib/$(DEPDIR)/test_sig-test_sig.Po \
 	tests/lib/$(DEPDIR)/test_srcdest_table-test_srcdest_table.Po \
 	tests/lib/$(DEPDIR)/test_stream-test_stream.Po \
@@ -2032,6 +2097,7 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	tests/lib/$(DEPDIR)/test_timer_correctness-test_timer_correctness.Po \
 	tests/lib/$(DEPDIR)/test_timer_performance-test_timer_performance.Po \
 	tests/lib/$(DEPDIR)/test_ttable-test_ttable.Po \
+	tests/lib/$(DEPDIR)/test_typelist-test_typelist.Po \
 	tests/lib/$(DEPDIR)/test_zlog-test_zlog.Po \
 	tests/lib/$(DEPDIR)/test_zmq-test_zmq.Po \
 	tests/lib/cli/$(DEPDIR)/ospf6d_test_lsdb-common_cli.Po \
@@ -2057,8 +2123,6 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	yang/$(DEPDIR)/frr-ripngd.yang.Po \
 	yang/$(DEPDIR)/frr-route-types.yang.Plo \
 	yang/$(DEPDIR)/tests_lib_northbound_test_oper_data-frr-test-module.yang.Po \
-	yang/libyang_plugins/$(DEPDIR)/frr_user_types.Plo \
-	yang/libyang_plugins/$(DEPDIR)/frr_user_types_la-frr_user_types.Plo \
 	zebra/$(DEPDIR)/connected.Po zebra/$(DEPDIR)/debug.Po \
 	zebra/$(DEPDIR)/if_ioctl.Po \
 	zebra/$(DEPDIR)/if_ioctl_solaris.Po \
@@ -2086,7 +2150,7 @@ am__depfiles_remade = babeld/$(DEPDIR)/babel_errors.Po \
 	zebra/$(DEPDIR)/zebra_fpm_netlink.Plo \
 	zebra/$(DEPDIR)/zebra_fpm_protobuf.Plo \
 	zebra/$(DEPDIR)/zebra_l2.Po zebra/$(DEPDIR)/zebra_memory.Po \
-	zebra/$(DEPDIR)/zebra_mpls.Po \
+	zebra/$(DEPDIR)/zebra_mlag.Po zebra/$(DEPDIR)/zebra_mpls.Po \
 	zebra/$(DEPDIR)/zebra_mpls_netlink.Po \
 	zebra/$(DEPDIR)/zebra_mpls_null.Po \
 	zebra/$(DEPDIR)/zebra_mpls_openbsd.Po \
@@ -2122,6 +2186,24 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
+CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+LTCXXCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) \
+	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
+	$(AM_CXXFLAGS) $(CXXFLAGS)
+AM_V_CXX = $(am__v_CXX_@AM_V@)
+am__v_CXX_ = $(am__v_CXX_@AM_DEFAULT_V@)
+am__v_CXX_0 = @echo "  CXX     " $@;
+am__v_CXX_1 = 
+CXXLD = $(CXX)
+CXXLINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
+am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
+am__v_CXXLD_0 = @echo "  CXXLD   " $@;
+am__v_CXXLD_1 = 
 LEXCOMPILE = $(LEX) $(AM_LFLAGS) $(LFLAGS)
 LTLEXCOMPILE = $(LIBTOOL) $(AM_V_lt) $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=compile $(LEX) $(AM_LFLAGS) $(LFLAGS)
@@ -2150,19 +2232,19 @@ SOURCES = $(babeld_libbabel_a_SOURCES) $(bfdd_libbfd_a_SOURCES) \
 	$(sharpd_libsharp_a_SOURCES) $(staticd_libstatic_a_SOURCES) \
 	$(bgpd_bgpd_rpki_la_SOURCES) $(bgpd_bgpd_snmp_la_SOURCES) \
 	$(fpm_libfrrfpm_pb_la_SOURCES) \
-	$(nodist_fpm_libfrrfpm_pb_la_SOURCES) $(lib_confd_la_SOURCES) \
+	$(nodist_fpm_libfrrfpm_pb_la_SOURCES) \
+	$(nodist_grpc_libfrrgrpc_pb_la_SOURCES) \
+	$(lib_confd_la_SOURCES) $(lib_grpc_la_SOURCES) \
 	$(lib_libfrr_la_SOURCES) $(nodist_lib_libfrr_la_SOURCES) \
 	$(lib_libfrrsnmp_la_SOURCES) $(lib_libfrrzmq_la_SOURCES) \
 	$(lib_sysrepo_la_SOURCES) $(ospf6d_ospf6d_snmp_la_SOURCES) \
 	$(ospfclient_libfrrospfapiclient_la_SOURCES) \
 	$(ospfd_ospfd_snmp_la_SOURCES) $(qpb_libfrr_pb_la_SOURCES) \
 	$(nodist_qpb_libfrr_pb_la_SOURCES) \
-	$(ripd_ripd_snmp_la_SOURCES) \
-	$(yang_libyang_plugins_frr_user_types_la_SOURCES) \
-	$(zebra_zebra_fpm_la_SOURCES) $(zebra_zebra_irdp_la_SOURCES) \
-	$(zebra_zebra_snmp_la_SOURCES) $(babeld_babeld_SOURCES) \
-	$(bfdd_bfdd_SOURCES) $(bgpd_bgp_btoa_SOURCES) \
-	$(bgpd_bgpd_SOURCES) \
+	$(ripd_ripd_snmp_la_SOURCES) $(zebra_zebra_fpm_la_SOURCES) \
+	$(zebra_zebra_irdp_la_SOURCES) $(zebra_zebra_snmp_la_SOURCES) \
+	$(babeld_babeld_SOURCES) $(bfdd_bfdd_SOURCES) \
+	$(bgpd_bgp_btoa_SOURCES) $(bgpd_bgpd_SOURCES) \
 	$(bgpd_rfp_example_rfptest_rfptest_SOURCES) \
 	$(eigrpd_eigrpd_SOURCES) $(isisd_fabricd_SOURCES) \
 	$(isisd_isisd_SOURCES) $(nodist_isisd_isisd_SOURCES) \
@@ -2189,8 +2271,10 @@ SOURCES = $(babeld_libbabel_a_SOURCES) $(bfdd_libbfd_a_SOURCES) \
 	$(tests_lib_cli_test_cli_SOURCES) \
 	$(tests_lib_cli_test_commands_SOURCES) \
 	$(nodist_tests_lib_cli_test_commands_SOURCES) \
+	$(tests_lib_cxxcompat_SOURCES) \
 	$(tests_lib_northbound_test_oper_data_SOURCES) \
 	$(nodist_tests_lib_northbound_test_oper_data_SOURCES) \
+	$(tests_lib_test_atomlist_SOURCES) \
 	$(tests_lib_test_buffer_SOURCES) \
 	$(tests_lib_test_checksum_SOURCES) \
 	$(tests_lib_test_graph_SOURCES) \
@@ -2202,13 +2286,16 @@ SOURCES = $(babeld_libbabel_a_SOURCES) $(bfdd_libbfd_a_SOURCES) \
 	$(tests_lib_test_nexthop_iter_SOURCES) \
 	$(tests_lib_test_privs_SOURCES) \
 	$(tests_lib_test_ringbuf_SOURCES) \
-	$(tests_lib_test_segv_SOURCES) $(tests_lib_test_sig_SOURCES) \
+	$(tests_lib_test_segv_SOURCES) \
+	$(tests_lib_test_seqlock_SOURCES) \
+	$(tests_lib_test_sig_SOURCES) \
 	$(tests_lib_test_srcdest_table_SOURCES) \
 	$(tests_lib_test_stream_SOURCES) \
 	$(tests_lib_test_table_SOURCES) \
 	$(tests_lib_test_timer_correctness_SOURCES) \
 	$(tests_lib_test_timer_performance_SOURCES) \
 	$(tests_lib_test_ttable_SOURCES) \
+	$(tests_lib_test_typelist_SOURCES) \
 	$(tests_lib_test_zlog_SOURCES) $(tests_lib_test_zmq_SOURCES) \
 	$(tests_ospf6d_test_lsdb_SOURCES) \
 	$(tools_gen_northbound_callbacks_SOURCES) \
@@ -2227,13 +2314,12 @@ DIST_SOURCES = $(babeld_libbabel_a_SOURCES) $(bfdd_libbfd_a_SOURCES) \
 	$(sharpd_libsharp_a_SOURCES) $(staticd_libstatic_a_SOURCES) \
 	$(bgpd_bgpd_rpki_la_SOURCES) $(bgpd_bgpd_snmp_la_SOURCES) \
 	$(fpm_libfrrfpm_pb_la_SOURCES) $(lib_confd_la_SOURCES) \
-	$(am__lib_libfrr_la_SOURCES_DIST) $(lib_libfrrsnmp_la_SOURCES) \
-	$(lib_libfrrzmq_la_SOURCES) $(lib_sysrepo_la_SOURCES) \
-	$(ospf6d_ospf6d_snmp_la_SOURCES) \
+	$(lib_grpc_la_SOURCES) $(am__lib_libfrr_la_SOURCES_DIST) \
+	$(lib_libfrrsnmp_la_SOURCES) $(lib_libfrrzmq_la_SOURCES) \
+	$(lib_sysrepo_la_SOURCES) $(ospf6d_ospf6d_snmp_la_SOURCES) \
 	$(ospfclient_libfrrospfapiclient_la_SOURCES) \
 	$(ospfd_ospfd_snmp_la_SOURCES) $(qpb_libfrr_pb_la_SOURCES) \
 	$(ripd_ripd_snmp_la_SOURCES) \
-	$(yang_libyang_plugins_frr_user_types_la_SOURCES) \
 	$(am__zebra_zebra_fpm_la_SOURCES_DIST) \
 	$(zebra_zebra_irdp_la_SOURCES) $(zebra_zebra_snmp_la_SOURCES) \
 	$(babeld_babeld_SOURCES) $(bfdd_bfdd_SOURCES) \
@@ -2262,7 +2348,9 @@ DIST_SOURCES = $(babeld_libbabel_a_SOURCES) $(bfdd_libbfd_a_SOURCES) \
 	$(tests_isisd_test_isis_vertex_queue_SOURCES) \
 	$(tests_lib_cli_test_cli_SOURCES) \
 	$(tests_lib_cli_test_commands_SOURCES) \
+	$(tests_lib_cxxcompat_SOURCES) \
 	$(tests_lib_northbound_test_oper_data_SOURCES) \
+	$(tests_lib_test_atomlist_SOURCES) \
 	$(tests_lib_test_buffer_SOURCES) \
 	$(tests_lib_test_checksum_SOURCES) \
 	$(tests_lib_test_graph_SOURCES) \
@@ -2274,13 +2362,16 @@ DIST_SOURCES = $(babeld_libbabel_a_SOURCES) $(bfdd_libbfd_a_SOURCES) \
 	$(tests_lib_test_nexthop_iter_SOURCES) \
 	$(tests_lib_test_privs_SOURCES) \
 	$(tests_lib_test_ringbuf_SOURCES) \
-	$(tests_lib_test_segv_SOURCES) $(tests_lib_test_sig_SOURCES) \
+	$(tests_lib_test_segv_SOURCES) \
+	$(tests_lib_test_seqlock_SOURCES) \
+	$(tests_lib_test_sig_SOURCES) \
 	$(tests_lib_test_srcdest_table_SOURCES) \
 	$(tests_lib_test_stream_SOURCES) \
 	$(tests_lib_test_table_SOURCES) \
 	$(tests_lib_test_timer_correctness_SOURCES) \
 	$(tests_lib_test_timer_performance_SOURCES) \
 	$(tests_lib_test_ttable_SOURCES) \
+	$(tests_lib_test_typelist_SOURCES) \
 	$(tests_lib_test_zlog_SOURCES) $(tests_lib_test_zmq_SOURCES) \
 	$(tests_ospf6d_test_lsdb_SOURCES) \
 	$(tools_gen_northbound_callbacks_SOURCES) \
@@ -2314,11 +2405,11 @@ am__ospfdheader_HEADERS_DIST = ospfd/ospf_api.h ospfd/ospf_asbr.h \
 	ospfd/ospf_dump.h ospfd/ospf_dump_api.h ospfd/ospf_ism.h \
 	ospfd/ospf_lsa.h ospfd/ospf_lsdb.h ospfd/ospf_nsm.h \
 	ospfd/ospf_opaque.h ospfd/ospfd.h
-am__pkginclude_HEADERS_DIST = lib/agg_table.h lib/bfd.h lib/bitfield.h \
-	lib/buffer.h lib/checksum.h lib/command.h lib/command_graph.h \
-	lib/command_match.h lib/compiler.h lib/csv.h lib/db.h \
-	lib/debug.h lib/distribute.h lib/event_counter.h lib/ferr.h \
-	lib/fifo.h lib/filter.h lib/freebsd-queue.h lib/frr_pthread.h \
+am__pkginclude_HEADERS_DIST = lib/agg_table.h lib/atomlist.h lib/bfd.h \
+	lib/bitfield.h lib/buffer.h lib/checksum.h lib/mlag.h \
+	lib/command.h lib/command_graph.h lib/command_match.h \
+	lib/compiler.h lib/csv.h lib/db.h lib/debug.h lib/distribute.h \
+	lib/ferr.h lib/filter.h lib/freebsd-queue.h lib/frr_pthread.h \
 	lib/frratomic.h lib/frrstr.h lib/getopt.h lib/graph.h \
 	lib/hash.h lib/hook.h lib/id_alloc.h lib/if.h lib/if_rmap.h \
 	lib/imsg.h lib/ipaddr.h lib/jhash.h lib/json.h lib/keychain.h \
@@ -2329,12 +2420,13 @@ am__pkginclude_HEADERS_DIST = lib/agg_table.h lib/bfd.h lib/bitfield.h \
 	lib/northbound_db.h lib/ns.h lib/openbsd-queue.h \
 	lib/openbsd-tree.h lib/plist.h lib/pqueue.h lib/prefix.h \
 	lib/privs.h lib/ptm_lib.h lib/pw.h lib/qobj.h lib/queue.h \
-	lib/ringbuf.h lib/routemap.h lib/sbuf.h lib/sha256.h \
-	lib/sigevent.h lib/skiplist.h lib/smux.h lib/sockopt.h \
-	lib/sockunion.h lib/spf_backoff.h lib/srcdest_table.h \
-	lib/stream.h lib/systemd.h lib/table.h lib/termtable.h \
-	lib/thread.h lib/vector.h lib/vlan.h lib/vrf.h lib/vrf_int.h \
-	lib/vty.h lib/vxlan.h lib/wheel.h lib/workqueue.h lib/yang.h \
+	lib/ringbuf.h lib/routemap.h lib/sbuf.h lib/seqlock.h \
+	lib/sha256.h lib/sigevent.h lib/skiplist.h lib/smux.h \
+	lib/sockopt.h lib/sockunion.h lib/spf_backoff.h \
+	lib/srcdest_table.h lib/stream.h lib/systemd.h lib/table.h \
+	lib/termtable.h lib/thread.h lib/typerb.h lib/typesafe.h \
+	lib/vector.h lib/vlan.h lib/vrf.h lib/vrf_int.h lib/vty.h \
+	lib/vxlan.h lib/wheel.h lib/workqueue.h lib/yang.h \
 	lib/yang_translator.h lib/yang_wrappers.h lib/zassert.h \
 	lib/zclient.h lib/zebra.h lib/logicalrouter.h lib/lua.h \
 	lib/pbr.h lib/frr_zmq.h
@@ -2372,17 +2464,18 @@ am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/babeld/subdir.am \
 	$(srcdir)/doc/developer/subdir.am \
 	$(srcdir)/doc/manpages/subdir.am $(srcdir)/doc/subdir.am \
 	$(srcdir)/doc/user/subdir.am $(srcdir)/eigrpd/subdir.am \
-	$(srcdir)/fpm/subdir.am $(srcdir)/include/subdir.am \
-	$(srcdir)/isisd/subdir.am $(srcdir)/ldpd/subdir.am \
-	$(srcdir)/lib/subdir.am $(srcdir)/nhrpd/subdir.am \
-	$(srcdir)/ospf6d/subdir.am $(srcdir)/ospfclient/subdir.am \
-	$(srcdir)/ospfd/subdir.am $(srcdir)/pbrd/subdir.am \
-	$(srcdir)/pimd/subdir.am $(srcdir)/qpb/subdir.am \
-	$(srcdir)/ripd/subdir.am $(srcdir)/ripngd/subdir.am \
-	$(srcdir)/sharpd/subdir.am $(srcdir)/solaris/subdir.am \
-	$(srcdir)/staticd/subdir.am $(srcdir)/tests/subdir.am \
-	$(srcdir)/tests/topotests/subdir.am $(srcdir)/tools/subdir.am \
-	$(srcdir)/vtysh/subdir.am $(srcdir)/watchfrr/subdir.am \
+	$(srcdir)/fpm/subdir.am $(srcdir)/grpc/subdir.am \
+	$(srcdir)/include/subdir.am $(srcdir)/isisd/subdir.am \
+	$(srcdir)/ldpd/subdir.am $(srcdir)/lib/subdir.am \
+	$(srcdir)/nhrpd/subdir.am $(srcdir)/ospf6d/subdir.am \
+	$(srcdir)/ospfclient/subdir.am $(srcdir)/ospfd/subdir.am \
+	$(srcdir)/pbrd/subdir.am $(srcdir)/pimd/subdir.am \
+	$(srcdir)/qpb/subdir.am $(srcdir)/ripd/subdir.am \
+	$(srcdir)/ripngd/subdir.am $(srcdir)/sharpd/subdir.am \
+	$(srcdir)/solaris/subdir.am $(srcdir)/staticd/subdir.am \
+	$(srcdir)/tests/subdir.am $(srcdir)/tests/topotests/subdir.am \
+	$(srcdir)/tools/subdir.am $(srcdir)/vtysh/subdir.am \
+	$(srcdir)/watchfrr/subdir.am \
 	$(srcdir)/yang/libyang_plugins/subdir.am \
 	$(srcdir)/yang/subdir.am $(srcdir)/zebra/subdir.am \
 	$(top_srcdir)/alpine/APKBUILD.in \
@@ -2449,9 +2542,15 @@ CFLAGS = @CFLAGS@
 CONFD = @CONFD@
 CONFDATE = @CONFDATE@
 CONFD_CFLAGS = @CONFD_CFLAGS@
+CONFD_LIBS = @CONFD_LIBS@
 CONFIG_ARGS = @CONFIG_ARGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
+CXX = @CXX@
+CXXCPP = @CXXCPP@
+CXXDEPMODE = @CXXDEPMODE@
+CXXFLAGS = @CXXFLAGS@
+CXX_COMPAT_CFLAGS = @CXX_COMPAT_CFLAGS@
 CYGPATH_W = @CYGPATH_W@
 DEFS = @DEFS@ -DSYSCONFDIR=\"$(sysconfdir)/\" -DCONFDATE=$(CONFDATE)
 DEPDIR = @DEPDIR@
@@ -2467,6 +2566,8 @@ EXEEXT = @EXEEXT@
 EXTRAVERSION = @EXTRAVERSION@
 FGREP = @FGREP@
 GREP = @GREP@
+GRPC_CFLAGS = @GRPC_CFLAGS@
+GRPC_LIBS = @GRPC_LIBS@
 HAVE_LIBPCREPOSIX = @HAVE_LIBPCREPOSIX@
 HOSTTOOLS = @HOSTTOOLS@
 INSTALL = @INSTALL@
@@ -2557,6 +2658,7 @@ abs_top_builddir = @abs_top_builddir@
 abs_top_srcdir = @abs_top_srcdir@
 ac_ct_AR = @ac_ct_AR@
 ac_ct_CC = @ac_ct_CC@
+ac_ct_CXX = @ac_ct_CXX@
 ac_ct_DUMPBIN = @ac_ct_DUMPBIN@
 ac_ct_PYTHONCONFIG = @ac_ct_PYTHONCONFIG@
 am__include = @am__include@
@@ -2731,11 +2833,12 @@ EXTRA_DIST = doc/mpls/ChangeLog.opaque.txt doc/mpls/ospfd.conf \
 	doc/developer/draft-zebra-00.ms \
 	doc/developer/ldpd-basic-test-setup.md lib/command_lex.h \
 	lib/command_parse.h lib/gitversion.pl lib/route_types.pl \
-	lib/route_types.txt qpb/qpb.proto fpm/fpm.proto tools/etc \
-	tools/frr-reload tools/frr-reload.py tools/frr.service \
-	tools/multiple-bgpd.sh tools/rrcheck.pl tools/rrlookup.pl \
-	tools/zc.pl tools/zebra.el tools/build-debian-package.sh \
-	solaris/frr.xml.in solaris/frr.init.in solaris/pkginfo.tmpl.in \
+	lib/route_types.txt qpb/qpb.proto fpm/fpm.proto \
+	grpc/frr-northbound.proto tools/etc tools/frr-reload \
+	tools/frr-reload.py tools/frr.service tools/multiple-bgpd.sh \
+	tools/rrcheck.pl tools/rrlookup.pl tools/zc.pl tools/zebra.el \
+	tools/build-debian-package.sh solaris/frr.xml.in \
+	solaris/frr.init.in solaris/pkginfo.tmpl.in \
 	solaris/prototype.daemons.in solaris/prototype.dev.in \
 	solaris/prototype.doc.in solaris/prototype.libs.in \
 	solaris/prototype.smf.in solaris/pkginfo.daemons.tmpl.in \
@@ -2760,35 +2863,36 @@ EXTRA_DIST = doc/mpls/ChangeLog.opaque.txt doc/mpls/ospfd.conf \
 	tests/lib/northbound/test_oper_data.in \
 	tests/lib/northbound/test_oper_data.py \
 	tests/lib/northbound/test_oper_data.refout \
-	tests/lib/test_nexthop_iter.py tests/lib/test_ringbuf.py \
-	tests/lib/test_srcdest_table.py tests/lib/test_stream.py \
-	tests/lib/test_stream.refout tests/lib/test_table.py \
-	tests/lib/test_timer_correctness.py tests/lib/test_ttable.py \
-	tests/lib/test_ttable.refout tests/lib/test_zlog.py \
+	tests/lib/test_atomlist.py tests/lib/test_nexthop_iter.py \
+	tests/lib/test_ringbuf.py tests/lib/test_srcdest_table.py \
+	tests/lib/test_stream.py tests/lib/test_stream.refout \
+	tests/lib/test_table.py tests/lib/test_timer_correctness.py \
+	tests/lib/test_ttable.py tests/lib/test_ttable.refout \
+	tests/lib/test_typelist.py tests/lib/test_zlog.py \
 	tests/lib/test_graph.py tests/lib/test_graph.refout \
 	tests/ospf6d/test_lsdb.py tests/ospf6d/test_lsdb.in \
 	tests/ospf6d/test_lsdb.refout aclocal.m4 README.md \
 	m4/README.txt m4/libtool-whole-archive.patch config.version \
 	changelog-auto changelog-auto.in python/clidef.py \
-	python/clippy/__init__.py redhat/frr.init redhat/frr.service \
-	redhat/daemons redhat/frr.logrotate redhat/frr.pam \
-	redhat/frr.spec redhat/README.rpm_build.md \
-	snapcraft/snapcraft.yaml snapcraft/README.snap_build.md \
-	snapcraft/README.usage.md snapcraft/extra_version_info.txt \
-	snapcraft/scripts snapcraft/defaults snapcraft/helpers \
-	snapcraft/snap babeld/Makefile bgpd/Makefile \
-	bgpd/rfp-example/librfp/Makefile \
+	python/clippy/__init__.py redhat/frr.logrotate redhat/frr.pam \
+	redhat/frr.spec snapcraft/snapcraft.yaml \
+	snapcraft/README.snap_build.md snapcraft/README.usage.md \
+	snapcraft/extra_version_info.txt snapcraft/scripts \
+	snapcraft/defaults snapcraft/helpers snapcraft/snap \
+	babeld/Makefile bgpd/Makefile bgpd/rfp-example/librfp/Makefile \
 	bgpd/rfp-example/rfptest/Makefile doc/Makefile \
 	doc/developer/Makefile doc/manpages/Makefile doc/user/Makefile \
-	eigrpd/Makefile fpm/Makefile isisd/Makefile ldpd/Makefile \
-	lib/Makefile nhrpd/Makefile ospf6d/Makefile \
+	eigrpd/Makefile fpm/Makefile grpc/Makefile isisd/Makefile \
+	ldpd/Makefile lib/Makefile nhrpd/Makefile ospf6d/Makefile \
 	ospfclient/Makefile ospfd/Makefile pbrd/Makefile pimd/Makefile \
-	ports/Makefile qpb/Makefile ripd/Makefile ripngd/Makefile \
-	staticd/Makefile tests/Makefile tools/Makefile vtysh/Makefile \
-	watchfrr/Makefile zebra/Makefile # end
+	qpb/Makefile ripd/Makefile ripngd/Makefile staticd/Makefile \
+	tests/Makefile tools/Makefile vtysh/Makefile watchfrr/Makefile \
+	zebra/Makefile # end
 BUILT_SOURCES = lib/gitversion.h lib/route_types.h # end
 CLEANFILES = qpb/qpb.pb-c.c qpb/qpb.pb-c.h fpm/fpm.pb-c.c \
-	fpm/fpm.pb-c.h solaris/frr.xml solaris/frr.init \
+	fpm/fpm.pb-c.h grpc/frr-northbound.pb.cc \
+	grpc/frr-northbound.pb.h grpc/frr-northbound.grpc.pb.cc \
+	grpc/frr-northbound.grpc.pb.h solaris/frr.xml solaris/frr.init \
 	solaris/pkginfo.tmpl solaris/prototype.daemons \
 	solaris/prototype.dev solaris/prototype.doc \
 	solaris/prototype.libs solaris/prototype.smf \
@@ -2803,24 +2907,25 @@ DISTCLEANFILES = lib/route_types.h
 examplesdir = $(exampledir)
 sbin_SCRIPTS = tools/frr-reload tools/frr-reload.py tools/frr \
 	tools/frrcommon.sh tools/frrinit.sh tools/watchfrr.sh # end
-noinst_HEADERS = include/linux/if_bridge.h include/linux/if_link.h \
-	include/linux/lwtunnel.h include/linux/mpls_iptunnel.h \
-	include/linux/neighbour.h include/linux/netlink.h \
-	include/linux/rtnetlink.h include/linux/socket.h \
-	include/linux/net_namespace.h include/linux/fib_rules.h \
-	lib/clippy.h lib/log_int.h lib/plist_int.h zebra/connected.h \
-	zebra/debug.h zebra/if_netlink.h zebra/interface.h \
-	zebra/ioctl.h zebra/ioctl_solaris.h zebra/ipforward.h \
-	zebra/irdp.h zebra/kernel_netlink.h zebra/kernel_socket.h \
+noinst_HEADERS = include/linux/if_addr.h include/linux/if_bridge.h \
+	include/linux/if_link.h include/linux/lwtunnel.h \
+	include/linux/mpls_iptunnel.h include/linux/neighbour.h \
+	include/linux/netlink.h include/linux/rtnetlink.h \
+	include/linux/socket.h include/linux/net_namespace.h \
+	include/linux/fib_rules.h lib/clippy.h lib/log_int.h \
+	lib/plist_int.h zebra/connected.h zebra/debug.h \
+	zebra/if_netlink.h zebra/interface.h zebra/ioctl.h \
+	zebra/ioctl_solaris.h zebra/ipforward.h zebra/irdp.h \
+	zebra/kernel_netlink.h zebra/kernel_socket.h \
 	zebra/label_manager.h zebra/redistribute.h zebra/rib.h \
 	zebra/router-id.h zebra/rt.h zebra/rt_netlink.h zebra/rtadv.h \
-	zebra/rule_netlink.h zebra/zebra_fpm_private.h \
-	zebra/zebra_l2.h zebra/zebra_dplane.h zebra/zebra_memory.h \
-	zebra/zebra_mpls.h zebra/zebra_mroute.h zebra/zebra_ns.h \
-	zebra/zebra_pbr.h zebra/zebra_ptm.h \
-	zebra/zebra_ptm_redistribute.h zebra/zebra_pw.h \
-	zebra/zebra_rnh.h zebra/zebra_routemap.h zebra/zebra_router.h \
-	zebra/zebra_vrf.h zebra/zebra_vxlan.h \
+	zebra/rule_netlink.h zebra/zebra_mlag.h \
+	zebra/zebra_fpm_private.h zebra/zebra_l2.h \
+	zebra/zebra_dplane.h zebra/zebra_memory.h zebra/zebra_mpls.h \
+	zebra/zebra_mroute.h zebra/zebra_ns.h zebra/zebra_pbr.h \
+	zebra/zebra_ptm.h zebra/zebra_ptm_redistribute.h \
+	zebra/zebra_pw.h zebra/zebra_rnh.h zebra/zebra_routemap.h \
+	zebra/zebra_router.h zebra/zebra_vrf.h zebra/zebra_vxlan.h \
 	zebra/zebra_vxlan_private.h zebra/zserv.h \
 	zebra/zebra_netns_id.h zebra/zebra_netns_notify.h \
 	zebra/table_manager.h zebra/zapi_msg.h zebra/zebra_errors.h \
@@ -2836,15 +2941,15 @@ noinst_HEADERS = include/linux/if_bridge.h include/linux/if_link.h \
 	bgpd/bgp_flowspec.h bgpd/bgp_flowspec_private.h \
 	bgpd/bgp_flowspec_util.h bgpd/bgp_fsm.h bgpd/bgp_io.h \
 	bgpd/bgp_keepalives.h bgpd/bgp_label.h bgpd/bgp_labelpool.h \
-	bgpd/bgp_lcommunity.h bgpd/bgp_memory.h bgpd/bgp_mpath.h \
-	bgpd/bgp_mplsvpn.h bgpd/bgp_network.h bgpd/bgp_nexthop.h \
-	bgpd/bgp_nht.h bgpd/bgp_open.h bgpd/bgp_packet.h \
-	bgpd/bgp_pbr.h bgpd/bgp_rd.h bgpd/bgp_regex.h bgpd/bgp_route.h \
-	bgpd/bgp_table.h bgpd/bgp_updgrp.h bgpd/bgp_vpn.h \
-	bgpd/bgp_vty.h bgpd/bgp_zebra.h bgpd/bgpd.h \
-	bgpd/rfapi/bgp_rfapi_cfg.h bgpd/rfapi/rfapi_import.h \
-	bgpd/rfapi/rfapi.h bgpd/rfapi/rfapi_ap.h \
-	bgpd/rfapi/rfapi_backend.h \
+	bgpd/bgp_lcommunity.h bgpd/bgp_mac.h bgpd/bgp_memory.h \
+	bgpd/bgp_mpath.h bgpd/bgp_mplsvpn.h bgpd/bgp_network.h \
+	bgpd/bgp_nexthop.h bgpd/bgp_nht.h bgpd/bgp_open.h \
+	bgpd/bgp_packet.h bgpd/bgp_pbr.h bgpd/bgp_rd.h \
+	bgpd/bgp_regex.h bgpd/bgp_route.h bgpd/bgp_table.h \
+	bgpd/bgp_updgrp.h bgpd/bgp_vpn.h bgpd/bgp_vty.h \
+	bgpd/bgp_zebra.h bgpd/bgpd.h bgpd/rfapi/bgp_rfapi_cfg.h \
+	bgpd/rfapi/rfapi_import.h bgpd/rfapi/rfapi.h \
+	bgpd/rfapi/rfapi_ap.h bgpd/rfapi/rfapi_backend.h \
 	bgpd/rfapi/rfapi_descriptor_rfp_utils.h \
 	bgpd/rfapi/rfapi_encap_tlv.h bgpd/rfapi/rfapi_nve_addr.h \
 	bgpd/rfapi/rfapi_monitor.h bgpd/rfapi/rfapi_private.h \
@@ -2874,23 +2979,22 @@ noinst_HEADERS = include/linux/if_bridge.h include/linux/if_link.h \
 	ospf6d/ospf6_neighbor.h ospf6d/ospf6_network.h \
 	ospf6d/ospf6_proto.h ospf6d/ospf6_route.h ospf6d/ospf6_spf.h \
 	ospf6d/ospf6_top.h ospf6d/ospf6_zebra.h ospf6d/ospf6d.h \
-	isisd/dict.h isisd/isis_adjacency.h isisd/isis_bfd.h \
-	isisd/isis_circuit.h isisd/isis_common.h \
-	isisd/isis_constants.h isisd/isis_csm.h isisd/isis_dr.h \
-	isisd/isis_dynhn.h isisd/isis_errors.h isisd/isis_events.h \
-	isisd/isis_flags.h isisd/isis_lsp.h isisd/isis_memory.h \
-	isisd/isis_misc.h isisd/isis_mt.h isisd/isis_network.h \
-	isisd/isis_pdu.h isisd/isis_pdu_counter.h isisd/isis_redist.h \
-	isisd/isis_route.h isisd/isis_routemap.h isisd/isis_spf.h \
-	isisd/isis_spf_private.h isisd/isis_te.h isisd/isis_tlvs.h \
-	isisd/isis_tx_queue.h isisd/isis_vty_common.h \
-	isisd/isis_zebra.h isisd/isisd.h isisd/iso_checksum.h \
-	isisd/fabricd.h isisd/isis_cli.h nhrpd/debug.h nhrpd/list.h \
-	nhrpd/netlink.h nhrpd/nhrp_errors.h nhrpd/nhrp_protocol.h \
-	nhrpd/nhrpd.h nhrpd/os.h nhrpd/vici.h nhrpd/zbuf.h nhrpd/znl.h \
-	ldpd/control.h ldpd/lde.h ldpd/ldp.h ldpd/ldp_debug.h \
-	ldpd/ldp_vty.h ldpd/ldpd.h ldpd/ldpe.h ldpd/log.h \
-	babeld/babel_errors.h babeld/babel_filter.h \
+	isisd/isis_adjacency.h isisd/isis_bfd.h isisd/isis_circuit.h \
+	isisd/isis_common.h isisd/isis_constants.h isisd/isis_csm.h \
+	isisd/isis_dr.h isisd/isis_dynhn.h isisd/isis_errors.h \
+	isisd/isis_events.h isisd/isis_flags.h isisd/isis_lsp.h \
+	isisd/isis_memory.h isisd/isis_misc.h isisd/isis_mt.h \
+	isisd/isis_network.h isisd/isis_pdu.h isisd/isis_pdu_counter.h \
+	isisd/isis_redist.h isisd/isis_route.h isisd/isis_routemap.h \
+	isisd/isis_spf.h isisd/isis_spf_private.h isisd/isis_te.h \
+	isisd/isis_tlvs.h isisd/isis_tx_queue.h \
+	isisd/isis_vty_common.h isisd/isis_zebra.h isisd/isisd.h \
+	isisd/iso_checksum.h isisd/fabricd.h isisd/isis_cli.h \
+	nhrpd/debug.h nhrpd/list.h nhrpd/netlink.h nhrpd/nhrp_errors.h \
+	nhrpd/nhrp_protocol.h nhrpd/nhrpd.h nhrpd/os.h nhrpd/vici.h \
+	nhrpd/zbuf.h nhrpd/znl.h ldpd/control.h ldpd/lde.h ldpd/ldp.h \
+	ldpd/ldp_debug.h ldpd/ldp_vty.h ldpd/ldpd.h ldpd/ldpe.h \
+	ldpd/log.h babeld/babel_errors.h babeld/babel_filter.h \
 	babeld/babel_interface.h babeld/babel_main.h \
 	babeld/babel_memory.h babeld/babel_zebra.h babeld/babeld.h \
 	babeld/kernel.h babeld/message.h babeld/neighbour.h \
@@ -2901,53 +3005,56 @@ noinst_HEADERS = include/linux/if_bridge.h include/linux/if_link.h \
 	eigrpd/eigrp_memory.h eigrpd/eigrp_neighbor.h \
 	eigrpd/eigrp_network.h eigrpd/eigrp_packet.h \
 	eigrpd/eigrp_snmp.h eigrpd/eigrp_structs.h eigrpd/eigrp_vty.h \
-	eigrpd/eigrp_zebra.h sharpd/sharp_vty.h sharpd/sharp_zebra.h \
-	pimd/pim_assert.h pimd/pim_bfd.h pimd/pim_br.h pimd/pim_cmd.h \
-	pimd/pim_errors.h pimd/pim_hello.h pimd/pim_iface.h \
-	pimd/pim_ifchannel.h pimd/pim_igmp.h pimd/pim_igmp_join.h \
-	pimd/pim_igmp_mtrace.h pimd/pim_igmp_stats.h pimd/pim_igmpv2.h \
-	pimd/pim_igmpv3.h pimd/pim_instance.h pimd/pim_int.h \
-	pimd/pim_join.h pimd/pim_jp_agg.h pimd/pim_macro.h \
-	pimd/pim_memory.h pimd/pim_mroute.h pimd/pim_msdp.h \
-	pimd/pim_msdp_packet.h pimd/pim_msdp_socket.h pimd/pim_msg.h \
-	pimd/pim_neighbor.h pimd/pim_nht.h pimd/pim_oil.h \
-	pimd/pim_pim.h pimd/pim_register.h pimd/pim_rp.h \
-	pimd/pim_rpf.h pimd/pim_signals.h pimd/pim_sock.h \
-	pimd/pim_ssm.h pimd/pim_ssmpingd.h pimd/pim_static.h \
-	pimd/pim_str.h pimd/pim_time.h pimd/pim_tlv.h \
-	pimd/pim_upstream.h pimd/pim_util.h pimd/pim_version.h \
-	pimd/pim_vty.h pimd/pim_zebra.h pimd/pim_zlookup.h pimd/pimd.h \
-	pimd/mtracebis_netlink.h pimd/mtracebis_routeget.h \
-	pbrd/pbr_map.h pbrd/pbr_memory.h pbrd/pbr_nht.h pbrd/pbr_vty.h \
-	pbrd/pbr_zebra.h pbrd/pbr_debug.h staticd/static_memory.h \
-	staticd/static_nht.h staticd/static_zebra.h \
-	staticd/static_routes.h staticd/static_vty.h \
-	staticd/static_vrf.h bfdd/bfdctl.h bfdd/bfd.h vtysh/vtysh.h \
-	vtysh/vtysh_user.h tests/helpers/c/prng.h \
-	tests/helpers/c/tests.h tests/lib/cli/common_cli.h defaults.h
-noinst_LIBRARIES = $(am__append_28) $(am__append_40) $(am__append_42) \
-	$(am__append_48) $(am__append_52) $(am__append_58) \
-	$(am__append_68) $(am__append_73) $(am__append_79) \
-	$(am__append_84) $(am__append_88) $(am__append_93) \
-	$(am__append_98) $(am__append_105) $(am__append_110) \
-	$(am__append_115)
+	eigrpd/eigrp_zebra.h sharpd/sharp_nht.h sharpd/sharp_vty.h \
+	sharpd/sharp_globals.h sharpd/sharp_zebra.h pimd/pim_assert.h \
+	pimd/pim_bfd.h pimd/pim_br.h pimd/pim_cmd.h pimd/pim_errors.h \
+	pimd/pim_hello.h pimd/pim_iface.h pimd/pim_ifchannel.h \
+	pimd/pim_igmp.h pimd/pim_igmp_join.h pimd/pim_igmp_mtrace.h \
+	pimd/pim_igmp_stats.h pimd/pim_igmpv2.h pimd/pim_igmpv3.h \
+	pimd/pim_instance.h pimd/pim_int.h pimd/pim_join.h \
+	pimd/pim_jp_agg.h pimd/pim_macro.h pimd/pim_memory.h \
+	pimd/pim_mroute.h pimd/pim_msdp.h pimd/pim_msdp_packet.h \
+	pimd/pim_msdp_socket.h pimd/pim_msg.h pimd/pim_neighbor.h \
+	pimd/pim_nht.h pimd/pim_oil.h pimd/pim_pim.h \
+	pimd/pim_register.h pimd/pim_rp.h pimd/pim_rpf.h \
+	pimd/pim_signals.h pimd/pim_sock.h pimd/pim_ssm.h \
+	pimd/pim_ssmpingd.h pimd/pim_static.h pimd/pim_str.h \
+	pimd/pim_time.h pimd/pim_tlv.h pimd/pim_upstream.h \
+	pimd/pim_util.h pimd/pim_version.h pimd/pim_vty.h \
+	pimd/pim_zebra.h pimd/pim_zlookup.h pimd/pim_vxlan.h \
+	pimd/pim_vxlan_instance.h pimd/pimd.h pimd/mtracebis_netlink.h \
+	pimd/mtracebis_routeget.h pbrd/pbr_map.h pbrd/pbr_memory.h \
+	pbrd/pbr_nht.h pbrd/pbr_vty.h pbrd/pbr_zebra.h \
+	pbrd/pbr_debug.h staticd/static_memory.h staticd/static_nht.h \
+	staticd/static_zebra.h staticd/static_routes.h \
+	staticd/static_vty.h staticd/static_vrf.h bfdd/bfdctl.h \
+	bfdd/bfd.h vtysh/vtysh.h vtysh/vtysh_user.h \
+	tests/helpers/c/prng.h tests/helpers/c/tests.h \
+	tests/lib/cli/common_cli.h tests/lib/test_typelist.h \
+	defaults.h
+noinst_LIBRARIES = $(am__append_30) $(am__append_44) $(am__append_46) \
+	$(am__append_52) $(am__append_56) $(am__append_62) \
+	$(am__append_72) $(am__append_77) $(am__append_83) \
+	$(am__append_88) $(am__append_92) $(am__append_97) \
+	$(am__append_102) $(am__append_109) $(am__append_114) \
+	$(am__append_119)
 nodist_noinst_DATA = $(am__append_1) $(am__append_2)
 
 #
 # libfrr
 #
 lib_LTLIBRARIES = lib/libfrr.la $(am__append_7) $(am__append_8) \
-	$(am__append_26) $(am__append_27) $(am__append_64)
+	$(am__append_27) $(am__append_28) $(am__append_29) \
+	$(am__append_68)
 module_LTLIBRARIES = $(am__append_10) $(am__append_11) \
-	$(am__append_16) $(am__append_17) $(am__append_18) \
-	$(am__append_34) $(am__append_35) $(am__append_46) \
-	$(am__append_56) $(am__append_62)
-libyang_plugins_LTLIBRARIES = $(am__append_124)
-pkginclude_HEADERS = lib/agg_table.h lib/bfd.h lib/bitfield.h \
-	lib/buffer.h lib/checksum.h lib/command.h lib/command_graph.h \
-	lib/command_match.h lib/compiler.h lib/csv.h lib/db.h \
-	lib/debug.h lib/distribute.h lib/event_counter.h lib/ferr.h \
-	lib/fifo.h lib/filter.h lib/freebsd-queue.h lib/frr_pthread.h \
+	$(am__append_12) $(am__append_17) $(am__append_18) \
+	$(am__append_19) $(am__append_36) $(am__append_37) \
+	$(am__append_50) $(am__append_60) $(am__append_66)
+pkginclude_HEADERS = lib/agg_table.h lib/atomlist.h lib/bfd.h \
+	lib/bitfield.h lib/buffer.h lib/checksum.h lib/mlag.h \
+	lib/command.h lib/command_graph.h lib/command_match.h \
+	lib/compiler.h lib/csv.h lib/db.h lib/debug.h lib/distribute.h \
+	lib/ferr.h lib/filter.h lib/freebsd-queue.h lib/frr_pthread.h \
 	lib/frratomic.h lib/frrstr.h lib/getopt.h lib/graph.h \
 	lib/hash.h lib/hook.h lib/id_alloc.h lib/if.h lib/if_rmap.h \
 	lib/imsg.h lib/ipaddr.h lib/jhash.h lib/json.h lib/keychain.h \
@@ -2958,22 +3065,23 @@ pkginclude_HEADERS = lib/agg_table.h lib/bfd.h lib/bitfield.h \
 	lib/northbound_db.h lib/ns.h lib/openbsd-queue.h \
 	lib/openbsd-tree.h lib/plist.h lib/pqueue.h lib/prefix.h \
 	lib/privs.h lib/ptm_lib.h lib/pw.h lib/qobj.h lib/queue.h \
-	lib/ringbuf.h lib/routemap.h lib/sbuf.h lib/sha256.h \
-	lib/sigevent.h lib/skiplist.h lib/smux.h lib/sockopt.h \
-	lib/sockunion.h lib/spf_backoff.h lib/srcdest_table.h \
-	lib/stream.h lib/systemd.h lib/table.h lib/termtable.h \
-	lib/thread.h lib/vector.h lib/vlan.h lib/vrf.h lib/vrf_int.h \
-	lib/vty.h lib/vxlan.h lib/wheel.h lib/workqueue.h lib/yang.h \
+	lib/ringbuf.h lib/routemap.h lib/sbuf.h lib/seqlock.h \
+	lib/sha256.h lib/sigevent.h lib/skiplist.h lib/smux.h \
+	lib/sockopt.h lib/sockunion.h lib/spf_backoff.h \
+	lib/srcdest_table.h lib/stream.h lib/systemd.h lib/table.h \
+	lib/termtable.h lib/thread.h lib/typerb.h lib/typesafe.h \
+	lib/vector.h lib/vlan.h lib/vrf.h lib/vrf_int.h lib/vty.h \
+	lib/vxlan.h lib/wheel.h lib/workqueue.h lib/yang.h \
 	lib/yang_translator.h lib/yang_wrappers.h lib/zassert.h \
 	lib/zclient.h lib/zebra.h lib/logicalrouter.h lib/lua.h \
 	lib/pbr.h $(am__append_9)
 nodist_pkginclude_HEADERS = lib/route_types.h lib/version.h # end
-dist_examples_DATA = $(am__append_14) $(am__append_31) \
-	$(am__append_44) ripngd/ripngd.conf.sample $(am__append_54) \
-	$(am__append_60) $(am__append_70) $(am__append_75) \
-	$(am__append_81) $(am__append_86) $(am__append_90) \
-	$(am__append_95) $(am__append_102) $(am__append_107) \
-	$(am__append_112) $(am__append_117) $(am__append_126)
+dist_examples_DATA = $(am__append_15) $(am__append_33) \
+	$(am__append_48) ripngd/ripngd.conf.sample $(am__append_58) \
+	$(am__append_64) $(am__append_74) $(am__append_79) \
+	$(am__append_85) $(am__append_90) $(am__append_94) \
+	$(am__append_99) $(am__append_106) $(am__append_111) \
+	$(am__append_116) $(am__append_121) $(am__append_128)
 
 # use .yang.c files like this:
 #
@@ -2989,8 +3097,8 @@ dist_examples_DATA = $(am__append_14) $(am__append_31) \
 # without problems, as seen in libfrr.
 dist_yangmodels_DATA = yang/frr-module-translator.yang \
 	yang/frr-test-module.yang yang/frr-interface.yang \
-	yang/frr-route-types.yang $(am__append_120) $(am__append_121) \
-	$(am__append_122)
+	yang/frr-route-types.yang $(am__append_124) $(am__append_125) \
+	$(am__append_126)
 man_MANS = 
 # can be loaded as DSO - always include for vtysh
 vtysh_scan = $(top_srcdir)/lib/distribute.c $(top_srcdir)/lib/filter.c \
@@ -2999,12 +3107,12 @@ vtysh_scan = $(top_srcdir)/lib/distribute.c $(top_srcdir)/lib/filter.c \
 	$(top_srcdir)/lib/nexthop_group.c $(top_srcdir)/lib/plist.c \
 	$(top_srcdir)/lib/routemap.c $(top_srcdir)/lib/vrf.c \
 	$(top_srcdir)/lib/vty.c $(top_srcdir)/lib/agentx.c \
-	$(am__append_15) $(am__append_24) $(am__append_32) \
-	$(am__append_33) $(am__append_45) $(am__append_50) \
-	$(am__append_55) $(am__append_61) $(am__append_71) \
-	$(am__append_77) $(am__append_82) $(am__append_87) \
-	$(am__append_91) $(am__append_96) $(am__append_103) \
-	$(am__append_108) $(am__append_113) $(am__append_118)
+	$(am__append_16) $(am__append_25) $(am__append_34) \
+	$(am__append_35) $(am__append_49) $(am__append_54) \
+	$(am__append_59) $(am__append_65) $(am__append_75) \
+	$(am__append_81) $(am__append_86) $(am__append_91) \
+	$(am__append_95) $(am__append_100) $(am__append_107) \
+	$(am__append_112) $(am__append_117) $(am__append_122)
 
 # Internal variables.
 PAPEROPT_a4 = -D latex_paper_size=a4
@@ -3124,23 +3232,22 @@ rstman1dir = $(mandir)/man1
 rstman8dir = $(mandir)/man8
 rstman1_DATA = $(am__append_3)
 rstman8_DATA = $(am__append_4)
-man1 = $(MANBUILD)/frr.1 $(am__append_127)
-man8 = $(am__append_19) $(am__append_25) $(am__append_36) \
-	$(am__append_47) $(am__append_51) $(am__append_57) \
-	$(am__append_63) $(am__append_66) $(am__append_72) \
-	$(am__append_78) $(am__append_83) $(am__append_92) \
-	$(am__append_97) $(am__append_104) $(am__append_109) \
-	$(am__append_114) $(am__append_119)
+man1 = $(MANBUILD)/frr.1 $(am__append_129)
+man8 = $(am__append_20) $(am__append_26) $(am__append_38) \
+	$(am__append_51) $(am__append_55) $(am__append_61) \
+	$(am__append_67) $(am__append_70) $(am__append_76) \
+	$(am__append_82) $(am__append_87) $(am__append_96) \
+	$(am__append_101) $(am__append_108) $(am__append_113) \
+	$(am__append_118) $(am__append_123)
 dev_RSTFILES = \
 	doc/developer/bgp-typecodes.rst \
 	doc/developer/bgpd.rst \
-	doc/developer/building-frr-for-openwrt.rst \
 	doc/developer/building-frr-for-alpine.rst \
 	doc/developer/building-frr-for-centos6.rst \
 	doc/developer/building-frr-for-centos7.rst \
 	doc/developer/building-frr-for-debian8.rst \
 	doc/developer/building-frr-for-debian9.rst \
-	doc/developer/building-frr-for-fedora24.rst \
+	doc/developer/building-frr-for-fedora.rst \
 	doc/developer/building-frr-for-freebsd10.rst \
 	doc/developer/building-frr-for-freebsd11.rst \
 	doc/developer/building-frr-for-freebsd9.rst \
@@ -3148,6 +3255,7 @@ dev_RSTFILES = \
 	doc/developer/building-frr-for-netbsd7.rst \
 	doc/developer/building-frr-for-omnios.rst \
 	doc/developer/building-frr-for-openbsd6.rst \
+	doc/developer/building-frr-for-openwrt.rst \
 	doc/developer/building-frr-for-ubuntu1404.rst \
 	doc/developer/building-frr-for-ubuntu1604.rst \
 	doc/developer/building-frr-for-ubuntu1804.rst \
@@ -3156,8 +3264,10 @@ dev_RSTFILES = \
 	doc/developer/cli.rst \
 	doc/developer/conf.py \
 	doc/developer/hooks.rst \
+	doc/developer/include-compile.rst \
 	doc/developer/index.rst \
 	doc/developer/library.rst \
+	doc/developer/lists.rst \
 	doc/developer/logging.rst \
 	doc/developer/maintainer-release-build.rst \
 	doc/developer/memtypes.rst \
@@ -3166,8 +3276,12 @@ dev_RSTFILES = \
 	doc/developer/ospf-api.rst \
 	doc/developer/ospf-sr.rst \
 	doc/developer/ospf.rst \
-	doc/developer/packaging.rst \
 	doc/developer/packaging-debian.rst \
+	doc/developer/packaging-redhat.rst \
+	doc/developer/packaging.rst \
+	doc/developer/testing.rst \
+	doc/developer/topotests-snippets.rst \
+	doc/developer/topotests.rst \
 	doc/developer/workflow.rst \
 	doc/developer/zebra.rst \
 	# end
@@ -3176,29 +3290,30 @@ DEVBUILD = doc/developer/_build
 lib_libfrr_la_LDFLAGS = -version-info 0:0:0 -Xlinker -e_libfrr_version
 lib_libfrr_la_LIBADD = $(LIBCAP) $(UNWIND_LIBS) $(LIBYANG_LIBS) \
 	$(am__append_5)
-lib_libfrr_la_SOURCES = lib/agg_table.c lib/bfd.c lib/buffer.c \
-	lib/checksum.c lib/command.c lib/command_graph.c \
+lib_libfrr_la_SOURCES = lib/agg_table.c lib/atomlist.c lib/bfd.c \
+	lib/buffer.c lib/checksum.c lib/command.c lib/command_graph.c \
 	lib/command_lex.l lib/command_match.c lib/command_parse.y \
-	lib/csv.c lib/debug.c lib/distribute.c lib/event_counter.c \
-	lib/ferr.c lib/filter.c lib/frr_pthread.c lib/frrstr.c \
-	lib/getopt.c lib/getopt1.c lib/grammar_sandbox.c lib/graph.c \
-	lib/hash.c lib/hook.c lib/id_alloc.c lib/if.c lib/if_rmap.c \
-	lib/imsg-buffer.c lib/imsg.c lib/jhash.c lib/json.c \
-	lib/keychain.c lib/lib_errors.c lib/libfrr.c lib/linklist.c \
-	lib/log.c lib/md5.c lib/memory.c lib/memory_vty.c lib/module.c \
-	lib/mpls.c lib/network.c lib/nexthop.c lib/netns_linux.c \
-	lib/netns_other.c lib/nexthop_group.c lib/northbound.c \
-	lib/northbound_cli.c lib/northbound_db.c lib/openbsd-tree.c \
-	lib/pid_output.c lib/plist.c lib/pqueue.c lib/prefix.c \
-	lib/privs.c lib/ptm_lib.c lib/qobj.c lib/ringbuf.c \
-	lib/routemap.c lib/sbuf.c lib/sha256.c lib/sigevent.c \
-	lib/skiplist.c lib/sockopt.c lib/sockunion.c lib/spf_backoff.c \
-	lib/srcdest_table.c lib/stream.c lib/strlcat.c lib/strlcpy.c \
-	lib/systemd.c lib/table.c lib/termtable.c lib/thread.c \
-	lib/vector.c lib/vrf.c lib/vty.c lib/wheel.c lib/workqueue.c \
-	lib/yang.c lib/yang_translator.c lib/yang_wrappers.c \
-	lib/zclient.c lib/logicalrouter.c lib/lua.c $(am__append_6) \
-	$(am__append_123)
+	lib/csv.c lib/debug.c lib/distribute.c lib/ferr.c lib/filter.c \
+	lib/frr_pthread.c lib/frrstr.c lib/getopt.c lib/getopt1.c \
+	lib/grammar_sandbox.c lib/graph.c lib/hash.c lib/hook.c \
+	lib/id_alloc.c lib/if.c lib/if_rmap.c lib/imsg-buffer.c \
+	lib/imsg.c lib/jhash.c lib/json.c lib/keychain.c \
+	lib/lib_errors.c lib/libfrr.c lib/linklist.c lib/log.c \
+	lib/md5.c lib/memory.c lib/memory_vty.c lib/mlag.c \
+	lib/module.c lib/mpls.c lib/network.c lib/nexthop.c \
+	lib/netns_linux.c lib/netns_other.c lib/nexthop_group.c \
+	lib/northbound.c lib/northbound_cli.c lib/northbound_db.c \
+	lib/openbsd-tree.c lib/pid_output.c lib/plist.c lib/pqueue.c \
+	lib/prefix.c lib/privs.c lib/ptm_lib.c lib/qobj.c \
+	lib/ringbuf.c lib/routemap.c lib/sbuf.c lib/seqlock.c \
+	lib/sha256.c lib/sigevent.c lib/skiplist.c lib/sockopt.c \
+	lib/sockunion.c lib/spf_backoff.c lib/srcdest_table.c \
+	lib/stream.c lib/strlcat.c lib/strlcpy.c lib/systemd.c \
+	lib/table.c lib/termtable.c lib/thread.c lib/typerb.c \
+	lib/typesafe.c lib/vector.c lib/vrf.c lib/vty.c lib/wheel.c \
+	lib/workqueue.c lib/yang.c lib/yang_translator.c \
+	lib/yang_wrappers.c lib/zclient.c lib/logicalrouter.c \
+	lib/lua.c $(am__append_6)
 nodist_lib_libfrr_la_SOURCES = \
 	yang/frr-interface.yang.c \
 	yang/frr-route-types.yang.c \
@@ -3228,6 +3343,10 @@ lib_sysrepo_la_CFLAGS = $(WERROR) $(SYSREPO_CFLAGS)
 lib_sysrepo_la_LDFLAGS = -avoid-version -module -shared -export-dynamic
 lib_sysrepo_la_LIBADD = lib/libfrr.la $(SYSREPO_LIBS)
 lib_sysrepo_la_SOURCES = lib/northbound_sysrepo.c
+lib_grpc_la_CXXFLAGS = $(WERROR) $(GRPC_CFLAGS)
+lib_grpc_la_LDFLAGS = -avoid-version -module -shared -export-dynamic
+lib_grpc_la_LIBADD = lib/libfrr.la grpc/libfrrgrpc_pb.la $(GRPC_LIBS)
+lib_grpc_la_SOURCES = lib/northbound_grpc.cpp
 lib_grammar_sandbox_SOURCES = \
 	lib/grammar_sandbox_main.c
 
@@ -3257,8 +3376,8 @@ am__v_CLIPPY_ = $(am__v_CLIPPY_$(AM_DEFAULT_VERBOSITY))
 am__v_CLIPPY_0 = @echo "  CLIPPY  " $@;
 am__v_CLIPPY_1 = 
 CLIPPY_DEPS = $(HOSTTOOLS)lib/clippy $(top_srcdir)/python/clidef.py
-SUFFIXES = _clippy.c .proto .pb-c.c .pb-c.h .pb.h .yang .yang.c .yin \
-	.yin.c
+SUFFIXES = _clippy.c .proto .pb-c.c .pb-c.h .pb.h .pb.cc .grpc.pb.cc \
+	.yang .yang.c .yin .yin.c
 AM_YFLAGS = -d -Dapi.prefix=@BISON_OPENBRACE@cmd_yy@BISON_CLOSEBRACE@ @BISON_VERBOSE@
 @GIT_VERSION_FALSE@PHONY_GITVERSION = lib/gitversion.h
 
@@ -3297,6 +3416,7 @@ zebra_zebra_SOURCES = \
 	zebra/rtread_sysctl.c \
 	zebra/rule_netlink.c \
 	zebra/rule_socket.c \
+	zebra/zebra_mlag.c \
 	zebra/zebra_l2.c \
 	zebra/zebra_memory.c \
 	zebra/zebra_dplane.c \
@@ -3338,9 +3458,9 @@ zebra_zebra_snmp_la_CFLAGS = $(WERROR) $(SNMP_CFLAGS) -std=gnu99
 zebra_zebra_snmp_la_LDFLAGS = -avoid-version -module -shared -export-dynamic
 zebra_zebra_snmp_la_LIBADD = lib/libfrrsnmp.la
 zebra_zebra_fpm_la_LDFLAGS = -avoid-version -module -shared -export-dynamic
-zebra_zebra_fpm_la_LIBADD = $(am__append_20)
+zebra_zebra_fpm_la_LIBADD = $(am__append_21)
 zebra_zebra_fpm_la_SOURCES = zebra/zebra_fpm.c \
-	zebra/zebra_fpm_netlink.c $(am__append_21) $(am__append_22)
+	zebra/zebra_fpm_netlink.c $(am__append_22) $(am__append_23)
 watchfrr_watchfrr_LDADD = lib/libfrr.la $(LIBCAP)
 watchfrr_watchfrr_SOURCES = \
 	watchfrr/watchfrr.c \
@@ -3376,6 +3496,17 @@ nodist_fpm_libfrrfpm_pb_la_SOURCES = \
 	fpm/fpm.pb-c.c \
 	# end
 
+grpc_libfrrgrpc_pb_la_LDFLAGS = -version-info 0:0:0
+grpc_libfrrgrpc_pb_la_CPPFLAGS = $(AM_CPPFLAGS) $(GRPC_CXXFLAGS)
+nodist_grpc_libfrrgrpc_pb_la_SOURCES = \
+	grpc/frr-northbound.pb.cc \
+	grpc/frr-northbound.grpc.pb.cc \
+	# end
+
+AM_V_PROTOC = $(am__v_PROTOC_$(V))
+am__v_PROTOC_ = $(am__v_PROTOC_$(AM_DEFAULT_VERBOSITY))
+am__v_PROTOC_0 = @echo "  PROTOC" $@;
+am__v_PROTOC_1 = 
 tools_permutations_SOURCES = tools/permutations.c
 tools_permutations_LDADD = lib/libfrr.la
 tools_gen_northbound_callbacks_SOURCES = tools/gen_northbound_callbacks.c
@@ -3392,17 +3523,18 @@ bgpd_libbgp_a_SOURCES = bgpd/bgp_addpath.c bgpd/bgp_advertise.c \
 	bgpd/bgp_flowspec.c bgpd/bgp_flowspec_util.c \
 	bgpd/bgp_flowspec_vty.c bgpd/bgp_fsm.c bgpd/bgp_io.c \
 	bgpd/bgp_keepalives.c bgpd/bgp_label.c bgpd/bgp_labelpool.c \
-	bgpd/bgp_lcommunity.c bgpd/bgp_memory.c bgpd/bgp_mpath.c \
-	bgpd/bgp_mplsvpn.c bgpd/bgp_network.c bgpd/bgp_nexthop.c \
-	bgpd/bgp_nht.c bgpd/bgp_open.c bgpd/bgp_packet.c \
-	bgpd/bgp_pbr.c bgpd/bgp_rd.c bgpd/bgp_regex.c bgpd/bgp_route.c \
-	bgpd/bgp_routemap.c bgpd/bgp_table.c bgpd/bgp_updgrp.c \
-	bgpd/bgp_updgrp_adv.c bgpd/bgp_updgrp_packet.c bgpd/bgp_vpn.c \
-	bgpd/bgp_vty.c bgpd/bgp_zebra.c bgpd/bgpd.c $(am__append_37)
-bgpd_bgpd_SOURCES = bgpd/bgp_main.c $(am__append_38)
-bgpd_bgp_btoa_SOURCES = bgpd/bgp_btoa.c $(am__append_39)
-@ENABLE_BGP_VNC_TRUE@bgpd_bgpd_CFLAGS = $(AM_CFLAGS) -Irfapi -I@top_srcdir@/$(RFPINC)
-@ENABLE_BGP_VNC_TRUE@bgpd_bgp_btoa_CFLAGS = $(AM_CFLAGS) -Irfapi -I@top_srcdir@/$(RFPINC)
+	bgpd/bgp_lcommunity.c bgpd/bgp_mac.c bgpd/bgp_memory.c \
+	bgpd/bgp_mpath.c bgpd/bgp_mplsvpn.c bgpd/bgp_network.c \
+	bgpd/bgp_nexthop.c bgpd/bgp_nht.c bgpd/bgp_open.c \
+	bgpd/bgp_packet.c bgpd/bgp_pbr.c bgpd/bgp_rd.c \
+	bgpd/bgp_regex.c bgpd/bgp_route.c bgpd/bgp_routemap.c \
+	bgpd/bgp_table.c bgpd/bgp_updgrp.c bgpd/bgp_updgrp_adv.c \
+	bgpd/bgp_updgrp_packet.c bgpd/bgp_vpn.c bgpd/bgp_vty.c \
+	bgpd/bgp_zebra.c bgpd/bgpd.c $(am__append_39)
+bgpd_bgpd_SOURCES = bgpd/bgp_main.c $(am__append_40)
+bgpd_bgp_btoa_SOURCES = bgpd/bgp_btoa.c $(am__append_42)
+bgpd_bgpd_CFLAGS = $(AM_CFLAGS) $(am__append_41)
+bgpd_bgp_btoa_CFLAGS = $(AM_CFLAGS) $(am__append_43)
 
 # RFPLDADD is set in bgpd/rfp-example/librfp/subdir.am
 bgpd_bgpd_LDADD = bgpd/libbgp.a $(RFPLDADD) lib/libfrr.la $(LIBCAP) $(LIBM)
@@ -3578,13 +3710,12 @@ ospfclient_libfrrospfapiclient_la_SOURCES = \
 @OSPFCLIENT_TRUE@	# end
 
 ospfclient_ospfclient_LDADD = ospfclient/libfrrospfapiclient.la \
-	$(LIBCAP) $(am__append_67)
+	$(LIBCAP) $(am__append_71)
 ospfclient_ospfclient_SOURCES = \
 	ospfclient/ospfclient.c \
 	# end
 
 LIBISIS_SOURCES = \
-	isisd/dict.c \
 	isisd/isis_adjacency.c \
 	isisd/isis_bfd.c \
 	isisd/isis_circuit.c \
@@ -3758,6 +3889,7 @@ eigrpdheader_HEADERS = \
 eigrpd_eigrpd_SOURCES = eigrpd/eigrp_main.c
 eigrpd_eigrpd_LDADD = eigrpd/libeigrp.a lib/libfrr.la $(LIBCAP)
 sharpd_libsharp_a_SOURCES = \
+	sharpd/sharp_nht.c \
 	sharpd/sharp_zebra.c \
 	sharpd/sharp_vty.c \
 	# end
@@ -3811,6 +3943,7 @@ pimd_libpim_a_SOURCES = \
 	pimd/pim_vty.c \
 	pimd/pim_zebra.c \
 	pimd/pim_zlookup.c \
+	pimd/pim_vxlan.c \
 	pimd/pimd.c \
 	# end
 
@@ -3861,10 +3994,6 @@ bfdd_libbfd_a_SOURCES = \
 
 bfdd_bfdd_SOURCES = bfdd/bfdd.c
 bfdd_bfdd_LDADD = bfdd/libbfd.a lib/libfrr.la
-yang_libyang_plugins_frr_user_types_la_CFLAGS = $(WERROR) $(LIBYANG_CFLAGS)
-yang_libyang_plugins_frr_user_types_la_LDFLAGS = -avoid-version -module -shared -export-dynamic
-yang_libyang_plugins_frr_user_types_la_LIBADD = 
-yang_libyang_plugins_frr_user_types_la_SOURCES = yang/libyang_plugins/frr_user_types.c
 vtysh_vtysh_SOURCES = \
 	vtysh/vtysh_main.c \
 	vtysh/vtysh.c \
@@ -3969,6 +4098,10 @@ tests_isisd_test_isis_vertex_queue_CFLAGS = $(TESTS_CFLAGS)
 tests_isisd_test_isis_vertex_queue_CPPFLAGS = $(TESTS_CPPFLAGS)
 tests_isisd_test_isis_vertex_queue_LDADD = $(ISISD_TEST_LDADD)
 tests_isisd_test_isis_vertex_queue_SOURCES = tests/isisd/test_isis_vertex_queue.c
+tests_lib_cxxcompat_CFLAGS = $(TESTS_CFLAGS) $(CXX_COMPAT_CFLAGS) $(WERROR)
+tests_lib_cxxcompat_CPPFLAGS = $(TESTS_CPPFLAGS)
+tests_lib_cxxcompat_SOURCES = tests/lib/cxxcompat.c
+tests_lib_cxxcompat_LDADD = $(ALL_TESTS_LDADD)
 tests_lib_cli_test_cli_CFLAGS = $(TESTS_CFLAGS)
 tests_lib_cli_test_cli_CPPFLAGS = $(TESTS_CPPFLAGS)
 tests_lib_cli_test_cli_LDADD = $(ALL_TESTS_LDADD)
@@ -3983,6 +4116,10 @@ tests_lib_northbound_test_oper_data_CPPFLAGS = $(TESTS_CPPFLAGS)
 tests_lib_northbound_test_oper_data_LDADD = $(ALL_TESTS_LDADD)
 tests_lib_northbound_test_oper_data_SOURCES = tests/lib/northbound/test_oper_data.c
 nodist_tests_lib_northbound_test_oper_data_SOURCES = yang/frr-test-module.yang.c
+tests_lib_test_atomlist_CFLAGS = $(TESTS_CFLAGS)
+tests_lib_test_atomlist_CPPFLAGS = $(TESTS_CPPFLAGS)
+tests_lib_test_atomlist_LDADD = $(ALL_TESTS_LDADD)
+tests_lib_test_atomlist_SOURCES = tests/lib/test_atomlist.c
 tests_lib_test_buffer_CFLAGS = $(TESTS_CFLAGS)
 tests_lib_test_buffer_CPPFLAGS = $(TESTS_CPPFLAGS)
 tests_lib_test_buffer_LDADD = $(ALL_TESTS_LDADD)
@@ -4030,6 +4167,10 @@ tests_lib_test_segv_CFLAGS = $(TESTS_CFLAGS)
 tests_lib_test_segv_CPPFLAGS = $(TESTS_CPPFLAGS)
 tests_lib_test_segv_LDADD = $(ALL_TESTS_LDADD)
 tests_lib_test_segv_SOURCES = tests/lib/test_segv.c
+tests_lib_test_seqlock_CFLAGS = $(TESTS_CFLAGS)
+tests_lib_test_seqlock_CPPFLAGS = $(TESTS_CPPFLAGS)
+tests_lib_test_seqlock_LDADD = $(ALL_TESTS_LDADD)
+tests_lib_test_seqlock_SOURCES = tests/lib/test_seqlock.c
 tests_lib_test_sig_CFLAGS = $(TESTS_CFLAGS)
 tests_lib_test_sig_CPPFLAGS = $(TESTS_CPPFLAGS)
 tests_lib_test_sig_LDADD = $(ALL_TESTS_LDADD)
@@ -4058,6 +4199,10 @@ tests_lib_test_ttable_CFLAGS = $(TESTS_CFLAGS)
 tests_lib_test_ttable_CPPFLAGS = $(TESTS_CPPFLAGS)
 tests_lib_test_ttable_LDADD = $(ALL_TESTS_LDADD)
 tests_lib_test_ttable_SOURCES = tests/lib/test_ttable.c
+tests_lib_test_typelist_CFLAGS = $(TESTS_CFLAGS)
+tests_lib_test_typelist_CPPFLAGS = $(TESTS_CPPFLAGS)
+tests_lib_test_typelist_LDADD = $(ALL_TESTS_LDADD)
+tests_lib_test_typelist_SOURCES = tests/lib/test_typelist.c tests/helpers/c/prng.c
 tests_lib_test_zlog_CFLAGS = $(TESTS_CFLAGS)
 tests_lib_test_zlog_CPPFLAGS = $(TESTS_CPPFLAGS)
 tests_lib_test_zlog_LDADD = $(ALL_TESTS_LDADD)
@@ -4085,10 +4230,10 @@ all: $(BUILT_SOURCES) config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
 
 .SUFFIXES:
-.SUFFIXES: _clippy.c .proto .pb-c.c .pb-c.h .pb.h .yang .yang.c .yin .yin.c .c .l .lo .o .obj .y
+.SUFFIXES: _clippy.c .proto .pb-c.c .pb-c.h .pb.h .pb.cc .grpc.pb.cc .yang .yang.c .yin .yin.c .c .cc .cpp .l .lo .o .obj .y
 am--refresh: Makefile
 	@:
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/doc/subdir.am $(srcdir)/doc/user/subdir.am $(srcdir)/doc/manpages/subdir.am $(srcdir)/doc/developer/subdir.am $(srcdir)/include/subdir.am $(srcdir)/lib/subdir.am $(srcdir)/zebra/subdir.am $(srcdir)/watchfrr/subdir.am $(srcdir)/qpb/subdir.am $(srcdir)/fpm/subdir.am $(srcdir)/tools/subdir.am $(srcdir)/solaris/subdir.am $(srcdir)/bgpd/subdir.am $(srcdir)/bgpd/rfp-example/librfp/subdir.am $(srcdir)/bgpd/rfp-example/rfptest/subdir.am $(srcdir)/ripd/subdir.am $(srcdir)/ripngd/subdir.am $(srcdir)/ospfd/subdir.am $(srcdir)/ospf6d/subdir.am $(srcdir)/ospfclient/subdir.am $(srcdir)/isisd/subdir.am $(srcdir)/nhrpd/subdir.am $(srcdir)/ldpd/subdir.am $(srcdir)/babeld/subdir.am $(srcdir)/eigrpd/subdir.am $(srcdir)/sharpd/subdir.am $(srcdir)/pimd/subdir.am $(srcdir)/pbrd/subdir.am $(srcdir)/staticd/subdir.am $(srcdir)/bfdd/subdir.am $(srcdir)/yang/subdir.am $(srcdir)/yang/libyang_plugins/subdir.am $(srcdir)/vtysh/subdir.am $(srcdir)/tests/subdir.am $(srcdir)/tests/topotests/subdir.am $(am__configure_deps)
+$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am $(srcdir)/doc/subdir.am $(srcdir)/doc/user/subdir.am $(srcdir)/doc/manpages/subdir.am $(srcdir)/doc/developer/subdir.am $(srcdir)/include/subdir.am $(srcdir)/lib/subdir.am $(srcdir)/zebra/subdir.am $(srcdir)/watchfrr/subdir.am $(srcdir)/qpb/subdir.am $(srcdir)/fpm/subdir.am $(srcdir)/grpc/subdir.am $(srcdir)/tools/subdir.am $(srcdir)/solaris/subdir.am $(srcdir)/bgpd/subdir.am $(srcdir)/bgpd/rfp-example/librfp/subdir.am $(srcdir)/bgpd/rfp-example/rfptest/subdir.am $(srcdir)/ripd/subdir.am $(srcdir)/ripngd/subdir.am $(srcdir)/ospfd/subdir.am $(srcdir)/ospf6d/subdir.am $(srcdir)/ospfclient/subdir.am $(srcdir)/isisd/subdir.am $(srcdir)/nhrpd/subdir.am $(srcdir)/ldpd/subdir.am $(srcdir)/babeld/subdir.am $(srcdir)/eigrpd/subdir.am $(srcdir)/sharpd/subdir.am $(srcdir)/pimd/subdir.am $(srcdir)/pbrd/subdir.am $(srcdir)/staticd/subdir.am $(srcdir)/bfdd/subdir.am $(srcdir)/yang/subdir.am $(srcdir)/yang/libyang_plugins/subdir.am $(srcdir)/vtysh/subdir.am $(srcdir)/tests/subdir.am $(srcdir)/tests/topotests/subdir.am $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -4110,7 +4255,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	    echo ' cd $(top_builddir) && $(SHELL) ./config.status $@ $(am__maybe_remake_depfiles)'; \
 	    cd $(top_builddir) && $(SHELL) ./config.status $@ $(am__maybe_remake_depfiles);; \
 	esac;
-$(srcdir)/doc/subdir.am $(srcdir)/doc/user/subdir.am $(srcdir)/doc/manpages/subdir.am $(srcdir)/doc/developer/subdir.am $(srcdir)/include/subdir.am $(srcdir)/lib/subdir.am $(srcdir)/zebra/subdir.am $(srcdir)/watchfrr/subdir.am $(srcdir)/qpb/subdir.am $(srcdir)/fpm/subdir.am $(srcdir)/tools/subdir.am $(srcdir)/solaris/subdir.am $(srcdir)/bgpd/subdir.am $(srcdir)/bgpd/rfp-example/librfp/subdir.am $(srcdir)/bgpd/rfp-example/rfptest/subdir.am $(srcdir)/ripd/subdir.am $(srcdir)/ripngd/subdir.am $(srcdir)/ospfd/subdir.am $(srcdir)/ospf6d/subdir.am $(srcdir)/ospfclient/subdir.am $(srcdir)/isisd/subdir.am $(srcdir)/nhrpd/subdir.am $(srcdir)/ldpd/subdir.am $(srcdir)/babeld/subdir.am $(srcdir)/eigrpd/subdir.am $(srcdir)/sharpd/subdir.am $(srcdir)/pimd/subdir.am $(srcdir)/pbrd/subdir.am $(srcdir)/staticd/subdir.am $(srcdir)/bfdd/subdir.am $(srcdir)/yang/subdir.am $(srcdir)/yang/libyang_plugins/subdir.am $(srcdir)/vtysh/subdir.am $(srcdir)/tests/subdir.am $(srcdir)/tests/topotests/subdir.am $(am__empty):
+$(srcdir)/doc/subdir.am $(srcdir)/doc/user/subdir.am $(srcdir)/doc/manpages/subdir.am $(srcdir)/doc/developer/subdir.am $(srcdir)/include/subdir.am $(srcdir)/lib/subdir.am $(srcdir)/zebra/subdir.am $(srcdir)/watchfrr/subdir.am $(srcdir)/qpb/subdir.am $(srcdir)/fpm/subdir.am $(srcdir)/grpc/subdir.am $(srcdir)/tools/subdir.am $(srcdir)/solaris/subdir.am $(srcdir)/bgpd/subdir.am $(srcdir)/bgpd/rfp-example/librfp/subdir.am $(srcdir)/bgpd/rfp-example/rfptest/subdir.am $(srcdir)/ripd/subdir.am $(srcdir)/ripngd/subdir.am $(srcdir)/ospfd/subdir.am $(srcdir)/ospf6d/subdir.am $(srcdir)/ospfclient/subdir.am $(srcdir)/isisd/subdir.am $(srcdir)/nhrpd/subdir.am $(srcdir)/ldpd/subdir.am $(srcdir)/babeld/subdir.am $(srcdir)/eigrpd/subdir.am $(srcdir)/sharpd/subdir.am $(srcdir)/pimd/subdir.am $(srcdir)/pbrd/subdir.am $(srcdir)/staticd/subdir.am $(srcdir)/bfdd/subdir.am $(srcdir)/yang/subdir.am $(srcdir)/yang/libyang_plugins/subdir.am $(srcdir)/vtysh/subdir.am $(srcdir)/tests/subdir.am $(srcdir)/tests/topotests/subdir.am $(am__empty):
 
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	$(SHELL) ./config.status --recheck
@@ -4330,41 +4475,6 @@ clean-libLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
-install-libyang_pluginsLTLIBRARIES: $(libyang_plugins_LTLIBRARIES)
-	@$(NORMAL_INSTALL)
-	@list='$(libyang_plugins_LTLIBRARIES)'; test -n "$(libyang_pluginsdir)" || list=; \
-	list2=; for p in $$list; do \
-	  if test -f $$p; then \
-	    list2="$$list2 $$p"; \
-	  else :; fi; \
-	done; \
-	test -z "$$list2" || { \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(libyang_pluginsdir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(libyang_pluginsdir)" || exit 1; \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(libyang_pluginsdir)'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(libyang_pluginsdir)"; \
-	}
-
-uninstall-libyang_pluginsLTLIBRARIES:
-	@$(NORMAL_UNINSTALL)
-	@list='$(libyang_plugins_LTLIBRARIES)'; test -n "$(libyang_pluginsdir)" || list=; \
-	for p in $$list; do \
-	  $(am__strip_dir) \
-	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(libyang_pluginsdir)/$$f'"; \
-	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(libyang_pluginsdir)/$$f"; \
-	done
-
-clean-libyang_pluginsLTLIBRARIES:
-	-test -z "$(libyang_plugins_LTLIBRARIES)" || rm -f $(libyang_plugins_LTLIBRARIES)
-	@list='$(libyang_plugins_LTLIBRARIES)'; \
-	locs=`for p in $$list; do echo $$p; done | \
-	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
-	      sort -u`; \
-	test -z "$$locs" || { \
-	  echo rm -f $${locs}; \
-	  rm -f $${locs}; \
-	}
-
 install-moduleLTLIBRARIES: $(module_LTLIBRARIES)
 	@$(NORMAL_INSTALL)
 	@list='$(module_LTLIBRARIES)'; test -n "$(moduledir)" || list=; \
@@ -4529,6 +4639,8 @@ bgpd/bgp_labelpool.$(OBJEXT): bgpd/$(am__dirstamp) \
 	bgpd/$(DEPDIR)/$(am__dirstamp)
 bgpd/bgp_lcommunity.$(OBJEXT): bgpd/$(am__dirstamp) \
 	bgpd/$(DEPDIR)/$(am__dirstamp)
+bgpd/bgp_mac.$(OBJEXT): bgpd/$(am__dirstamp) \
+	bgpd/$(DEPDIR)/$(am__dirstamp)
 bgpd/bgp_memory.$(OBJEXT): bgpd/$(am__dirstamp) \
 	bgpd/$(DEPDIR)/$(am__dirstamp)
 bgpd/bgp_mpath.$(OBJEXT): bgpd/$(am__dirstamp) \
@@ -4684,8 +4796,6 @@ isisd/$(am__dirstamp):
 isisd/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) isisd/$(DEPDIR)
 	@: > isisd/$(DEPDIR)/$(am__dirstamp)
-isisd/libfabric_a-dict.$(OBJEXT): isisd/$(am__dirstamp) \
-	isisd/$(DEPDIR)/$(am__dirstamp)
 isisd/libfabric_a-isis_adjacency.$(OBJEXT): isisd/$(am__dirstamp) \
 	isisd/$(DEPDIR)/$(am__dirstamp)
 isisd/libfabric_a-isis_bfd.$(OBJEXT): isisd/$(am__dirstamp) \
@@ -4747,8 +4857,6 @@ isisd/libfabric.a: $(isisd_libfabric_a_OBJECTS) $(isisd_libfabric_a_DEPENDENCIES
 	$(AM_V_at)-rm -f isisd/libfabric.a
 	$(AM_V_AR)$(isisd_libfabric_a_AR) isisd/libfabric.a $(isisd_libfabric_a_OBJECTS) $(isisd_libfabric_a_LIBADD)
 	$(AM_V_at)$(RANLIB) isisd/libfabric.a
-isisd/dict.$(OBJEXT): isisd/$(am__dirstamp) \
-	isisd/$(DEPDIR)/$(am__dirstamp)
 isisd/isis_adjacency.$(OBJEXT): isisd/$(am__dirstamp) \
 	isisd/$(DEPDIR)/$(am__dirstamp)
 isisd/isis_bfd.$(OBJEXT): isisd/$(am__dirstamp) \
@@ -5120,6 +5228,8 @@ pimd/pim_zebra.$(OBJEXT): pimd/$(am__dirstamp) \
 	pimd/$(DEPDIR)/$(am__dirstamp)
 pimd/pim_zlookup.$(OBJEXT): pimd/$(am__dirstamp) \
 	pimd/$(DEPDIR)/$(am__dirstamp)
+pimd/pim_vxlan.$(OBJEXT): pimd/$(am__dirstamp) \
+	pimd/$(DEPDIR)/$(am__dirstamp)
 pimd/pimd.$(OBJEXT): pimd/$(am__dirstamp) \
 	pimd/$(DEPDIR)/$(am__dirstamp)
 
@@ -5201,6 +5311,8 @@ sharpd/$(am__dirstamp):
 sharpd/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) sharpd/$(DEPDIR)
 	@: > sharpd/$(DEPDIR)/$(am__dirstamp)
+sharpd/sharp_nht.$(OBJEXT): sharpd/$(am__dirstamp) \
+	sharpd/$(DEPDIR)/$(am__dirstamp)
 sharpd/sharp_zebra.$(OBJEXT): sharpd/$(am__dirstamp) \
 	sharpd/$(DEPDIR)/$(am__dirstamp)
 sharpd/sharp_vty.$(OBJEXT): sharpd/$(am__dirstamp) \
@@ -5256,6 +5368,19 @@ fpm/libfrrfpm_pb_la-fpm.pb-c.lo: fpm/$(am__dirstamp) \
 
 fpm/libfrrfpm_pb.la: $(fpm_libfrrfpm_pb_la_OBJECTS) $(fpm_libfrrfpm_pb_la_DEPENDENCIES) $(EXTRA_fpm_libfrrfpm_pb_la_DEPENDENCIES) fpm/$(am__dirstamp)
 	$(AM_V_CCLD)$(fpm_libfrrfpm_pb_la_LINK) $(am_fpm_libfrrfpm_pb_la_rpath) $(fpm_libfrrfpm_pb_la_OBJECTS) $(fpm_libfrrfpm_pb_la_LIBADD) $(LIBS)
+grpc/$(am__dirstamp):
+	@$(MKDIR_P) grpc
+	@: > grpc/$(am__dirstamp)
+grpc/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) grpc/$(DEPDIR)
+	@: > grpc/$(DEPDIR)/$(am__dirstamp)
+grpc/libfrrgrpc_pb_la-frr-northbound.pb.lo: grpc/$(am__dirstamp) \
+	grpc/$(DEPDIR)/$(am__dirstamp)
+grpc/libfrrgrpc_pb_la-frr-northbound.grpc.pb.lo: grpc/$(am__dirstamp) \
+	grpc/$(DEPDIR)/$(am__dirstamp)
+
+grpc/libfrrgrpc_pb.la: $(grpc_libfrrgrpc_pb_la_OBJECTS) $(grpc_libfrrgrpc_pb_la_DEPENDENCIES) $(EXTRA_grpc_libfrrgrpc_pb_la_DEPENDENCIES) grpc/$(am__dirstamp)
+	$(AM_V_CXXLD)$(grpc_libfrrgrpc_pb_la_LINK) $(am_grpc_libfrrgrpc_pb_la_rpath) $(grpc_libfrrgrpc_pb_la_OBJECTS) $(grpc_libfrrgrpc_pb_la_LIBADD) $(LIBS)
 lib/$(am__dirstamp):
 	@$(MKDIR_P) lib
 	@: > lib/$(am__dirstamp)
@@ -5267,7 +5392,13 @@ lib/confd_la-northbound_confd.lo: lib/$(am__dirstamp) \
 
 lib/confd.la: $(lib_confd_la_OBJECTS) $(lib_confd_la_DEPENDENCIES) $(EXTRA_lib_confd_la_DEPENDENCIES) lib/$(am__dirstamp)
 	$(AM_V_CCLD)$(lib_confd_la_LINK) $(am_lib_confd_la_rpath) $(lib_confd_la_OBJECTS) $(lib_confd_la_LIBADD) $(LIBS)
+lib/grpc_la-northbound_grpc.lo: lib/$(am__dirstamp) \
+	lib/$(DEPDIR)/$(am__dirstamp)
+
+lib/grpc.la: $(lib_grpc_la_OBJECTS) $(lib_grpc_la_DEPENDENCIES) $(EXTRA_lib_grpc_la_DEPENDENCIES) lib/$(am__dirstamp)
+	$(AM_V_CXXLD)$(lib_grpc_la_LINK) $(am_lib_grpc_la_rpath) $(lib_grpc_la_OBJECTS) $(lib_grpc_la_LIBADD) $(LIBS)
 lib/agg_table.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
+lib/atomlist.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/bfd.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/buffer.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/checksum.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
@@ -5285,8 +5416,6 @@ lib/command_parse.lo: lib/$(am__dirstamp) \
 lib/csv.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/debug.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/distribute.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
-lib/event_counter.lo: lib/$(am__dirstamp) \
-	lib/$(DEPDIR)/$(am__dirstamp)
 lib/ferr.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/filter.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/frr_pthread.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
@@ -5313,6 +5442,7 @@ lib/log.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/md5.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/memory.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/memory_vty.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
+lib/mlag.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/module.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/mpls.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/network.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
@@ -5337,6 +5467,7 @@ lib/qobj.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/ringbuf.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/routemap.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/sbuf.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
+lib/seqlock.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/sha256.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/sigevent.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/skiplist.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
@@ -5352,6 +5483,8 @@ lib/systemd.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/table.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/termtable.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/thread.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
+lib/typerb.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
+lib/typesafe.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/vector.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/vrf.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/vty.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
@@ -5367,15 +5500,6 @@ lib/logicalrouter.lo: lib/$(am__dirstamp) \
 	lib/$(DEPDIR)/$(am__dirstamp)
 lib/lua.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
 lib/db.lo: lib/$(am__dirstamp) lib/$(DEPDIR)/$(am__dirstamp)
-yang/libyang_plugins/$(am__dirstamp):
-	@$(MKDIR_P) yang/libyang_plugins
-	@: > yang/libyang_plugins/$(am__dirstamp)
-yang/libyang_plugins/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) yang/libyang_plugins/$(DEPDIR)
-	@: > yang/libyang_plugins/$(DEPDIR)/$(am__dirstamp)
-yang/libyang_plugins/frr_user_types.lo:  \
-	yang/libyang_plugins/$(am__dirstamp) \
-	yang/libyang_plugins/$(DEPDIR)/$(am__dirstamp)
 yang/$(am__dirstamp):
 	@$(MKDIR_P) yang
 	@: > yang/$(am__dirstamp)
@@ -5449,12 +5573,6 @@ ripd/ripd_snmp_la-rip_snmp.lo: ripd/$(am__dirstamp) \
 
 ripd/ripd_snmp.la: $(ripd_ripd_snmp_la_OBJECTS) $(ripd_ripd_snmp_la_DEPENDENCIES) $(EXTRA_ripd_ripd_snmp_la_DEPENDENCIES) ripd/$(am__dirstamp)
 	$(AM_V_CCLD)$(ripd_ripd_snmp_la_LINK) $(am_ripd_ripd_snmp_la_rpath) $(ripd_ripd_snmp_la_OBJECTS) $(ripd_ripd_snmp_la_LIBADD) $(LIBS)
-yang/libyang_plugins/frr_user_types_la-frr_user_types.lo:  \
-	yang/libyang_plugins/$(am__dirstamp) \
-	yang/libyang_plugins/$(DEPDIR)/$(am__dirstamp)
-
-yang/libyang_plugins/frr_user_types.la: $(yang_libyang_plugins_frr_user_types_la_OBJECTS) $(yang_libyang_plugins_frr_user_types_la_DEPENDENCIES) $(EXTRA_yang_libyang_plugins_frr_user_types_la_DEPENDENCIES) yang/libyang_plugins/$(am__dirstamp)
-	$(AM_V_CCLD)$(yang_libyang_plugins_frr_user_types_la_LINK) $(am_yang_libyang_plugins_frr_user_types_la_rpath) $(yang_libyang_plugins_frr_user_types_la_OBJECTS) $(yang_libyang_plugins_frr_user_types_la_LIBADD) $(LIBS)
 zebra/$(am__dirstamp):
 	@$(MKDIR_P) zebra
 	@: > zebra/$(am__dirstamp)
@@ -5841,6 +5959,18 @@ tests/lib/cli/test_commands-test_commands_defun.$(OBJEXT):  \
 tests/lib/cli/test_commands$(EXEEXT): $(tests_lib_cli_test_commands_OBJECTS) $(tests_lib_cli_test_commands_DEPENDENCIES) $(EXTRA_tests_lib_cli_test_commands_DEPENDENCIES) tests/lib/cli/$(am__dirstamp)
 	@rm -f tests/lib/cli/test_commands$(EXEEXT)
 	$(AM_V_CCLD)$(tests_lib_cli_test_commands_LINK) $(tests_lib_cli_test_commands_OBJECTS) $(tests_lib_cli_test_commands_LDADD) $(LIBS)
+tests/lib/$(am__dirstamp):
+	@$(MKDIR_P) tests/lib
+	@: > tests/lib/$(am__dirstamp)
+tests/lib/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) tests/lib/$(DEPDIR)
+	@: > tests/lib/$(DEPDIR)/$(am__dirstamp)
+tests/lib/cxxcompat-cxxcompat.$(OBJEXT): tests/lib/$(am__dirstamp) \
+	tests/lib/$(DEPDIR)/$(am__dirstamp)
+
+tests/lib/cxxcompat$(EXEEXT): $(tests_lib_cxxcompat_OBJECTS) $(tests_lib_cxxcompat_DEPENDENCIES) $(EXTRA_tests_lib_cxxcompat_DEPENDENCIES) tests/lib/$(am__dirstamp)
+	@rm -f tests/lib/cxxcompat$(EXEEXT)
+	$(AM_V_CCLD)$(tests_lib_cxxcompat_LINK) $(tests_lib_cxxcompat_OBJECTS) $(tests_lib_cxxcompat_LDADD) $(LIBS)
 tests/lib/northbound/$(am__dirstamp):
 	@$(MKDIR_P) tests/lib/northbound
 	@: > tests/lib/northbound/$(am__dirstamp)
@@ -5856,12 +5986,12 @@ yang/tests_lib_northbound_test_oper_data-frr-test-module.yang.$(OBJEXT):  \
 tests/lib/northbound/test_oper_data$(EXEEXT): $(tests_lib_northbound_test_oper_data_OBJECTS) $(tests_lib_northbound_test_oper_data_DEPENDENCIES) $(EXTRA_tests_lib_northbound_test_oper_data_DEPENDENCIES) tests/lib/northbound/$(am__dirstamp)
 	@rm -f tests/lib/northbound/test_oper_data$(EXEEXT)
 	$(AM_V_CCLD)$(tests_lib_northbound_test_oper_data_LINK) $(tests_lib_northbound_test_oper_data_OBJECTS) $(tests_lib_northbound_test_oper_data_LDADD) $(LIBS)
-tests/lib/$(am__dirstamp):
-	@$(MKDIR_P) tests/lib
-	@: > tests/lib/$(am__dirstamp)
-tests/lib/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) tests/lib/$(DEPDIR)
-	@: > tests/lib/$(DEPDIR)/$(am__dirstamp)
+tests/lib/test_atomlist-test_atomlist.$(OBJEXT):  \
+	tests/lib/$(am__dirstamp) tests/lib/$(DEPDIR)/$(am__dirstamp)
+
+tests/lib/test_atomlist$(EXEEXT): $(tests_lib_test_atomlist_OBJECTS) $(tests_lib_test_atomlist_DEPENDENCIES) $(EXTRA_tests_lib_test_atomlist_DEPENDENCIES) tests/lib/$(am__dirstamp)
+	@rm -f tests/lib/test_atomlist$(EXEEXT)
+	$(AM_V_CCLD)$(tests_lib_test_atomlist_LINK) $(tests_lib_test_atomlist_OBJECTS) $(tests_lib_test_atomlist_LDADD) $(LIBS)
 tests/lib/test_buffer-test_buffer.$(OBJEXT):  \
 	tests/lib/$(am__dirstamp) tests/lib/$(DEPDIR)/$(am__dirstamp)
 
@@ -5946,6 +6076,12 @@ tests/lib/test_segv-test_segv.$(OBJEXT): tests/lib/$(am__dirstamp) \
 tests/lib/test_segv$(EXEEXT): $(tests_lib_test_segv_OBJECTS) $(tests_lib_test_segv_DEPENDENCIES) $(EXTRA_tests_lib_test_segv_DEPENDENCIES) tests/lib/$(am__dirstamp)
 	@rm -f tests/lib/test_segv$(EXEEXT)
 	$(AM_V_CCLD)$(tests_lib_test_segv_LINK) $(tests_lib_test_segv_OBJECTS) $(tests_lib_test_segv_LDADD) $(LIBS)
+tests/lib/test_seqlock-test_seqlock.$(OBJEXT):  \
+	tests/lib/$(am__dirstamp) tests/lib/$(DEPDIR)/$(am__dirstamp)
+
+tests/lib/test_seqlock$(EXEEXT): $(tests_lib_test_seqlock_OBJECTS) $(tests_lib_test_seqlock_DEPENDENCIES) $(EXTRA_tests_lib_test_seqlock_DEPENDENCIES) tests/lib/$(am__dirstamp)
+	@rm -f tests/lib/test_seqlock$(EXEEXT)
+	$(AM_V_CCLD)$(tests_lib_test_seqlock_LINK) $(tests_lib_test_seqlock_OBJECTS) $(tests_lib_test_seqlock_LDADD) $(LIBS)
 tests/lib/test_sig-test_sig.$(OBJEXT): tests/lib/$(am__dirstamp) \
 	tests/lib/$(DEPDIR)/$(am__dirstamp)
 
@@ -5997,6 +6133,15 @@ tests/lib/test_ttable-test_ttable.$(OBJEXT):  \
 tests/lib/test_ttable$(EXEEXT): $(tests_lib_test_ttable_OBJECTS) $(tests_lib_test_ttable_DEPENDENCIES) $(EXTRA_tests_lib_test_ttable_DEPENDENCIES) tests/lib/$(am__dirstamp)
 	@rm -f tests/lib/test_ttable$(EXEEXT)
 	$(AM_V_CCLD)$(tests_lib_test_ttable_LINK) $(tests_lib_test_ttable_OBJECTS) $(tests_lib_test_ttable_LDADD) $(LIBS)
+tests/lib/test_typelist-test_typelist.$(OBJEXT):  \
+	tests/lib/$(am__dirstamp) tests/lib/$(DEPDIR)/$(am__dirstamp)
+tests/helpers/c/lib_test_typelist-prng.$(OBJEXT):  \
+	tests/helpers/c/$(am__dirstamp) \
+	tests/helpers/c/$(DEPDIR)/$(am__dirstamp)
+
+tests/lib/test_typelist$(EXEEXT): $(tests_lib_test_typelist_OBJECTS) $(tests_lib_test_typelist_DEPENDENCIES) $(EXTRA_tests_lib_test_typelist_DEPENDENCIES) tests/lib/$(am__dirstamp)
+	@rm -f tests/lib/test_typelist$(EXEEXT)
+	$(AM_V_CCLD)$(tests_lib_test_typelist_LINK) $(tests_lib_test_typelist_OBJECTS) $(tests_lib_test_typelist_LDADD) $(LIBS)
 tests/lib/test_zlog-test_zlog.$(OBJEXT): tests/lib/$(am__dirstamp) \
 	tests/lib/$(DEPDIR)/$(am__dirstamp)
 
@@ -6143,6 +6288,8 @@ zebra/rule_netlink.$(OBJEXT): zebra/$(am__dirstamp) \
 	zebra/$(DEPDIR)/$(am__dirstamp)
 zebra/rule_socket.$(OBJEXT): zebra/$(am__dirstamp) \
 	zebra/$(DEPDIR)/$(am__dirstamp)
+zebra/zebra_mlag.$(OBJEXT): zebra/$(am__dirstamp) \
+	zebra/$(DEPDIR)/$(am__dirstamp)
 zebra/zebra_l2.$(OBJEXT): zebra/$(am__dirstamp) \
 	zebra/$(DEPDIR)/$(am__dirstamp)
 zebra/zebra_memory.$(OBJEXT): zebra/$(am__dirstamp) \
@@ -6284,6 +6431,8 @@ mostlyclean-compile:
 	-rm -f eigrpd/*.$(OBJEXT)
 	-rm -f fpm/*.$(OBJEXT)
 	-rm -f fpm/*.lo
+	-rm -f grpc/*.$(OBJEXT)
+	-rm -f grpc/*.lo
 	-rm -f isisd/*.$(OBJEXT)
 	-rm -f ldpd/*.$(OBJEXT)
 	-rm -f lib/*.$(OBJEXT)
@@ -6316,8 +6465,6 @@ mostlyclean-compile:
 	-rm -f watchfrr/*.$(OBJEXT)
 	-rm -f yang/*.$(OBJEXT)
 	-rm -f yang/*.lo
-	-rm -f yang/libyang_plugins/*.$(OBJEXT)
-	-rm -f yang/libyang_plugins/*.lo
 	-rm -f zebra/*.$(OBJEXT)
 	-rm -f zebra/*.lo
 
@@ -6378,6 +6525,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@bgpd/$(DEPDIR)/bgp_label.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@bgpd/$(DEPDIR)/bgp_labelpool.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@bgpd/$(DEPDIR)/bgp_lcommunity.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@bgpd/$(DEPDIR)/bgp_mac.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@bgpd/$(DEPDIR)/bgp_memory.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@bgpd/$(DEPDIR)/bgp_mpath.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@bgpd/$(DEPDIR)/bgp_mplsvpn.Po@am__quote@ # am--include-marker
@@ -6444,7 +6592,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@eigrpd/$(DEPDIR)/eigrpd.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@fpm/$(DEPDIR)/libfrrfpm_pb_la-fpm.pb-c.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@fpm/$(DEPDIR)/libfrrfpm_pb_la-fpm_pb.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/dict.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.grpc.pb.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.pb.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/fabricd-isis_bpf.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/fabricd-isis_dlpi.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/fabricd-isis_main.Po@am__quote@ # am--include-marker
@@ -6482,7 +6631,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/isis_zebra.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/isisd.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/iso_checksum.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/libfabric_a-dict.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/libfabric_a-fabricd.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/libfabric_a-isis_adjacency.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@isisd/$(DEPDIR)/libfabric_a-isis_bfd.Po@am__quote@ # am--include-marker
@@ -6539,6 +6687,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@ldpd/$(DEPDIR)/socket.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@ldpd/$(DEPDIR)/util.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/agg_table.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/atomlist.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/bfd.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/buffer.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/checksum.Plo@am__quote@ # am--include-marker
@@ -6561,7 +6710,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/db.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/debug.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/distribute.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/event_counter.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/ferr.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/filter.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/frr_pthread.Plo@am__quote@ # am--include-marker
@@ -6571,6 +6719,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/grammar_sandbox.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/grammar_sandbox_main.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/graph.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/grpc_la-northbound_grpc.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/hash.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/hook.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/id_alloc.Plo@am__quote@ # am--include-marker
@@ -6593,6 +6742,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/md5.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/memory.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/memory_vty.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/mlag.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/module.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/mpls.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/netns_linux.Plo@am__quote@ # am--include-marker
@@ -6614,6 +6764,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/ringbuf.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/routemap.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/sbuf.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/seqlock.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/sha256.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/sigevent.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/skiplist.Plo@am__quote@ # am--include-marker
@@ -6629,6 +6780,8 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/table.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/termtable.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/thread.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/typerb.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/typesafe.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/vector.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/vrf.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@lib/$(DEPDIR)/vty.Plo@am__quote@ # am--include-marker
@@ -6769,6 +6922,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@pimd/$(DEPDIR)/pim_util.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@pimd/$(DEPDIR)/pim_version.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@pimd/$(DEPDIR)/pim_vty.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@pimd/$(DEPDIR)/pim_vxlan.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@pimd/$(DEPDIR)/pim_zebra.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@pimd/$(DEPDIR)/pim_zlookup.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@pimd/$(DEPDIR)/pimd.Po@am__quote@ # am--include-marker
@@ -6803,6 +6957,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@ripngd/$(DEPDIR)/ripng_zebra.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@ripngd/$(DEPDIR)/ripngd.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@sharpd/$(DEPDIR)/sharp_main.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@sharpd/$(DEPDIR)/sharp_nht.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@sharpd/$(DEPDIR)/sharp_vty.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@sharpd/$(DEPDIR)/sharp_zebra.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@staticd/$(DEPDIR)/static_main.Po@am__quote@ # am--include-marker
@@ -6828,9 +6983,12 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@tests/helpers/c/$(DEPDIR)/lib_test_srcdest_table-prng.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/helpers/c/$(DEPDIR)/lib_test_timer_correctness-prng.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/helpers/c/$(DEPDIR)/lib_test_timer_performance-prng.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@tests/helpers/c/$(DEPDIR)/lib_test_typelist-prng.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/isisd/$(DEPDIR)/test_fuzz_isis_tlv-test_fuzz_isis_tlv.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/isisd/$(DEPDIR)/test_isis_lspdb-test_isis_lspdb.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/isisd/$(DEPDIR)/test_isis_vertex_queue-test_isis_vertex_queue.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/cxxcompat-cxxcompat.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_atomlist-test_atomlist.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_buffer-test_buffer.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_checksum-test_checksum.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_graph-test_graph.Po@am__quote@ # am--include-marker
@@ -6843,6 +7001,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_privs-test_privs.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_ringbuf-test_ringbuf.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_segv-test_segv.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_seqlock-test_seqlock.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_sig-test_sig.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_srcdest_table-test_srcdest_table.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_stream-test_stream.Po@am__quote@ # am--include-marker
@@ -6850,6 +7009,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_timer_correctness-test_timer_correctness.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_timer_performance-test_timer_performance.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_ttable-test_ttable.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_typelist-test_typelist.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_zlog-test_zlog.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/$(DEPDIR)/test_zmq-test_zmq.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@tests/lib/cli/$(DEPDIR)/ospf6d_test_lsdb-common_cli.Po@am__quote@ # am--include-marker
@@ -6878,8 +7038,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@yang/$(DEPDIR)/frr-ripngd.yang.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@yang/$(DEPDIR)/frr-route-types.yang.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@yang/$(DEPDIR)/tests_lib_northbound_test_oper_data-frr-test-module.yang.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@yang/libyang_plugins/$(DEPDIR)/frr_user_types.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@yang/libyang_plugins/$(DEPDIR)/frr_user_types_la-frr_user_types.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@zebra/$(DEPDIR)/connected.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@zebra/$(DEPDIR)/debug.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@zebra/$(DEPDIR)/if_ioctl.Po@am__quote@ # am--include-marker
@@ -6919,6 +7077,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@zebra/$(DEPDIR)/zebra_fpm_protobuf.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@zebra/$(DEPDIR)/zebra_l2.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@zebra/$(DEPDIR)/zebra_memory.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@zebra/$(DEPDIR)/zebra_mlag.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@zebra/$(DEPDIR)/zebra_mpls.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@zebra/$(DEPDIR)/zebra_mpls_netlink.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@zebra/$(DEPDIR)/zebra_mpls_null.Po@am__quote@ # am--include-marker
@@ -6971,20 +7130,6 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
-
-isisd/libfabric_a-dict.o: isisd/dict.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(isisd_libfabric_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT isisd/libfabric_a-dict.o -MD -MP -MF isisd/$(DEPDIR)/libfabric_a-dict.Tpo -c -o isisd/libfabric_a-dict.o `test -f 'isisd/dict.c' || echo '$(srcdir)/'`isisd/dict.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) isisd/$(DEPDIR)/libfabric_a-dict.Tpo isisd/$(DEPDIR)/libfabric_a-dict.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='isisd/dict.c' object='isisd/libfabric_a-dict.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(isisd_libfabric_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o isisd/libfabric_a-dict.o `test -f 'isisd/dict.c' || echo '$(srcdir)/'`isisd/dict.c
-
-isisd/libfabric_a-dict.obj: isisd/dict.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(isisd_libfabric_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT isisd/libfabric_a-dict.obj -MD -MP -MF isisd/$(DEPDIR)/libfabric_a-dict.Tpo -c -o isisd/libfabric_a-dict.obj `if test -f 'isisd/dict.c'; then $(CYGPATH_W) 'isisd/dict.c'; else $(CYGPATH_W) '$(srcdir)/isisd/dict.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) isisd/$(DEPDIR)/libfabric_a-dict.Tpo isisd/$(DEPDIR)/libfabric_a-dict.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='isisd/dict.c' object='isisd/libfabric_a-dict.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(isisd_libfabric_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -c -o isisd/libfabric_a-dict.obj `if test -f 'isisd/dict.c'; then $(CYGPATH_W) 'isisd/dict.c'; else $(CYGPATH_W) '$(srcdir)/isisd/dict.c'; fi`
 
 isisd/libfabric_a-isis_adjacency.o: isisd/isis_adjacency.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(isisd_libfabric_a_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS) -MT isisd/libfabric_a-isis_adjacency.o -MD -MP -MF isisd/$(DEPDIR)/libfabric_a-isis_adjacency.Tpo -c -o isisd/libfabric_a-isis_adjacency.o `test -f 'isisd/isis_adjacency.c' || echo '$(srcdir)/'`isisd/isis_adjacency.c
@@ -7482,13 +7627,6 @@ ripd/ripd_snmp_la-rip_snmp.lo: ripd/rip_snmp.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='ripd/rip_snmp.c' object='ripd/ripd_snmp_la-rip_snmp.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ripd_ripd_snmp_la_CFLAGS) $(CFLAGS) -c -o ripd/ripd_snmp_la-rip_snmp.lo `test -f 'ripd/rip_snmp.c' || echo '$(srcdir)/'`ripd/rip_snmp.c
-
-yang/libyang_plugins/frr_user_types_la-frr_user_types.lo: yang/libyang_plugins/frr_user_types.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(yang_libyang_plugins_frr_user_types_la_CFLAGS) $(CFLAGS) -MT yang/libyang_plugins/frr_user_types_la-frr_user_types.lo -MD -MP -MF yang/libyang_plugins/$(DEPDIR)/frr_user_types_la-frr_user_types.Tpo -c -o yang/libyang_plugins/frr_user_types_la-frr_user_types.lo `test -f 'yang/libyang_plugins/frr_user_types.c' || echo '$(srcdir)/'`yang/libyang_plugins/frr_user_types.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) yang/libyang_plugins/$(DEPDIR)/frr_user_types_la-frr_user_types.Tpo yang/libyang_plugins/$(DEPDIR)/frr_user_types_la-frr_user_types.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='yang/libyang_plugins/frr_user_types.c' object='yang/libyang_plugins/frr_user_types_la-frr_user_types.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(yang_libyang_plugins_frr_user_types_la_CFLAGS) $(CFLAGS) -c -o yang/libyang_plugins/frr_user_types_la-frr_user_types.lo `test -f 'yang/libyang_plugins/frr_user_types.c' || echo '$(srcdir)/'`yang/libyang_plugins/frr_user_types.c
 
 zebra/zebra_snmp_la-zebra_snmp.lo: zebra/zebra_snmp.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(zebra_zebra_snmp_la_CFLAGS) $(CFLAGS) -MT zebra/zebra_snmp_la-zebra_snmp.lo -MD -MP -MF zebra/$(DEPDIR)/zebra_snmp_la-zebra_snmp.Tpo -c -o zebra/zebra_snmp_la-zebra_snmp.lo `test -f 'zebra/zebra_snmp.c' || echo '$(srcdir)/'`zebra/zebra_snmp.c
@@ -8253,6 +8391,20 @@ tests/lib/cli/test_commands-test_commands_defun.obj: tests/lib/cli/test_commands
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_cli_test_commands_CPPFLAGS) $(CPPFLAGS) $(tests_lib_cli_test_commands_CFLAGS) $(CFLAGS) -c -o tests/lib/cli/test_commands-test_commands_defun.obj `if test -f 'tests/lib/cli/test_commands_defun.c'; then $(CYGPATH_W) 'tests/lib/cli/test_commands_defun.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/cli/test_commands_defun.c'; fi`
 
+tests/lib/cxxcompat-cxxcompat.o: tests/lib/cxxcompat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_cxxcompat_CPPFLAGS) $(CPPFLAGS) $(tests_lib_cxxcompat_CFLAGS) $(CFLAGS) -MT tests/lib/cxxcompat-cxxcompat.o -MD -MP -MF tests/lib/$(DEPDIR)/cxxcompat-cxxcompat.Tpo -c -o tests/lib/cxxcompat-cxxcompat.o `test -f 'tests/lib/cxxcompat.c' || echo '$(srcdir)/'`tests/lib/cxxcompat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/$(DEPDIR)/cxxcompat-cxxcompat.Tpo tests/lib/$(DEPDIR)/cxxcompat-cxxcompat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tests/lib/cxxcompat.c' object='tests/lib/cxxcompat-cxxcompat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_cxxcompat_CPPFLAGS) $(CPPFLAGS) $(tests_lib_cxxcompat_CFLAGS) $(CFLAGS) -c -o tests/lib/cxxcompat-cxxcompat.o `test -f 'tests/lib/cxxcompat.c' || echo '$(srcdir)/'`tests/lib/cxxcompat.c
+
+tests/lib/cxxcompat-cxxcompat.obj: tests/lib/cxxcompat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_cxxcompat_CPPFLAGS) $(CPPFLAGS) $(tests_lib_cxxcompat_CFLAGS) $(CFLAGS) -MT tests/lib/cxxcompat-cxxcompat.obj -MD -MP -MF tests/lib/$(DEPDIR)/cxxcompat-cxxcompat.Tpo -c -o tests/lib/cxxcompat-cxxcompat.obj `if test -f 'tests/lib/cxxcompat.c'; then $(CYGPATH_W) 'tests/lib/cxxcompat.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/cxxcompat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/$(DEPDIR)/cxxcompat-cxxcompat.Tpo tests/lib/$(DEPDIR)/cxxcompat-cxxcompat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tests/lib/cxxcompat.c' object='tests/lib/cxxcompat-cxxcompat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_cxxcompat_CPPFLAGS) $(CPPFLAGS) $(tests_lib_cxxcompat_CFLAGS) $(CFLAGS) -c -o tests/lib/cxxcompat-cxxcompat.obj `if test -f 'tests/lib/cxxcompat.c'; then $(CYGPATH_W) 'tests/lib/cxxcompat.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/cxxcompat.c'; fi`
+
 tests/lib/northbound/test_oper_data-test_oper_data.o: tests/lib/northbound/test_oper_data.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_northbound_test_oper_data_CPPFLAGS) $(CPPFLAGS) $(tests_lib_northbound_test_oper_data_CFLAGS) $(CFLAGS) -MT tests/lib/northbound/test_oper_data-test_oper_data.o -MD -MP -MF tests/lib/northbound/$(DEPDIR)/test_oper_data-test_oper_data.Tpo -c -o tests/lib/northbound/test_oper_data-test_oper_data.o `test -f 'tests/lib/northbound/test_oper_data.c' || echo '$(srcdir)/'`tests/lib/northbound/test_oper_data.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/northbound/$(DEPDIR)/test_oper_data-test_oper_data.Tpo tests/lib/northbound/$(DEPDIR)/test_oper_data-test_oper_data.Po
@@ -8280,6 +8432,20 @@ yang/tests_lib_northbound_test_oper_data-frr-test-module.yang.obj: yang/frr-test
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='yang/frr-test-module.yang.c' object='yang/tests_lib_northbound_test_oper_data-frr-test-module.yang.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_northbound_test_oper_data_CPPFLAGS) $(CPPFLAGS) $(tests_lib_northbound_test_oper_data_CFLAGS) $(CFLAGS) -c -o yang/tests_lib_northbound_test_oper_data-frr-test-module.yang.obj `if test -f 'yang/frr-test-module.yang.c'; then $(CYGPATH_W) 'yang/frr-test-module.yang.c'; else $(CYGPATH_W) '$(srcdir)/yang/frr-test-module.yang.c'; fi`
+
+tests/lib/test_atomlist-test_atomlist.o: tests/lib/test_atomlist.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_atomlist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_atomlist_CFLAGS) $(CFLAGS) -MT tests/lib/test_atomlist-test_atomlist.o -MD -MP -MF tests/lib/$(DEPDIR)/test_atomlist-test_atomlist.Tpo -c -o tests/lib/test_atomlist-test_atomlist.o `test -f 'tests/lib/test_atomlist.c' || echo '$(srcdir)/'`tests/lib/test_atomlist.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/$(DEPDIR)/test_atomlist-test_atomlist.Tpo tests/lib/$(DEPDIR)/test_atomlist-test_atomlist.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tests/lib/test_atomlist.c' object='tests/lib/test_atomlist-test_atomlist.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_atomlist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_atomlist_CFLAGS) $(CFLAGS) -c -o tests/lib/test_atomlist-test_atomlist.o `test -f 'tests/lib/test_atomlist.c' || echo '$(srcdir)/'`tests/lib/test_atomlist.c
+
+tests/lib/test_atomlist-test_atomlist.obj: tests/lib/test_atomlist.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_atomlist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_atomlist_CFLAGS) $(CFLAGS) -MT tests/lib/test_atomlist-test_atomlist.obj -MD -MP -MF tests/lib/$(DEPDIR)/test_atomlist-test_atomlist.Tpo -c -o tests/lib/test_atomlist-test_atomlist.obj `if test -f 'tests/lib/test_atomlist.c'; then $(CYGPATH_W) 'tests/lib/test_atomlist.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/test_atomlist.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/$(DEPDIR)/test_atomlist-test_atomlist.Tpo tests/lib/$(DEPDIR)/test_atomlist-test_atomlist.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tests/lib/test_atomlist.c' object='tests/lib/test_atomlist-test_atomlist.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_atomlist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_atomlist_CFLAGS) $(CFLAGS) -c -o tests/lib/test_atomlist-test_atomlist.obj `if test -f 'tests/lib/test_atomlist.c'; then $(CYGPATH_W) 'tests/lib/test_atomlist.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/test_atomlist.c'; fi`
 
 tests/lib/test_buffer-test_buffer.o: tests/lib/test_buffer.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_buffer_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_buffer_CFLAGS) $(CFLAGS) -MT tests/lib/test_buffer-test_buffer.o -MD -MP -MF tests/lib/$(DEPDIR)/test_buffer-test_buffer.Tpo -c -o tests/lib/test_buffer-test_buffer.o `test -f 'tests/lib/test_buffer.c' || echo '$(srcdir)/'`tests/lib/test_buffer.c
@@ -8505,6 +8671,20 @@ tests/lib/test_segv-test_segv.obj: tests/lib/test_segv.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_segv_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_segv_CFLAGS) $(CFLAGS) -c -o tests/lib/test_segv-test_segv.obj `if test -f 'tests/lib/test_segv.c'; then $(CYGPATH_W) 'tests/lib/test_segv.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/test_segv.c'; fi`
 
+tests/lib/test_seqlock-test_seqlock.o: tests/lib/test_seqlock.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_seqlock_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_seqlock_CFLAGS) $(CFLAGS) -MT tests/lib/test_seqlock-test_seqlock.o -MD -MP -MF tests/lib/$(DEPDIR)/test_seqlock-test_seqlock.Tpo -c -o tests/lib/test_seqlock-test_seqlock.o `test -f 'tests/lib/test_seqlock.c' || echo '$(srcdir)/'`tests/lib/test_seqlock.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/$(DEPDIR)/test_seqlock-test_seqlock.Tpo tests/lib/$(DEPDIR)/test_seqlock-test_seqlock.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tests/lib/test_seqlock.c' object='tests/lib/test_seqlock-test_seqlock.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_seqlock_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_seqlock_CFLAGS) $(CFLAGS) -c -o tests/lib/test_seqlock-test_seqlock.o `test -f 'tests/lib/test_seqlock.c' || echo '$(srcdir)/'`tests/lib/test_seqlock.c
+
+tests/lib/test_seqlock-test_seqlock.obj: tests/lib/test_seqlock.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_seqlock_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_seqlock_CFLAGS) $(CFLAGS) -MT tests/lib/test_seqlock-test_seqlock.obj -MD -MP -MF tests/lib/$(DEPDIR)/test_seqlock-test_seqlock.Tpo -c -o tests/lib/test_seqlock-test_seqlock.obj `if test -f 'tests/lib/test_seqlock.c'; then $(CYGPATH_W) 'tests/lib/test_seqlock.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/test_seqlock.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/$(DEPDIR)/test_seqlock-test_seqlock.Tpo tests/lib/$(DEPDIR)/test_seqlock-test_seqlock.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tests/lib/test_seqlock.c' object='tests/lib/test_seqlock-test_seqlock.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_seqlock_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_seqlock_CFLAGS) $(CFLAGS) -c -o tests/lib/test_seqlock-test_seqlock.obj `if test -f 'tests/lib/test_seqlock.c'; then $(CYGPATH_W) 'tests/lib/test_seqlock.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/test_seqlock.c'; fi`
+
 tests/lib/test_sig-test_sig.o: tests/lib/test_sig.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_sig_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_sig_CFLAGS) $(CFLAGS) -MT tests/lib/test_sig-test_sig.o -MD -MP -MF tests/lib/$(DEPDIR)/test_sig-test_sig.Tpo -c -o tests/lib/test_sig-test_sig.o `test -f 'tests/lib/test_sig.c' || echo '$(srcdir)/'`tests/lib/test_sig.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/$(DEPDIR)/test_sig-test_sig.Tpo tests/lib/$(DEPDIR)/test_sig-test_sig.Po
@@ -8645,6 +8825,34 @@ tests/lib/test_ttable-test_ttable.obj: tests/lib/test_ttable.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_ttable_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_ttable_CFLAGS) $(CFLAGS) -c -o tests/lib/test_ttable-test_ttable.obj `if test -f 'tests/lib/test_ttable.c'; then $(CYGPATH_W) 'tests/lib/test_ttable.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/test_ttable.c'; fi`
 
+tests/lib/test_typelist-test_typelist.o: tests/lib/test_typelist.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_typelist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_typelist_CFLAGS) $(CFLAGS) -MT tests/lib/test_typelist-test_typelist.o -MD -MP -MF tests/lib/$(DEPDIR)/test_typelist-test_typelist.Tpo -c -o tests/lib/test_typelist-test_typelist.o `test -f 'tests/lib/test_typelist.c' || echo '$(srcdir)/'`tests/lib/test_typelist.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/$(DEPDIR)/test_typelist-test_typelist.Tpo tests/lib/$(DEPDIR)/test_typelist-test_typelist.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tests/lib/test_typelist.c' object='tests/lib/test_typelist-test_typelist.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_typelist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_typelist_CFLAGS) $(CFLAGS) -c -o tests/lib/test_typelist-test_typelist.o `test -f 'tests/lib/test_typelist.c' || echo '$(srcdir)/'`tests/lib/test_typelist.c
+
+tests/lib/test_typelist-test_typelist.obj: tests/lib/test_typelist.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_typelist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_typelist_CFLAGS) $(CFLAGS) -MT tests/lib/test_typelist-test_typelist.obj -MD -MP -MF tests/lib/$(DEPDIR)/test_typelist-test_typelist.Tpo -c -o tests/lib/test_typelist-test_typelist.obj `if test -f 'tests/lib/test_typelist.c'; then $(CYGPATH_W) 'tests/lib/test_typelist.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/test_typelist.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/$(DEPDIR)/test_typelist-test_typelist.Tpo tests/lib/$(DEPDIR)/test_typelist-test_typelist.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tests/lib/test_typelist.c' object='tests/lib/test_typelist-test_typelist.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_typelist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_typelist_CFLAGS) $(CFLAGS) -c -o tests/lib/test_typelist-test_typelist.obj `if test -f 'tests/lib/test_typelist.c'; then $(CYGPATH_W) 'tests/lib/test_typelist.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/test_typelist.c'; fi`
+
+tests/helpers/c/lib_test_typelist-prng.o: tests/helpers/c/prng.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_typelist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_typelist_CFLAGS) $(CFLAGS) -MT tests/helpers/c/lib_test_typelist-prng.o -MD -MP -MF tests/helpers/c/$(DEPDIR)/lib_test_typelist-prng.Tpo -c -o tests/helpers/c/lib_test_typelist-prng.o `test -f 'tests/helpers/c/prng.c' || echo '$(srcdir)/'`tests/helpers/c/prng.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/helpers/c/$(DEPDIR)/lib_test_typelist-prng.Tpo tests/helpers/c/$(DEPDIR)/lib_test_typelist-prng.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tests/helpers/c/prng.c' object='tests/helpers/c/lib_test_typelist-prng.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_typelist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_typelist_CFLAGS) $(CFLAGS) -c -o tests/helpers/c/lib_test_typelist-prng.o `test -f 'tests/helpers/c/prng.c' || echo '$(srcdir)/'`tests/helpers/c/prng.c
+
+tests/helpers/c/lib_test_typelist-prng.obj: tests/helpers/c/prng.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_typelist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_typelist_CFLAGS) $(CFLAGS) -MT tests/helpers/c/lib_test_typelist-prng.obj -MD -MP -MF tests/helpers/c/$(DEPDIR)/lib_test_typelist-prng.Tpo -c -o tests/helpers/c/lib_test_typelist-prng.obj `if test -f 'tests/helpers/c/prng.c'; then $(CYGPATH_W) 'tests/helpers/c/prng.c'; else $(CYGPATH_W) '$(srcdir)/tests/helpers/c/prng.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/helpers/c/$(DEPDIR)/lib_test_typelist-prng.Tpo tests/helpers/c/$(DEPDIR)/lib_test_typelist-prng.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='tests/helpers/c/prng.c' object='tests/helpers/c/lib_test_typelist-prng.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_typelist_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_typelist_CFLAGS) $(CFLAGS) -c -o tests/helpers/c/lib_test_typelist-prng.obj `if test -f 'tests/helpers/c/prng.c'; then $(CYGPATH_W) 'tests/helpers/c/prng.c'; else $(CYGPATH_W) '$(srcdir)/tests/helpers/c/prng.c'; fi`
+
 tests/lib/test_zlog-test_zlog.o: tests/lib/test_zlog.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_lib_test_zlog_CPPFLAGS) $(CPPFLAGS) $(tests_lib_test_zlog_CFLAGS) $(CFLAGS) -MT tests/lib/test_zlog-test_zlog.o -MD -MP -MF tests/lib/$(DEPDIR)/test_zlog-test_zlog.Tpo -c -o tests/lib/test_zlog-test_zlog.o `test -f 'tests/lib/test_zlog.c' || echo '$(srcdir)/'`tests/lib/test_zlog.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) tests/lib/$(DEPDIR)/test_zlog-test_zlog.Tpo tests/lib/$(DEPDIR)/test_zlog-test_zlog.Po
@@ -8701,6 +8909,75 @@ tests/lib/cli/ospf6d_test_lsdb-common_cli.obj: tests/lib/cli/common_cli.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(tests_ospf6d_test_lsdb_CPPFLAGS) $(CPPFLAGS) $(tests_ospf6d_test_lsdb_CFLAGS) $(CFLAGS) -c -o tests/lib/cli/ospf6d_test_lsdb-common_cli.obj `if test -f 'tests/lib/cli/common_cli.c'; then $(CYGPATH_W) 'tests/lib/cli/common_cli.c'; else $(CYGPATH_W) '$(srcdir)/tests/lib/cli/common_cli.c'; fi`
 
+.cc.o:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ $<
+
+.cc.obj:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.cc.lo:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+@am__fastdepCXX_TRUE@	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
+
+grpc/libfrrgrpc_pb_la-frr-northbound.pb.lo: grpc/frr-northbound.pb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(grpc_libfrrgrpc_pb_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT grpc/libfrrgrpc_pb_la-frr-northbound.pb.lo -MD -MP -MF grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.pb.Tpo -c -o grpc/libfrrgrpc_pb_la-frr-northbound.pb.lo `test -f 'grpc/frr-northbound.pb.cc' || echo '$(srcdir)/'`grpc/frr-northbound.pb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.pb.Tpo grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.pb.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='grpc/frr-northbound.pb.cc' object='grpc/libfrrgrpc_pb_la-frr-northbound.pb.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(grpc_libfrrgrpc_pb_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o grpc/libfrrgrpc_pb_la-frr-northbound.pb.lo `test -f 'grpc/frr-northbound.pb.cc' || echo '$(srcdir)/'`grpc/frr-northbound.pb.cc
+
+grpc/libfrrgrpc_pb_la-frr-northbound.grpc.pb.lo: grpc/frr-northbound.grpc.pb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(grpc_libfrrgrpc_pb_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT grpc/libfrrgrpc_pb_la-frr-northbound.grpc.pb.lo -MD -MP -MF grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.grpc.pb.Tpo -c -o grpc/libfrrgrpc_pb_la-frr-northbound.grpc.pb.lo `test -f 'grpc/frr-northbound.grpc.pb.cc' || echo '$(srcdir)/'`grpc/frr-northbound.grpc.pb.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.grpc.pb.Tpo grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.grpc.pb.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='grpc/frr-northbound.grpc.pb.cc' object='grpc/libfrrgrpc_pb_la-frr-northbound.grpc.pb.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(grpc_libfrrgrpc_pb_la_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o grpc/libfrrgrpc_pb_la-frr-northbound.grpc.pb.lo `test -f 'grpc/frr-northbound.grpc.pb.cc' || echo '$(srcdir)/'`grpc/frr-northbound.grpc.pb.cc
+
+lib/grpc_la-northbound_grpc.lo: lib/northbound_grpc.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_grpc_la_CXXFLAGS) $(CXXFLAGS) -MT lib/grpc_la-northbound_grpc.lo -MD -MP -MF lib/$(DEPDIR)/grpc_la-northbound_grpc.Tpo -c -o lib/grpc_la-northbound_grpc.lo `test -f 'lib/northbound_grpc.cpp' || echo '$(srcdir)/'`lib/northbound_grpc.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) lib/$(DEPDIR)/grpc_la-northbound_grpc.Tpo lib/$(DEPDIR)/grpc_la-northbound_grpc.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='lib/northbound_grpc.cpp' object='lib/grpc_la-northbound_grpc.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_grpc_la_CXXFLAGS) $(CXXFLAGS) -c -o lib/grpc_la-northbound_grpc.lo `test -f 'lib/northbound_grpc.cpp' || echo '$(srcdir)/'`lib/northbound_grpc.cpp
+
+.cpp.o:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ $<
+
+.cpp.obj:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.obj$$||'`;\
+@am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ `$(CYGPATH_W) '$<'` &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
+
+.cpp.lo:
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.lo$$||'`;\
+@am__fastdepCXX_TRUE@	$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $$depbase.Tpo -c -o $@ $< &&\
+@am__fastdepCXX_TRUE@	$(am__mv) $$depbase.Tpo $$depbase.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
+
 mostlyclean-libtool:
 	-rm -f *.lo
 
@@ -8712,6 +8989,7 @@ clean-libtool:
 	-rm -rf bgpd/rfp-example/rfptest/.libs bgpd/rfp-example/rfptest/_libs
 	-rm -rf eigrpd/.libs eigrpd/_libs
 	-rm -rf fpm/.libs fpm/_libs
+	-rm -rf grpc/.libs grpc/_libs
 	-rm -rf isisd/.libs isisd/_libs
 	-rm -rf ldpd/.libs ldpd/_libs
 	-rm -rf lib/.libs lib/_libs
@@ -8736,7 +9014,6 @@ clean-libtool:
 	-rm -rf vtysh/.libs vtysh/_libs
 	-rm -rf watchfrr/.libs watchfrr/_libs
 	-rm -rf yang/.libs yang/_libs
-	-rm -rf yang/libyang_plugins/.libs yang/libyang_plugins/_libs
 	-rm -rf zebra/.libs zebra/_libs
 
 distclean-libtool:
@@ -9165,7 +9442,7 @@ all-am: Makefile $(PROGRAMS) $(LIBRARIES) $(LTLIBRARIES) $(SCRIPTS) \
 install-binPROGRAMS: install-libLTLIBRARIES
 
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libyang_pluginsdir)" "$(DESTDIR)$(moduledir)" "$(DESTDIR)$(rcdir)" "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(examplesdir)" "$(DESTDIR)$(yangmodelsdir)" "$(DESTDIR)$(rstman1dir)" "$(DESTDIR)$(rstman8dir)" "$(DESTDIR)$(eigrpdheaderdir)" "$(DESTDIR)$(pkgincludedir)" "$(DESTDIR)$(ospfapiheaderdir)" "$(DESTDIR)$(ospfdheaderdir)" "$(DESTDIR)$(pkgincludedir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(libdir)" "$(DESTDIR)$(moduledir)" "$(DESTDIR)$(rcdir)" "$(DESTDIR)$(sbindir)" "$(DESTDIR)$(examplesdir)" "$(DESTDIR)$(yangmodelsdir)" "$(DESTDIR)$(rstman1dir)" "$(DESTDIR)$(rstman8dir)" "$(DESTDIR)$(eigrpdheaderdir)" "$(DESTDIR)$(pkgincludedir)" "$(DESTDIR)$(ospfapiheaderdir)" "$(DESTDIR)$(ospfdheaderdir)" "$(DESTDIR)$(pkgincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -9212,6 +9489,8 @@ distclean-generic:
 	-rm -f eigrpd/$(am__dirstamp)
 	-rm -f fpm/$(DEPDIR)/$(am__dirstamp)
 	-rm -f fpm/$(am__dirstamp)
+	-rm -f grpc/$(DEPDIR)/$(am__dirstamp)
+	-rm -f grpc/$(am__dirstamp)
 	-rm -f isisd/$(DEPDIR)/$(am__dirstamp)
 	-rm -f isisd/$(am__dirstamp)
 	-rm -f ldpd/$(DEPDIR)/$(am__dirstamp)
@@ -9262,8 +9541,6 @@ distclean-generic:
 	-rm -f watchfrr/$(am__dirstamp)
 	-rm -f yang/$(DEPDIR)/$(am__dirstamp)
 	-rm -f yang/$(am__dirstamp)
-	-rm -f yang/libyang_plugins/$(DEPDIR)/$(am__dirstamp)
-	-rm -f yang/libyang_plugins/$(am__dirstamp)
 	-rm -f zebra/$(DEPDIR)/$(am__dirstamp)
 	-rm -f zebra/$(am__dirstamp)
 	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
@@ -9279,8 +9556,7 @@ maintainer-clean-generic:
 clean: clean-am
 
 clean-am: clean-binPROGRAMS clean-checkPROGRAMS clean-generic \
-	clean-libLTLIBRARIES clean-libtool \
-	clean-libyang_pluginsLTLIBRARIES clean-local \
+	clean-libLTLIBRARIES clean-libtool clean-local \
 	clean-moduleLTLIBRARIES clean-noinstLIBRARIES \
 	clean-noinstPROGRAMS clean-sbinPROGRAMS mostlyclean-am
 
@@ -9340,6 +9616,7 @@ distclean: distclean-am
 	-rm -f bgpd/$(DEPDIR)/bgp_label.Po
 	-rm -f bgpd/$(DEPDIR)/bgp_labelpool.Po
 	-rm -f bgpd/$(DEPDIR)/bgp_lcommunity.Po
+	-rm -f bgpd/$(DEPDIR)/bgp_mac.Po
 	-rm -f bgpd/$(DEPDIR)/bgp_memory.Po
 	-rm -f bgpd/$(DEPDIR)/bgp_mpath.Po
 	-rm -f bgpd/$(DEPDIR)/bgp_mplsvpn.Po
@@ -9406,7 +9683,8 @@ distclean: distclean-am
 	-rm -f eigrpd/$(DEPDIR)/eigrpd.Po
 	-rm -f fpm/$(DEPDIR)/libfrrfpm_pb_la-fpm.pb-c.Plo
 	-rm -f fpm/$(DEPDIR)/libfrrfpm_pb_la-fpm_pb.Plo
-	-rm -f isisd/$(DEPDIR)/dict.Po
+	-rm -f grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.grpc.pb.Plo
+	-rm -f grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.pb.Plo
 	-rm -f isisd/$(DEPDIR)/fabricd-isis_bpf.Po
 	-rm -f isisd/$(DEPDIR)/fabricd-isis_dlpi.Po
 	-rm -f isisd/$(DEPDIR)/fabricd-isis_main.Po
@@ -9444,7 +9722,6 @@ distclean: distclean-am
 	-rm -f isisd/$(DEPDIR)/isis_zebra.Po
 	-rm -f isisd/$(DEPDIR)/isisd.Po
 	-rm -f isisd/$(DEPDIR)/iso_checksum.Po
-	-rm -f isisd/$(DEPDIR)/libfabric_a-dict.Po
 	-rm -f isisd/$(DEPDIR)/libfabric_a-fabricd.Po
 	-rm -f isisd/$(DEPDIR)/libfabric_a-isis_adjacency.Po
 	-rm -f isisd/$(DEPDIR)/libfabric_a-isis_bfd.Po
@@ -9501,6 +9778,7 @@ distclean: distclean-am
 	-rm -f ldpd/$(DEPDIR)/socket.Po
 	-rm -f ldpd/$(DEPDIR)/util.Po
 	-rm -f lib/$(DEPDIR)/agg_table.Plo
+	-rm -f lib/$(DEPDIR)/atomlist.Plo
 	-rm -f lib/$(DEPDIR)/bfd.Plo
 	-rm -f lib/$(DEPDIR)/buffer.Plo
 	-rm -f lib/$(DEPDIR)/checksum.Plo
@@ -9523,7 +9801,6 @@ distclean: distclean-am
 	-rm -f lib/$(DEPDIR)/db.Plo
 	-rm -f lib/$(DEPDIR)/debug.Plo
 	-rm -f lib/$(DEPDIR)/distribute.Plo
-	-rm -f lib/$(DEPDIR)/event_counter.Plo
 	-rm -f lib/$(DEPDIR)/ferr.Plo
 	-rm -f lib/$(DEPDIR)/filter.Plo
 	-rm -f lib/$(DEPDIR)/frr_pthread.Plo
@@ -9533,6 +9810,7 @@ distclean: distclean-am
 	-rm -f lib/$(DEPDIR)/grammar_sandbox.Plo
 	-rm -f lib/$(DEPDIR)/grammar_sandbox_main.Po
 	-rm -f lib/$(DEPDIR)/graph.Plo
+	-rm -f lib/$(DEPDIR)/grpc_la-northbound_grpc.Plo
 	-rm -f lib/$(DEPDIR)/hash.Plo
 	-rm -f lib/$(DEPDIR)/hook.Plo
 	-rm -f lib/$(DEPDIR)/id_alloc.Plo
@@ -9555,6 +9833,7 @@ distclean: distclean-am
 	-rm -f lib/$(DEPDIR)/md5.Plo
 	-rm -f lib/$(DEPDIR)/memory.Plo
 	-rm -f lib/$(DEPDIR)/memory_vty.Plo
+	-rm -f lib/$(DEPDIR)/mlag.Plo
 	-rm -f lib/$(DEPDIR)/module.Plo
 	-rm -f lib/$(DEPDIR)/mpls.Plo
 	-rm -f lib/$(DEPDIR)/netns_linux.Plo
@@ -9576,6 +9855,7 @@ distclean: distclean-am
 	-rm -f lib/$(DEPDIR)/ringbuf.Plo
 	-rm -f lib/$(DEPDIR)/routemap.Plo
 	-rm -f lib/$(DEPDIR)/sbuf.Plo
+	-rm -f lib/$(DEPDIR)/seqlock.Plo
 	-rm -f lib/$(DEPDIR)/sha256.Plo
 	-rm -f lib/$(DEPDIR)/sigevent.Plo
 	-rm -f lib/$(DEPDIR)/skiplist.Plo
@@ -9591,6 +9871,8 @@ distclean: distclean-am
 	-rm -f lib/$(DEPDIR)/table.Plo
 	-rm -f lib/$(DEPDIR)/termtable.Plo
 	-rm -f lib/$(DEPDIR)/thread.Plo
+	-rm -f lib/$(DEPDIR)/typerb.Plo
+	-rm -f lib/$(DEPDIR)/typesafe.Plo
 	-rm -f lib/$(DEPDIR)/vector.Plo
 	-rm -f lib/$(DEPDIR)/vrf.Plo
 	-rm -f lib/$(DEPDIR)/vty.Plo
@@ -9731,6 +10013,7 @@ distclean: distclean-am
 	-rm -f pimd/$(DEPDIR)/pim_util.Po
 	-rm -f pimd/$(DEPDIR)/pim_version.Po
 	-rm -f pimd/$(DEPDIR)/pim_vty.Po
+	-rm -f pimd/$(DEPDIR)/pim_vxlan.Po
 	-rm -f pimd/$(DEPDIR)/pim_zebra.Po
 	-rm -f pimd/$(DEPDIR)/pim_zlookup.Po
 	-rm -f pimd/$(DEPDIR)/pimd.Po
@@ -9765,6 +10048,7 @@ distclean: distclean-am
 	-rm -f ripngd/$(DEPDIR)/ripng_zebra.Po
 	-rm -f ripngd/$(DEPDIR)/ripngd.Po
 	-rm -f sharpd/$(DEPDIR)/sharp_main.Po
+	-rm -f sharpd/$(DEPDIR)/sharp_nht.Po
 	-rm -f sharpd/$(DEPDIR)/sharp_vty.Po
 	-rm -f sharpd/$(DEPDIR)/sharp_zebra.Po
 	-rm -f staticd/$(DEPDIR)/static_main.Po
@@ -9790,9 +10074,12 @@ distclean: distclean-am
 	-rm -f tests/helpers/c/$(DEPDIR)/lib_test_srcdest_table-prng.Po
 	-rm -f tests/helpers/c/$(DEPDIR)/lib_test_timer_correctness-prng.Po
 	-rm -f tests/helpers/c/$(DEPDIR)/lib_test_timer_performance-prng.Po
+	-rm -f tests/helpers/c/$(DEPDIR)/lib_test_typelist-prng.Po
 	-rm -f tests/isisd/$(DEPDIR)/test_fuzz_isis_tlv-test_fuzz_isis_tlv.Po
 	-rm -f tests/isisd/$(DEPDIR)/test_isis_lspdb-test_isis_lspdb.Po
 	-rm -f tests/isisd/$(DEPDIR)/test_isis_vertex_queue-test_isis_vertex_queue.Po
+	-rm -f tests/lib/$(DEPDIR)/cxxcompat-cxxcompat.Po
+	-rm -f tests/lib/$(DEPDIR)/test_atomlist-test_atomlist.Po
 	-rm -f tests/lib/$(DEPDIR)/test_buffer-test_buffer.Po
 	-rm -f tests/lib/$(DEPDIR)/test_checksum-test_checksum.Po
 	-rm -f tests/lib/$(DEPDIR)/test_graph-test_graph.Po
@@ -9805,6 +10092,7 @@ distclean: distclean-am
 	-rm -f tests/lib/$(DEPDIR)/test_privs-test_privs.Po
 	-rm -f tests/lib/$(DEPDIR)/test_ringbuf-test_ringbuf.Po
 	-rm -f tests/lib/$(DEPDIR)/test_segv-test_segv.Po
+	-rm -f tests/lib/$(DEPDIR)/test_seqlock-test_seqlock.Po
 	-rm -f tests/lib/$(DEPDIR)/test_sig-test_sig.Po
 	-rm -f tests/lib/$(DEPDIR)/test_srcdest_table-test_srcdest_table.Po
 	-rm -f tests/lib/$(DEPDIR)/test_stream-test_stream.Po
@@ -9812,6 +10100,7 @@ distclean: distclean-am
 	-rm -f tests/lib/$(DEPDIR)/test_timer_correctness-test_timer_correctness.Po
 	-rm -f tests/lib/$(DEPDIR)/test_timer_performance-test_timer_performance.Po
 	-rm -f tests/lib/$(DEPDIR)/test_ttable-test_ttable.Po
+	-rm -f tests/lib/$(DEPDIR)/test_typelist-test_typelist.Po
 	-rm -f tests/lib/$(DEPDIR)/test_zlog-test_zlog.Po
 	-rm -f tests/lib/$(DEPDIR)/test_zmq-test_zmq.Po
 	-rm -f tests/lib/cli/$(DEPDIR)/ospf6d_test_lsdb-common_cli.Po
@@ -9840,8 +10129,6 @@ distclean: distclean-am
 	-rm -f yang/$(DEPDIR)/frr-ripngd.yang.Po
 	-rm -f yang/$(DEPDIR)/frr-route-types.yang.Plo
 	-rm -f yang/$(DEPDIR)/tests_lib_northbound_test_oper_data-frr-test-module.yang.Po
-	-rm -f yang/libyang_plugins/$(DEPDIR)/frr_user_types.Plo
-	-rm -f yang/libyang_plugins/$(DEPDIR)/frr_user_types_la-frr_user_types.Plo
 	-rm -f zebra/$(DEPDIR)/connected.Po
 	-rm -f zebra/$(DEPDIR)/debug.Po
 	-rm -f zebra/$(DEPDIR)/if_ioctl.Po
@@ -9881,6 +10168,7 @@ distclean: distclean-am
 	-rm -f zebra/$(DEPDIR)/zebra_fpm_protobuf.Plo
 	-rm -f zebra/$(DEPDIR)/zebra_l2.Po
 	-rm -f zebra/$(DEPDIR)/zebra_memory.Po
+	-rm -f zebra/$(DEPDIR)/zebra_mlag.Po
 	-rm -f zebra/$(DEPDIR)/zebra_mpls.Po
 	-rm -f zebra/$(DEPDIR)/zebra_mpls_netlink.Po
 	-rm -f zebra/$(DEPDIR)/zebra_mpls_null.Po
@@ -9917,10 +10205,10 @@ info-am:
 
 install-data-am: install-data-local install-dist_examplesDATA \
 	install-dist_yangmodelsDATA install-eigrpdheaderHEADERS \
-	install-libyang_pluginsLTLIBRARIES install-moduleLTLIBRARIES \
-	install-nodist_pkgincludeHEADERS install-ospfapiheaderHEADERS \
-	install-ospfdheaderHEADERS install-pkgincludeHEADERS \
-	install-rcSCRIPTS install-rstman1DATA install-rstman8DATA
+	install-moduleLTLIBRARIES install-nodist_pkgincludeHEADERS \
+	install-ospfapiheaderHEADERS install-ospfdheaderHEADERS \
+	install-pkgincludeHEADERS install-rcSCRIPTS \
+	install-rstman1DATA install-rstman8DATA
 
 install-dvi: install-dvi-am
 
@@ -10002,6 +10290,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f bgpd/$(DEPDIR)/bgp_label.Po
 	-rm -f bgpd/$(DEPDIR)/bgp_labelpool.Po
 	-rm -f bgpd/$(DEPDIR)/bgp_lcommunity.Po
+	-rm -f bgpd/$(DEPDIR)/bgp_mac.Po
 	-rm -f bgpd/$(DEPDIR)/bgp_memory.Po
 	-rm -f bgpd/$(DEPDIR)/bgp_mpath.Po
 	-rm -f bgpd/$(DEPDIR)/bgp_mplsvpn.Po
@@ -10068,7 +10357,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f eigrpd/$(DEPDIR)/eigrpd.Po
 	-rm -f fpm/$(DEPDIR)/libfrrfpm_pb_la-fpm.pb-c.Plo
 	-rm -f fpm/$(DEPDIR)/libfrrfpm_pb_la-fpm_pb.Plo
-	-rm -f isisd/$(DEPDIR)/dict.Po
+	-rm -f grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.grpc.pb.Plo
+	-rm -f grpc/$(DEPDIR)/libfrrgrpc_pb_la-frr-northbound.pb.Plo
 	-rm -f isisd/$(DEPDIR)/fabricd-isis_bpf.Po
 	-rm -f isisd/$(DEPDIR)/fabricd-isis_dlpi.Po
 	-rm -f isisd/$(DEPDIR)/fabricd-isis_main.Po
@@ -10106,7 +10396,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f isisd/$(DEPDIR)/isis_zebra.Po
 	-rm -f isisd/$(DEPDIR)/isisd.Po
 	-rm -f isisd/$(DEPDIR)/iso_checksum.Po
-	-rm -f isisd/$(DEPDIR)/libfabric_a-dict.Po
 	-rm -f isisd/$(DEPDIR)/libfabric_a-fabricd.Po
 	-rm -f isisd/$(DEPDIR)/libfabric_a-isis_adjacency.Po
 	-rm -f isisd/$(DEPDIR)/libfabric_a-isis_bfd.Po
@@ -10163,6 +10452,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ldpd/$(DEPDIR)/socket.Po
 	-rm -f ldpd/$(DEPDIR)/util.Po
 	-rm -f lib/$(DEPDIR)/agg_table.Plo
+	-rm -f lib/$(DEPDIR)/atomlist.Plo
 	-rm -f lib/$(DEPDIR)/bfd.Plo
 	-rm -f lib/$(DEPDIR)/buffer.Plo
 	-rm -f lib/$(DEPDIR)/checksum.Plo
@@ -10185,7 +10475,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f lib/$(DEPDIR)/db.Plo
 	-rm -f lib/$(DEPDIR)/debug.Plo
 	-rm -f lib/$(DEPDIR)/distribute.Plo
-	-rm -f lib/$(DEPDIR)/event_counter.Plo
 	-rm -f lib/$(DEPDIR)/ferr.Plo
 	-rm -f lib/$(DEPDIR)/filter.Plo
 	-rm -f lib/$(DEPDIR)/frr_pthread.Plo
@@ -10195,6 +10484,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f lib/$(DEPDIR)/grammar_sandbox.Plo
 	-rm -f lib/$(DEPDIR)/grammar_sandbox_main.Po
 	-rm -f lib/$(DEPDIR)/graph.Plo
+	-rm -f lib/$(DEPDIR)/grpc_la-northbound_grpc.Plo
 	-rm -f lib/$(DEPDIR)/hash.Plo
 	-rm -f lib/$(DEPDIR)/hook.Plo
 	-rm -f lib/$(DEPDIR)/id_alloc.Plo
@@ -10217,6 +10507,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f lib/$(DEPDIR)/md5.Plo
 	-rm -f lib/$(DEPDIR)/memory.Plo
 	-rm -f lib/$(DEPDIR)/memory_vty.Plo
+	-rm -f lib/$(DEPDIR)/mlag.Plo
 	-rm -f lib/$(DEPDIR)/module.Plo
 	-rm -f lib/$(DEPDIR)/mpls.Plo
 	-rm -f lib/$(DEPDIR)/netns_linux.Plo
@@ -10238,6 +10529,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f lib/$(DEPDIR)/ringbuf.Plo
 	-rm -f lib/$(DEPDIR)/routemap.Plo
 	-rm -f lib/$(DEPDIR)/sbuf.Plo
+	-rm -f lib/$(DEPDIR)/seqlock.Plo
 	-rm -f lib/$(DEPDIR)/sha256.Plo
 	-rm -f lib/$(DEPDIR)/sigevent.Plo
 	-rm -f lib/$(DEPDIR)/skiplist.Plo
@@ -10253,6 +10545,8 @@ maintainer-clean: maintainer-clean-am
 	-rm -f lib/$(DEPDIR)/table.Plo
 	-rm -f lib/$(DEPDIR)/termtable.Plo
 	-rm -f lib/$(DEPDIR)/thread.Plo
+	-rm -f lib/$(DEPDIR)/typerb.Plo
+	-rm -f lib/$(DEPDIR)/typesafe.Plo
 	-rm -f lib/$(DEPDIR)/vector.Plo
 	-rm -f lib/$(DEPDIR)/vrf.Plo
 	-rm -f lib/$(DEPDIR)/vty.Plo
@@ -10393,6 +10687,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f pimd/$(DEPDIR)/pim_util.Po
 	-rm -f pimd/$(DEPDIR)/pim_version.Po
 	-rm -f pimd/$(DEPDIR)/pim_vty.Po
+	-rm -f pimd/$(DEPDIR)/pim_vxlan.Po
 	-rm -f pimd/$(DEPDIR)/pim_zebra.Po
 	-rm -f pimd/$(DEPDIR)/pim_zlookup.Po
 	-rm -f pimd/$(DEPDIR)/pimd.Po
@@ -10427,6 +10722,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f ripngd/$(DEPDIR)/ripng_zebra.Po
 	-rm -f ripngd/$(DEPDIR)/ripngd.Po
 	-rm -f sharpd/$(DEPDIR)/sharp_main.Po
+	-rm -f sharpd/$(DEPDIR)/sharp_nht.Po
 	-rm -f sharpd/$(DEPDIR)/sharp_vty.Po
 	-rm -f sharpd/$(DEPDIR)/sharp_zebra.Po
 	-rm -f staticd/$(DEPDIR)/static_main.Po
@@ -10452,9 +10748,12 @@ maintainer-clean: maintainer-clean-am
 	-rm -f tests/helpers/c/$(DEPDIR)/lib_test_srcdest_table-prng.Po
 	-rm -f tests/helpers/c/$(DEPDIR)/lib_test_timer_correctness-prng.Po
 	-rm -f tests/helpers/c/$(DEPDIR)/lib_test_timer_performance-prng.Po
+	-rm -f tests/helpers/c/$(DEPDIR)/lib_test_typelist-prng.Po
 	-rm -f tests/isisd/$(DEPDIR)/test_fuzz_isis_tlv-test_fuzz_isis_tlv.Po
 	-rm -f tests/isisd/$(DEPDIR)/test_isis_lspdb-test_isis_lspdb.Po
 	-rm -f tests/isisd/$(DEPDIR)/test_isis_vertex_queue-test_isis_vertex_queue.Po
+	-rm -f tests/lib/$(DEPDIR)/cxxcompat-cxxcompat.Po
+	-rm -f tests/lib/$(DEPDIR)/test_atomlist-test_atomlist.Po
 	-rm -f tests/lib/$(DEPDIR)/test_buffer-test_buffer.Po
 	-rm -f tests/lib/$(DEPDIR)/test_checksum-test_checksum.Po
 	-rm -f tests/lib/$(DEPDIR)/test_graph-test_graph.Po
@@ -10467,6 +10766,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f tests/lib/$(DEPDIR)/test_privs-test_privs.Po
 	-rm -f tests/lib/$(DEPDIR)/test_ringbuf-test_ringbuf.Po
 	-rm -f tests/lib/$(DEPDIR)/test_segv-test_segv.Po
+	-rm -f tests/lib/$(DEPDIR)/test_seqlock-test_seqlock.Po
 	-rm -f tests/lib/$(DEPDIR)/test_sig-test_sig.Po
 	-rm -f tests/lib/$(DEPDIR)/test_srcdest_table-test_srcdest_table.Po
 	-rm -f tests/lib/$(DEPDIR)/test_stream-test_stream.Po
@@ -10474,6 +10774,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f tests/lib/$(DEPDIR)/test_timer_correctness-test_timer_correctness.Po
 	-rm -f tests/lib/$(DEPDIR)/test_timer_performance-test_timer_performance.Po
 	-rm -f tests/lib/$(DEPDIR)/test_ttable-test_ttable.Po
+	-rm -f tests/lib/$(DEPDIR)/test_typelist-test_typelist.Po
 	-rm -f tests/lib/$(DEPDIR)/test_zlog-test_zlog.Po
 	-rm -f tests/lib/$(DEPDIR)/test_zmq-test_zmq.Po
 	-rm -f tests/lib/cli/$(DEPDIR)/ospf6d_test_lsdb-common_cli.Po
@@ -10502,8 +10803,6 @@ maintainer-clean: maintainer-clean-am
 	-rm -f yang/$(DEPDIR)/frr-ripngd.yang.Po
 	-rm -f yang/$(DEPDIR)/frr-route-types.yang.Plo
 	-rm -f yang/$(DEPDIR)/tests_lib_northbound_test_oper_data-frr-test-module.yang.Po
-	-rm -f yang/libyang_plugins/$(DEPDIR)/frr_user_types.Plo
-	-rm -f yang/libyang_plugins/$(DEPDIR)/frr_user_types_la-frr_user_types.Plo
 	-rm -f zebra/$(DEPDIR)/connected.Po
 	-rm -f zebra/$(DEPDIR)/debug.Po
 	-rm -f zebra/$(DEPDIR)/if_ioctl.Po
@@ -10543,6 +10842,7 @@ maintainer-clean: maintainer-clean-am
 	-rm -f zebra/$(DEPDIR)/zebra_fpm_protobuf.Plo
 	-rm -f zebra/$(DEPDIR)/zebra_l2.Po
 	-rm -f zebra/$(DEPDIR)/zebra_memory.Po
+	-rm -f zebra/$(DEPDIR)/zebra_mlag.Po
 	-rm -f zebra/$(DEPDIR)/zebra_mpls.Po
 	-rm -f zebra/$(DEPDIR)/zebra_mpls_netlink.Po
 	-rm -f zebra/$(DEPDIR)/zebra_mpls_null.Po
@@ -10581,9 +10881,8 @@ ps-am:
 
 uninstall-am: uninstall-binPROGRAMS uninstall-dist_examplesDATA \
 	uninstall-dist_yangmodelsDATA uninstall-eigrpdheaderHEADERS \
-	uninstall-libLTLIBRARIES uninstall-libyang_pluginsLTLIBRARIES \
-	uninstall-local uninstall-moduleLTLIBRARIES \
-	uninstall-nodist_pkgincludeHEADERS \
+	uninstall-libLTLIBRARIES uninstall-local \
+	uninstall-moduleLTLIBRARIES uninstall-nodist_pkgincludeHEADERS \
 	uninstall-ospfapiheaderHEADERS uninstall-ospfdheaderHEADERS \
 	uninstall-pkgincludeHEADERS uninstall-rcSCRIPTS \
 	uninstall-rstman1DATA uninstall-rstman8DATA \
@@ -10594,8 +10893,7 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_examplesDATA \
 .PHONY: CTAGS GTAGS TAGS all all-am am--depfiles am--refresh check \
 	check-am clean clean-binPROGRAMS clean-checkPROGRAMS \
 	clean-cscope clean-generic clean-libLTLIBRARIES clean-libtool \
-	clean-libyang_pluginsLTLIBRARIES clean-local \
-	clean-moduleLTLIBRARIES clean-noinstLIBRARIES \
+	clean-local clean-moduleLTLIBRARIES clean-noinstLIBRARIES \
 	clean-noinstPROGRAMS clean-sbinPROGRAMS cscope cscopelist-am \
 	ctags ctags-am dist dist-all dist-bzip2 dist-gzip dist-lzip \
 	dist-shar dist-tarZ dist-xz dist-zip distcheck distclean \
@@ -10607,8 +10905,7 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_examplesDATA \
 	install-dist_yangmodelsDATA install-dvi install-dvi-am \
 	install-eigrpdheaderHEADERS install-exec install-exec-am \
 	install-html install-html-am install-info install-info-am \
-	install-libLTLIBRARIES install-libyang_pluginsLTLIBRARIES \
-	install-man install-moduleLTLIBRARIES \
+	install-libLTLIBRARIES install-man install-moduleLTLIBRARIES \
 	install-nodist_pkgincludeHEADERS install-ospfapiheaderHEADERS \
 	install-ospfdheaderHEADERS install-pdf install-pdf-am \
 	install-pkgincludeHEADERS install-ps install-ps-am \
@@ -10620,8 +10917,8 @@ uninstall-am: uninstall-binPROGRAMS uninstall-dist_examplesDATA \
 	tags tags-am uninstall uninstall-am uninstall-binPROGRAMS \
 	uninstall-dist_examplesDATA uninstall-dist_yangmodelsDATA \
 	uninstall-eigrpdheaderHEADERS uninstall-libLTLIBRARIES \
-	uninstall-libyang_pluginsLTLIBRARIES uninstall-local \
-	uninstall-moduleLTLIBRARIES uninstall-nodist_pkgincludeHEADERS \
+	uninstall-local uninstall-moduleLTLIBRARIES \
+	uninstall-nodist_pkgincludeHEADERS \
 	uninstall-ospfapiheaderHEADERS uninstall-ospfdheaderHEADERS \
 	uninstall-pkgincludeHEADERS uninstall-rcSCRIPTS \
 	uninstall-rstman1DATA uninstall-rstman8DATA \
@@ -10647,7 +10944,6 @@ var-%:
 $(AUTOMAKE_DUMMY)install-moduleLTLIBRARIES: install-libLTLIBRARIES
 $(AUTOMAKE_DUMMY)install-binPROGRAMS: install-libLTLIBRARIES
 $(AUTOMAKE_DUMMY)install-sbinPROGRAMS: install-libLTLIBRARIES
-$(AUTOMAKE_DUMMY)install-libyang_pluginsLTLIBRARIES: install-libLTLIBRARIES
 
 # You can set these variables from the command line.
 SPHINXOPTS    ?=
@@ -10859,7 +11155,15 @@ lib/route_types.h: $(top_srcdir)/lib/route_types.txt $(top_srcdir)/lib/route_typ
 @GIT_VERSION_FALSE@	true
 .PHONY: $(PHONY_GITVERSION)
 
+zebra/debug_clippy.c: $(CLIPPY_DEPS)
+zebra/debug.$(OBJEXT): zebra/debug_clippy.c
+
+zebra/zebra_mlag_clippy.c: $(CLIPPY_DEPS)
+zebra/zebra_mlag.$(OBJEXT): zebra/zebra_mlag_clippy.c
+
 zebra/zebra_vty_clippy.c: $(CLIPPY_DEPS)
+zebra/interface_clippy.c: $(CLIPPY_DEPS)
+zebra/interface.$(OBJEXT): zebra/interface_clippy.c
 zebra/zebra_vty.$(OBJEXT): zebra/zebra_vty_clippy.c
 
 zebra/zebra_routemap_clippy.c: $(CLIPPY_DEPS)
@@ -10874,6 +11178,11 @@ zebra/zebra_routemap.$(OBJEXT): zebra/zebra_routemap_clippy.c
 @HAVE_PROTOBUF_TRUE@.pb-c.c.pb-c.h:
 @HAVE_PROTOBUF_TRUE@	@/bin/true
 
+.proto.pb.cc:
+	$(AM_V_PROTOC)$(PROTOC) -I$(top_srcdir) --cpp_out=$(top_srcdir) $(top_srcdir)/$^
+.proto.grpc.pb.cc:
+	$(AM_V_PROTOC)$(PROTOC) -I$(top_srcdir) --grpc_out=$(top_srcdir) --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` $(top_srcdir)/$^
+
 .PHONY: solaris/all
 @SOLARIS_TRUE@all: solaris/all
 @SOLARIS_TRUE@solaris/all:
@@ -10887,6 +11196,8 @@ bgpd/bgp_route_clippy.c: $(CLIPPY_DEPS)
 bgpd/bgp_route.$(OBJEXT): bgpd/bgp_route_clippy.c
 bgpd/bgp_debug_clippy.c: $(CLIPPY_DEPS)
 bgpd/bgp_debug.$(OBJEXT): bgpd/bgp_debug_clippy.c
+bgpd/bgp_routemap_clippy.c: $(CLIPPY_DEPS)
+bgpd/bgp_routemap.$(OBJEXT): bgpd/bgp_routemap_clippy.c
 bgpd/bgp_rpki_clippy.c: $(CLIPPY_DEPS)
 $(AUTOMAKE_DUMMY)bgpd/bgpd_bgpd_rpki_la-bgp_rpki.lo: bgpd/bgp_rpki_clippy.c
 $(AUTOMAKE_DUMMY)bgpd/bgpd_rpki_la-bgp_rpki.lo: bgpd/bgp_rpki_clippy.c
@@ -10912,6 +11223,9 @@ eigrpd/eigrp_vty.$(OBJEXT): eigrpd/eigrp_vty_clippy.c
 sharpd/sharp_vty_clippy.c: $(CLIPPY_DEPS)
 sharpd/sharp_vty.$(OBJEXT): sharpd/sharp_vty_clippy.c
 
+pimd/pim_cmd_clippy.c: $(CLIPPY_DEPS)
+pimd/pim_cmd.$(OBJEXT): pimd/pim_cmd_clippy.c
+
 pbrd/pbr_vty_clippy.c: $(CLIPPY_DEPS)
 pbrd/pbr_vty.$(OBJEXT): pbrd/pbr_vty_clippy.c
 
@@ -10928,6 +11242,10 @@ bfdd/bfdd_vty.$(OBJEXT): bfdd/bfdd_vty_clippy.c
 	$(AM_V_GEN)$(PYTHON) $(top_srcdir)/yang/embedmodel.py $^ $@
 .yin.yin.c:
 	$(AM_V_GEN)$(PYTHON) $(top_srcdir)/yang/embedmodel.py $^ $@
+
+# XXX: disable support for libyang custom user types temporarily to facilitate
+# the transition from libyang 0.x to libyang 1.x.
+#lib_libfrr_la_SOURCES += yang/libyang_plugins/frr_user_types.c
 
 vtysh/vtysh_cmd.c: $(vtysh_scan) vtysh/extract.pl
 	$(AM_V_EXTRACT) vtysh/extract.pl $(vtysh_scan) > vtysh/vtysh_cmd.c
@@ -10974,8 +11292,8 @@ topotests: ## Runs topotests
 clean-local: clean-python
 .PHONY: clean-python
 clean-python:
-	find -name __pycache__ -o -name .pytest_cache | xargs rm -rf
-	find -name "*.pyc" -o -name "*_clippy.c" | xargs rm -f
+	find . -name __pycache__ -o -name .pytest_cache | xargs rm -rf
+	find . -name "*.pyc" -o -name "*_clippy.c" | xargs rm -f
 
 redistclean:
 	$(MAKE) distclean CONFIG_CLEAN_FILES="$(filter-out $(EXTRA_DIST), $(CONFIG_CLEAN_FILES))"
