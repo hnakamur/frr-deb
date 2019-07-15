@@ -22,11 +22,9 @@ Signed-off-by: Renato Westphal <renato@opensourcerouting.org>
  zebra/zebra_rib.c         | 4 ++--
  10 files changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/isisd/isis_circuit.c b/isisd/isis_circuit.c
-index f9a028587..8d008d78b 100644
 --- a/isisd/isis_circuit.c
 +++ b/isisd/isis_circuit.c
-@@ -551,7 +551,7 @@ static void isis_circuit_update_all_srmflags(struct isis_circuit *circuit,
+@@ -551,7 +551,7 @@
  		if (!lspdb_count(&area->lspdb[level - 1]))
  			continue;
  
@@ -35,11 +33,9 @@ index f9a028587..8d008d78b 100644
  			if (is_set) {
  				isis_tx_queue_add(circuit->tx_queue, lsp,
  						  TX_LSP_NORMAL);
-diff --git a/isisd/isis_lsp.c b/isisd/isis_lsp.c
-index 199166695..4b29e6dc7 100644
 --- a/isisd/isis_lsp.c
 +++ b/isisd/isis_lsp.c
-@@ -574,7 +574,7 @@ void lsp_build_list_nonzero_ht(struct lspdb_head *head, const uint8_t *start_id,
+@@ -574,7 +574,7 @@
  	memcpy(&searchfor.hdr.lsp_id, start_id, sizeof(searchfor.hdr.lsp_id));
  
  	start = lspdb_find_gteq(head, &searchfor);
@@ -48,7 +44,7 @@ index 199166695..4b29e6dc7 100644
  		if (memcmp(lsp->hdr.lsp_id, stop_id,
  			   ISIS_SYS_ID_LEN + 2) > 0)
  			break;
-@@ -682,12 +682,12 @@ int lsp_print_all(struct vty *vty, struct lspdb_head *head, char detail,
+@@ -682,12 +682,12 @@
  	int lsp_count = 0;
  
  	if (detail == ISIS_UI_LEVEL_BRIEF) {
@@ -63,7 +59,7 @@ index 199166695..4b29e6dc7 100644
  			lsp_print_detail(lsp, vty, dynhost);
  			lsp_count++;
  		}
-@@ -1855,7 +1855,7 @@ int lsp_tick(struct thread *thread)
+@@ -1855,7 +1855,7 @@
  	 */
  	for (level = 0; level < ISIS_LEVELS; level++) {
  		struct isis_lsp *next = lspdb_first(&area->lspdb[level]);
@@ -72,11 +68,9 @@ index 199166695..4b29e6dc7 100644
  			/*
  			 * The lsp rem_lifetime is kept at 0 for MaxAge
  			 * or
-diff --git a/isisd/isis_pdu.c b/isisd/isis_pdu.c
-index 9c633117b..3d16d5601 100644
 --- a/isisd/isis_pdu.c
 +++ b/isisd/isis_pdu.c
-@@ -2258,7 +2258,7 @@ static int send_psnp(int level, struct isis_circuit *circuit)
+@@ -2258,7 +2258,7 @@
  		if (CHECK_FLAG(passwd->snp_auth, SNP_AUTH_SEND))
  			isis_tlvs_add_auth(tlvs, passwd);
  
@@ -85,11 +79,9 @@ index 9c633117b..3d16d5601 100644
  			if (ISIS_CHECK_FLAG(lsp->SSNflags, circuit))
  				isis_tlvs_add_lsp_entry(tlvs, lsp);
  
-diff --git a/isisd/isis_tlvs.c b/isisd/isis_tlvs.c
-index ae149a042..6b8e74f07 100644
 --- a/isisd/isis_tlvs.c
 +++ b/isisd/isis_tlvs.c
-@@ -3552,7 +3552,7 @@ void isis_tlvs_add_csnp_entries(struct isis_tlvs *tlvs, uint8_t *start_id,
+@@ -3552,7 +3552,7 @@
  	if (!first)
  		return;
  
@@ -98,11 +90,9 @@ index ae149a042..6b8e74f07 100644
  		if (memcmp(lsp->hdr.lsp_id, stop_id, sizeof(lsp->hdr.lsp_id))
  			> 0 || tlvs->lsp_entries.count == num_lsps)
  			break;
-diff --git a/isisd/isis_vty_fabricd.c b/isisd/isis_vty_fabricd.c
-index 7f2061692..2476bd255 100644
 --- a/isisd/isis_vty_fabricd.c
 +++ b/isisd/isis_vty_fabricd.c
-@@ -176,7 +176,7 @@ DEFUN (show_lsp_flooding,
+@@ -176,7 +176,7 @@
  			continue;
  		}
  
@@ -111,11 +101,9 @@ index 7f2061692..2476bd255 100644
  			lsp_print_flooding(vty, lsp);
  			vty_out(vty, "\n");
  		}
-diff --git a/lib/thread.c b/lib/thread.c
-index 9489e3e92..7a9a0ab60 100644
 --- a/lib/thread.c
 +++ b/lib/thread.c
-@@ -1034,7 +1034,7 @@ static void do_thread_cancel(struct thread_master *master)
+@@ -1034,7 +1034,7 @@
  		if (cr->eventobj) {
  			struct thread *t;
  
@@ -124,7 +112,7 @@ index 9489e3e92..7a9a0ab60 100644
  				if (t->arg != cr->eventobj)
  					continue;
  				thread_list_del(&master->event, t);
-@@ -1043,7 +1043,7 @@ static void do_thread_cancel(struct thread_master *master)
+@@ -1043,7 +1043,7 @@
  				thread_add_unuse(master, t);
  			}
  
@@ -133,11 +121,9 @@ index 9489e3e92..7a9a0ab60 100644
  				if (t->arg != cr->eventobj)
  					continue;
  				thread_list_del(&master->ready, t);
-diff --git a/lib/typesafe.h b/lib/typesafe.h
-index 6829b0a38..0a4ed69e4 100644
 --- a/lib/typesafe.h
 +++ b/lib/typesafe.h
-@@ -29,17 +29,17 @@ extern "C" {
+@@ -25,17 +25,17 @@
  
  /* generic macros for all list-like types */
  
@@ -158,11 +144,9 @@ index 6829b0a38..0a4ed69e4 100644
  	for (item = from, from = prefix##_next_safe(head, item);               \
  		item;                                                          \
  		item = from, from = prefix##_next_safe(head, from))
-diff --git a/tests/lib/test_atomlist.c b/tests/lib/test_atomlist.c
-index 078e05e33..249fff8ed 100644
 --- a/tests/lib/test_atomlist.c
 +++ b/tests/lib/test_atomlist.c
-@@ -308,7 +308,7 @@ static void run_tr(struct testrun *tr)
+@@ -308,7 +308,7 @@
  	if (tr->sorted) {
  		uint64_t prevval = 0;
  
@@ -171,7 +155,7 @@ index 078e05e33..249fff8ed 100644
  			assert(item->val1 >= prevval);
  			prevval = item->val1;
  			c++;
-@@ -316,7 +316,7 @@ static void run_tr(struct testrun *tr)
+@@ -316,7 +316,7 @@
  		assert(c == asort_count(&shead));
  	} else {
  		prev = &dummy;
@@ -180,7 +164,7 @@ index 078e05e33..249fff8ed 100644
  			assert(item != prev);
  			prev = item;
  			c++;
-@@ -335,7 +335,7 @@ static void dump(const char *lbl)
+@@ -335,7 +335,7 @@
  	size_t ctr = 0;
  
  	printf("dumping %s:\n", lbl);
@@ -189,68 +173,32 @@ index 078e05e33..249fff8ed 100644
  		printf("%s %3zu %p %3"PRIu64" %3"PRIu64"\n", lbl, ctr++,
  				(void *)item, item->val1, item->val2);
  	}
-diff --git a/tests/lib/test_typelist.h b/tests/lib/test_typelist.h
-index f09175fea..b288f0bd8 100644
 --- a/tests/lib/test_typelist.h
 +++ b/tests/lib/test_typelist.h
-@@ -105,7 +105,7 @@ static void ts_hash(const char *text, const char *expect)
- 	SHA256_Init(&ctx);
- 	SHA256_Update(&ctx, &count, sizeof(count));
- 
--	for_each (list, &head, item) {
-+	frr_each (list, &head, item) {
- 		struct {
- 			uint32_t val_upper, val_lower, index;
- 		} hashitem = {
-@@ -177,7 +177,7 @@ static void concat(test_, TYPE)(void)
+@@ -108,7 +108,7 @@
  
  	k = 0;
  	prev = NULL;
 -	for_each(list, &head, item) {
 +	frr_each(list, &head, item) {
- #if IS_HASH(REALTYPE) || IS_HEAP(REALTYPE)
+ #if IS_HASH(TYPE)
  		/* hash table doesn't give sorting */
  		(void)prev;
-@@ -303,7 +303,7 @@ static void concat(test_, TYPE)(void)
+@@ -219,7 +219,7 @@
  	assert(l + list_count(&head) == k);
- 	ts_hashx("del", "cb2e5d80f08a803ef7b56c15e981b681adcea214bebc2f55e12e0bfb242b07ca");
+ 	ts_ref("del");
  
 -	for_each_safe(list, &head, item) {
 +	frr_each_safe(list, &head, item) {
  		assert(item->scratchpad != 0);
  
  		if (item->val & 1) {
-@@ -313,7 +313,7 @@ static void concat(test_, TYPE)(void)
+@@ -229,7 +229,7 @@
  		}
  	}
  	assert(l + list_count(&head) == k);
--	ts_hashx("for_each_safe+del", "e0beb71dd963a75af05b722b8e71b61b304587d860c8accdc4349067542b86bb");
-+	ts_hashx("frr_each_safe+del", "e0beb71dd963a75af05b722b8e71b61b304587d860c8accdc4349067542b86bb");
+-	ts_ref("for_each_safe+del");
++	ts_ref("frr_each_safe+del");
  
- #else /* !IS_SORTED */
- 	prng = prng_new(0);
-diff --git a/zebra/zebra_rib.c b/zebra/zebra_rib.c
-index 3b305f6e3..8f2731666 100644
---- a/zebra/zebra_rib.c
-+++ b/zebra/zebra_rib.c
-@@ -1229,7 +1229,7 @@ void zebra_rib_evaluate_rn_nexthops(struct route_node *rn, uint32_t seq)
- 		 * nht resolution and as such we need to call the
- 		 * nexthop tracking evaluation code
- 		 */
--		for_each (rnh_list, &dest->nht, rnh) {
-+		frr_each (rnh_list, &dest->nht, rnh) {
- 			struct zebra_vrf *zvrf =
- 				zebra_vrf_lookup_by_id(rnh->vrf_id);
- 			struct prefix *p = &rnh->node->p;
-@@ -3223,7 +3223,7 @@ unsigned long rib_score_proto(uint8_t proto, unsigned short instance)
- 			       proto, instance,
- 			       zvrf->table[AFI_IP6][SAFI_UNICAST]);
- 
--		for_each(otable, &zvrf->other_tables, ort) cnt +=
-+		frr_each(otable, &zvrf->other_tables, ort) cnt +=
- 			rib_score_proto_table(proto, instance, ort->table);
- 	}
- 
--- 
-2.17.1
-
+ 	while ((item = list_pop(&head))) {
+ 		assert(item->scratchpad != 0);
