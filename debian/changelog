@@ -1,3 +1,12 @@
+frr (7.1-1ppa1~bionic) bionic; urgency=medium
+
+  * Update dependencies according to Building FRR Ubuntu 18.04 LTS
+  * Add libgrpc++-dev, libprotobuf-dev, protobuf-compiler, and
+    protobuf-compiler-grpc to Build-Depends to use grpc plugin
+  * Enable experimental grpc plugin
+
+ -- Hiroaki Nakamura <hnakamur@gmail.com>  Sun, 14 Jul 2019 11:25:40 +0900
+
 frr (7.1-1~ubuntu18.04.1) UNRELEASED; urgency=medium
 
   * upstream 7.1 release (7.0 / 7.0.1 packages existed on deb.frrouting.org
